@@ -1,8 +1,8 @@
 matrix = [
-  ("r18b", {"arm": ["16", "21", "24", "28"], }),
-  ("r17c", {"arm": ["16", "21", "24", "28"], }),
-  ("r16b", {"arm": ["16", "21", "24",     ], }),
-  ("r12b", {"arm": ["16", "21", "24",     ], }),
+  ("r18b", {"arm": ["16", "21", "24", "26", "27", "28",], }),
+  ("r17c", {"arm": ["16", "21", "24", "26", "27", "28",], }),
+  ("r16b", {"arm": ["16", "21", "24",                  ], }),
+  ("r12b", {"arm": ["16", "21", "24",                  ], }),
 ]
 
 import sys
@@ -23,7 +23,7 @@ travis_template = '''    - name: "{name}"
         - api={api}'''
 
 shell_template = '''echo {rev}-{arch}-{api}
-ndk={rev} arch={arch} api={api} bash single.sh &> {name}.log || (echo FAIL && exit 0)'''
+ndk={rev} arch={arch} api={api} bash single.sh &> {name}.log || (echo FAIL; bash rm_toolchain.sh; exit 0)'''
 
 if kind == "travis":
   comment_format = "# {}"
