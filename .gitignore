@@ -1,0 +1,7 @@
+/ACE_TAO
+/OpenDDS
+/MPC
+/android-ndk-*
+/toolchain
+/*-toolchain
+/*.log

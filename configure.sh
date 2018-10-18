@@ -5,14 +5,12 @@ cd OpenDDS
 ./configure --no-tests --target=android \
   --ace=${workspace}/ACE_TAO/ACE \
   --tao=${workspace}/ACE_TAO/TAO \
+  --marcos=CXFLAGS+=-Wdeprecated-declarations
 
-pm=ACE_TAO/ACE/build/target/include/makeinclude/platform_macros.GNU
+pm=../ACE_TAO/ACE/build/target/include/makeinclude/platform_macros.GNU
 function prepend_pm {
   printf '%s\n%s' "$@" "$(cat $pm)" > $pm
 }
-
-prepend_pm "no_deprecated := 1"
-prepend_pm "CXXFLAGS += -Wdeprecated-declarations"
 
 major_rev=$(echo $ndk | grep -oE '[0-9]+')
 minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')

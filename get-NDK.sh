@@ -1,19 +1,16 @@
 set -e
 
 ndk_dir=android-ndk-$ndk
+ndk_zip=$ndk_dir-linux-x86_64.zip
 
-if [ -z ${presetup+x} ]
+if [ ! -d $ndk_dir ]
 then
-  ndk_zip=$ndk_dir-linux-x86_64.zip
-
-  if [ ! -d $ndk_dir ]
+  if [ -d ../$ndk_dir ]
   then
-    wget https://dl.google.com/android/repository/$ndk_zip
-    unzip -qq $ndk_zip
-    rm -f $ndk_zip
+    ln -s ../$ndk_dir
+    exit 0
   fi
-elif [ ! -d $presetup/$ndk_dir ]
-then
-  echo "ndk ($ndk_dir) is not in presetup ($presetup)"
-  exit 1
+  wget https://dl.google.com/android/repository/$ndk_zip
+  unzip -qq $ndk_zip
+  rm -f $ndk_zip
 fi
