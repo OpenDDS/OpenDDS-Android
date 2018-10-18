@@ -1,0 +1,25 @@
+install: 
+- bash get-ACE-TAO.sh
+- bash get-OpenDDS.sh
+- bash get-NDK.sh
+script:
+- bash configure.sh
+- bash build.sh
+matrix:
+  include:
+    - name: "arm-r18b-16"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=16
+    - name: "arm-r18b-21"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=21
+    - name: "arm-r18b-24"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=24
+
