@@ -5,13 +5,14 @@ cd OpenDDS
 ./configure --no-tests --target=android \
   --ace=${workspace}/ACE_TAO/ACE \
   --tao=${workspace}/ACE_TAO/TAO \
-  --macros=CPPFLAGS+=-Wdeprecated-declarations
+  --macros=CPPFLAGS+=-Wno-deprecated
 
 pm=../ACE_TAO/ACE/build/target/include/makeinclude/platform_macros.GNU
 function prepend_pm {
   printf '%s\n%s' "$@" "$(cat $pm)" > $pm
 }
 
+prepend_pm 'CPPFLAGS+=-Wno-deprecated-declarations'
 major_rev=$(echo $ndk | grep -oE '[0-9]+')
 minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')
 if [ $major_rev -lt 16 ]
