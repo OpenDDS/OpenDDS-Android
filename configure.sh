@@ -5,7 +5,7 @@ cd OpenDDS
 ./configure --no-tests --target=android \
   --ace=${workspace}/ACE_TAO/ACE \
   --tao=${workspace}/ACE_TAO/TAO \
-  --marcos=CXFLAGS+=-Wdeprecated-declarations
+  --macros=CXFLAGS+=-Wdeprecated-declarations
 
 pm=../ACE_TAO/ACE/build/target/include/makeinclude/platform_macros.GNU
 function prepend_pm {
