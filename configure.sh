@@ -1,3 +1,5 @@
+set -e
+
 source setenv.sh
 cd OpenDDS
 ./configure --no-tests --target=android \
@@ -10,6 +12,7 @@ function prepend_pm {
 }
 
 prepend_pm "no_deprecated := 1"
+prepend_pm "CXXFLAGS += -Wdeprecated-declarations"
 
 major_rev=$(echo $ndk | grep -oE '[0-9]+')
 minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')
@@ -18,3 +21,4 @@ then
   prepend_pm "__NDK_MINOR__ := $minor_rev"
   prepend_pm "__NDK_MAJOR__ := $major_rev"
 fi
+
