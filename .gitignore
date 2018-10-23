@@ -8,5 +8,6 @@
 /messenger
 /messenger.tar.gz
 /jdk
-/xerces
+/xerces_source
+/xerces_build
 /settings.sh
