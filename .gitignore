@@ -11,3 +11,5 @@
 /xerces_source
 /xerces_build
 /settings.sh
+/openssl_source
+/openssl_build
