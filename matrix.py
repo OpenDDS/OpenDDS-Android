@@ -23,7 +23,7 @@ travis_template = '''    - name: "{name}"
         - api={api}'''
 
 shell_template = '''echo {rev}-{arch}-{api}
-ndk={rev} arch={arch} api={api} bash single.sh &> {name}.log || (echo FAIL; bash rm_toolchain.sh; exit 0)'''
+ndk={rev} arch={arch} api={api} bash single_round.sh &> {name}.log || (echo FAIL; bash rm_toolchain.sh; exit 0)'''
 
 if kind == "travis":
   comment_format = "# {}"
