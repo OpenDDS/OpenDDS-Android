@@ -15,8 +15,8 @@ function include {
 }
 
 include lib \
-  $(find ACE_TAO/ACE/build/target/lib -name '*.so.*') \
-  $(find OpenDDS/build/target/lib -name '*.so.*') \
+  $(find ACE_TAO/ACE/build/target/lib -name '*.so') \
+  $(find OpenDDS/build/target/lib -name '*.so') \
 
 include bin \
   OpenDDS/build/target/bin/DCPSInfoRepo \
@@ -27,8 +27,8 @@ include bin \
 include test \
   OpenDDS/build/target/DevGuideExamples/DCPS/Messenger/subscriber \
   OpenDDS/build/target/DevGuideExamples/DCPS/Messenger/publisher \
-  OpenDDS/DevGuideExamples/DCPS/Messenger/run_test.pl \
-  OpenDDS/tests/DCPS/Messenger/rtps_disc.ini \
+  run_test.pl \
+  rtps_disc.ini \
 
 cat << EOT > messenger/run_test.sh
 export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$(pwd)/lib
