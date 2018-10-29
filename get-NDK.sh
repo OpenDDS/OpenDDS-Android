@@ -1,5 +1,7 @@
 set -e
 
+source setenv.sh
+
 ndk_dir=android-ndk-$ndk
 ndk_zip=$ndk_dir-linux-x86_64.zip
 
