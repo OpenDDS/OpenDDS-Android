@@ -5,8 +5,6 @@
 /toolchain
 /*-toolchain
 /*.log
-/messenger
-/messenger.tar.gz
 /jdk
 /xerces_source
 /xerces_build
@@ -14,3 +12,5 @@
 /openssl_source
 /openssl_build
 /reports
+/ace_tests*
+/messenger*
