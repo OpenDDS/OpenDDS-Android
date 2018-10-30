@@ -16,6 +16,21 @@ matrix:
         - arch=arm
         - ndk=r18b
         - api=16
+    - name: "r18b-arm-17"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=17
+    - name: "r18b-arm-18"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=18
+    - name: "r18b-arm-19"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=19
     - name: "r18b-arm-21"
       env:
         - arch=arm
@@ -36,11 +51,6 @@ matrix:
         - arch=arm
         - ndk=r18b
         - api=24
-    - name: "r18b-arm-25"
-      env:
-        - arch=arm
-        - ndk=r18b
-        - api=25
     - name: "r18b-arm-26"
       env:
         - arch=arm

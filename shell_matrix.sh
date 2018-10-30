@@ -7,6 +7,12 @@ bash get-OpenDDS.sh
 ndk=r18b bash get-NDK.sh
 echo r18b-arm-16
 ndk=r18b arch=arm api=16 bash single_round.sh &> r18b-arm-16.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
+echo r18b-arm-17
+ndk=r18b arch=arm api=17 bash single_round.sh &> r18b-arm-17.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
+echo r18b-arm-18
+ndk=r18b arch=arm api=18 bash single_round.sh &> r18b-arm-18.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
+echo r18b-arm-19
+ndk=r18b arch=arm api=19 bash single_round.sh &> r18b-arm-19.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 echo r18b-arm-21
 ndk=r18b arch=arm api=21 bash single_round.sh &> r18b-arm-21.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 echo r18b-arm-22
@@ -15,8 +21,6 @@ echo r18b-arm-23
 ndk=r18b arch=arm api=23 bash single_round.sh &> r18b-arm-23.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 echo r18b-arm-24
 ndk=r18b arch=arm api=24 bash single_round.sh &> r18b-arm-24.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
-echo r18b-arm-25
-ndk=r18b arch=arm api=25 bash single_round.sh &> r18b-arm-25.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 echo r18b-arm-26
 ndk=r18b arch=arm api=26 bash single_round.sh &> r18b-arm-26.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 echo r18b-arm-27
