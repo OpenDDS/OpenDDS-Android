@@ -21,11 +21,26 @@ matrix:
         - arch=arm
         - ndk=r18b
         - api=21
+    - name: "r18b-arm-22"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=22
+    - name: "r18b-arm-23"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=23
     - name: "r18b-arm-24"
       env:
         - arch=arm
         - ndk=r18b
         - api=24
+    - name: "r18b-arm-25"
+      env:
+        - arch=arm
+        - ndk=r18b
+        - api=25
     - name: "r18b-arm-26"
       env:
         - arch=arm
@@ -39,6 +54,16 @@ matrix:
     - name: "r18b-arm-28"
       env:
         - arch=arm
+        - ndk=r18b
+        - api=28
+    - name: "r18b-arm64-28"
+      env:
+        - arch=arm64
+        - ndk=r18b
+        - api=28
+    - name: "r18b-x86_64-28"
+      env:
+        - arch=x86_64
         - ndk=r18b
         - api=28
 # r17c ========================================
@@ -88,19 +113,37 @@ matrix:
         - arch=arm
         - ndk=r16b
         - api=24
+# r15c ========================================
+    - name: "r15c-arm-16"
+      env:
+        - arch=arm
+        - ndk=r15c
+        - api=16
+    - name: "r15c-arm-21"
+      env:
+        - arch=arm
+        - ndk=r15c
+        - api=21
+    - name: "r15c-arm-24"
+      env:
+        - arch=arm
+        - ndk=r15c
+        - api=24
+# r14b ========================================
+    - name: "r14b-arm-16"
+      env:
+        - arch=arm
+        - ndk=r14b
+        - api=16
+# r13b ========================================
+    - name: "r13b-arm-16"
+      env:
+        - arch=arm
+        - ndk=r13b
+        - api=16
 # r12b ========================================
     - name: "r12b-arm-16"
       env:
         - arch=arm
         - ndk=r12b
         - api=16
-    - name: "r12b-arm-21"
-      env:
-        - arch=arm
-        - ndk=r12b
-        - api=21
-    - name: "r12b-arm-24"
-      env:
-        - arch=arm
-        - ndk=r12b
-        - api=24
