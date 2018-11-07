@@ -30,6 +30,7 @@ cd OpenDDS
   --tao=${workspace}/ACE_TAO/TAO \
   --macros=CPPFLAGS+=-Wno-deprecated \
   --macros=CPPFLAGS+=-Wno-deprecated-declarations \
+  --no-inline \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}" \
 
