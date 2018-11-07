@@ -6,7 +6,7 @@ set -e
 source setenv.sh
 bash mk_toolchain.sh
 
-common_configure_options="--target=android --mpc=$MPC_ROOT --ace=${workspace}/ACE_TAO/ACE --tao=${workspace}/ACE_TAO/TAO --macros=CPPFLAGS+=-Wno-deprecated --no-debug --macros=CPPFLAGS+=-Wno-deprecated-declarations --macros=ANDROID_ABI:=$abi"
+common_configure_options="--target=android --mpc=$MPC_ROOT --ace=${workspace}/ACE_TAO/ACE --tao=${workspace}/ACE_TAO/TAO --macros=CPPFLAGS+=-Wno-deprecated --no-inline --no-debug --macros=CPPFLAGS+=-Wno-deprecated-declarations --macros=ANDROID_ABI:=$abi"
 security="--security --xerces3=${workspace}/xerces_build --openssl=${workspace}/openssl_build"
 java="--java=${workspace}/jdk"
 slim="--no-built-in-topics --no-content-subscription --no-ownership-profile --no-object-model-profile --no-persistence-profile"
