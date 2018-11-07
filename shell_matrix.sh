@@ -75,6 +75,8 @@ ndk=r13b bash get-NDK.sh
 echo r13b-arm-16
 ndk=r13b arch=arm api=16 bash single_round.sh &> r13b-arm-16.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
 ndk=r13b bash rm_NDK.sh
+ndk=r13b arch=arm api=21 bash single_round.sh &> r13b-arm-21.log || (echo FAIL; bash rm_toolchain.sh; exit 0)
+ndk=r13b bash rm_NDK.sh
 # r12b ========================================
 ndk=r12b bash get-NDK.sh
 echo r12b-arm-16
