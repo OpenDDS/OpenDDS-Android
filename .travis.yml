@@ -1,5 +1,5 @@
 # This part is in travis_template.yml
-install: 
+install:
 - bash get-NDK.sh
 - bash mk_toolchain.sh
 - bash get-ACE-TAO.sh
@@ -151,6 +151,11 @@ matrix:
         - arch=arm
         - ndk=r13b
         - api=16
+    - name: "r13b-arm-21"
+      env:
+        - arch=arm
+        - ndk=r13b
+        - api=21
 # r12b ========================================
     - name: "r12b-arm-16"
       env:
