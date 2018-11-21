@@ -23,7 +23,7 @@ popd
 # ACE Tests
 if $build_ace_tests
 then
-  pushd $ACE_ROOT/tests
+  pushd $ace_target/tests
   $make
   popd
 fi

@@ -36,7 +36,7 @@ popd
 
 if $build_ace_tests
 then
-  pushd $ACE_ROOT/tests
+  pushd $ace_target/tests
   mwc.pl -type gnuace tests.mwc
   popd
 fi
