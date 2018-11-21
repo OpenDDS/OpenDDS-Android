@@ -37,6 +37,8 @@ export MPC_ROOT=$workspace/MPC
 export android_toolchain=${workspace}/$(cat ${workspace}/toolchain)
 export ANDROID_NDK=$workspace/android-ndk-$ndk
 export PATH=$android_toolchain/bin:${PATH}
+export ACE_ROOT=${workspace}/ACE_TAO/ACE
+export TAO_ROOT=${workspace}/ACE_TAO/TAO
 
 # Optional Features
 export use_java=${use_java:-false}

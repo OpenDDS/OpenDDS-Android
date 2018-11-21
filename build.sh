@@ -1,7 +1,7 @@
 set -e
 
 source setenv.sh
-make=make -j 8 --sync-output
+make="make -j 8 --sync-output"
 
 # OpenDDS
 pushd $DDS_ROOT

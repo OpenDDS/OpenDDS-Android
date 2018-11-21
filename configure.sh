@@ -26,8 +26,8 @@ fi
 
 pushd $DDS_ROOT
 ./configure --no-tests --target=android \
-  --ace=${workspace}/ACE_TAO/ACE \
-  --tao=${workspace}/ACE_TAO/TAO \
+  --ace=$ACE_ROOT \
+  --tao=$TAO_ROOT \
   --macros=CPPFLAGS+=-Wno-deprecated \
   --macros=CPPFLAGS+=-Wno-deprecated-declarations \
   --macros=ANDROID_ABI:=$abi \
