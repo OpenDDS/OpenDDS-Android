@@ -38,5 +38,7 @@ export android_toolchain=${workspace}/$(cat ${workspace}/toolchain)
 export ANDROID_NDK=$workspace/android-ndk-$ndk
 export PATH=$android_toolchain/bin:${PATH}
 
+# Optional Features
 export use_java=${use_java:-false}
 export use_security=${use_security:-false}
+export build_ace_tests=${build_ace_tests:-true}
