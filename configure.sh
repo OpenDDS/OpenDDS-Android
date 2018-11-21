@@ -24,7 +24,7 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
-pushd $DDS_ROOT
+pushd $workspace/OpenDDS
 ./configure --no-tests --target=android \
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \

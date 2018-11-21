@@ -4,7 +4,7 @@ source setenv.sh
 make="make -j 8 --sync-output"
 
 # OpenDDS
-pushd $DDS_ROOT
+pushd $workspace/OpenDDS
 $make
 popd
 
