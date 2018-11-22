@@ -36,7 +36,12 @@ export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
 export MPC_ROOT=$workspace/MPC
 export android_toolchain=${workspace}/$(cat ${workspace}/toolchain)
 export ANDROID_NDK=$workspace/android-ndk-$ndk
-export PATH=$android_toolchain/bin:${PATH}
+export ACE_ROOT=${workspace}/ACE_TAO/ACE
+export ace_target=$ACE_ROOT/build/target
+export TAO_ROOT=${workspace}/ACE_TAO/TAO
+export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 
+# Optional Features
 export use_java=${use_java:-false}
 export use_security=${use_security:-false}
+export build_ace_tests=${build_ace_tests:-true}

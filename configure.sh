@@ -24,13 +24,20 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
-cd OpenDDS
+pushd $workspace/OpenDDS
 ./configure --no-tests --target=android \
-  --ace=${workspace}/ACE_TAO/ACE \
-  --tao=${workspace}/ACE_TAO/TAO \
+  --ace=$ACE_ROOT \
+  --tao=$TAO_ROOT \
   --macros=CPPFLAGS+=-Wno-deprecated \
   --macros=CPPFLAGS+=-Wno-deprecated-declarations \
   --no-inline \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}" \
+popd
 
+if $build_ace_tests
+then
+  pushd $ace_target/tests
+  mwc.pl -type gnuace tests.mwc
+  popd
+fi
