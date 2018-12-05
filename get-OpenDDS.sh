@@ -2,7 +2,5 @@ set -e
 
 if [ ! -d OpenDDS ]
 then
-  git clone https://github.com/iguessthislldo/OpenDDS
-  cd OpenDDS
-  git checkout igtd/android
+  git clone --depth 1 https://github.com/objectcomputing/OpenDDS
 fi
