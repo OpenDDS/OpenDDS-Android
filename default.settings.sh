@@ -10,3 +10,5 @@ export api=27
 #export use_security=true
 # $ACE_ROOT/tests, defaults to true
 #export build_ace_tests=false
+# Prebuilt Host Tools Root, defaults to blank (Build Tools)
+#export host_tools=

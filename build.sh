@@ -23,18 +23,18 @@ then
 fi
 
 # OpenDDS
-pushd $workspace/OpenDDS
+pushd $workspace/OpenDDS > /dev/null
 $make
-popd
+popd > /dev/null
 
 # ACE Tests
 if $build_ace_tests
 then
-  pushd $ace_target/tests
+  pushd $ace_target/tests > /dev/null
   old_ace_root="$ACE_ROOT"
   export ACE_ROOT="$ace_target"
   $make
   export ACE_ROOT="$old_ace_root"
   unset old_ace_root
-  popd
+  popd > /dev/null
 fi

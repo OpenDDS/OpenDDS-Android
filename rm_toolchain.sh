@@ -1,7 +1,5 @@
 set -e
 
-if [ -f toolchain ]
-then
-  rm -fr $(cat toolchain)
-  rm toolchain
-fi
+source setenv.sh
+
+rm -fr $toolchain_name

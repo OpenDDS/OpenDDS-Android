@@ -13,6 +13,11 @@ then
   extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build --security")
 fi
 
+if [ ! -z "${host_tools}" ]
+then
+  extra_configure_flags+=("--host-tools=$host_tools")
+fi
+
 major_rev=$(echo $ndk | grep -oE '[0-9]+')
 minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')
 if [ $major_rev -lt 16 ]
@@ -24,19 +29,19 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
-pushd $workspace/OpenDDS
+pushd $workspace/OpenDDS > /dev/null
 ./configure --no-tests --target=android \
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \
   --macros=CPPFLAGS+=-Wno-deprecated \
   --macros=CPPFLAGS+=-Wno-deprecated-declarations \
   --macros=ANDROID_ABI:=$abi \
-  "${extra_configure_flags[@]}" \
-popd
+  "${extra_configure_flags[@]}"
+popd > /dev/null
 
 if $build_ace_tests
 then
-  pushd $ace_target/tests
+  pushd $ace_target/tests > /dev/null
   mwc.pl -type gnuace tests.mwc
-  popd
+  popd > /dev/null
 fi

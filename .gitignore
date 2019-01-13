@@ -2,7 +2,6 @@
 /OpenDDS
 /MPC
 /android-ndk-*
-/toolchain
 /*-toolchain
 /*.log
 /jdk
