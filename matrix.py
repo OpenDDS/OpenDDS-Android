@@ -4,7 +4,7 @@ matrix = [
   ("r16b", {"arm": ["16",                        "21",             "24",                        ],                                      }),
   ("r15c", {"arm": ["16",                        "21",             "24",                        ],                                      }),
   ("r14b", {"arm": ["16",                                                                       ],                                      }),
-  ("r13b", {"arm": ["16",                                                                       ],                                      }),
+  ("r13b", {"arm": ["16",                        "21",                                          ],                                      }),
   ("r12b", {"arm": ["16",                                                                       ],                                      }),
 ]
 
@@ -51,5 +51,5 @@ for rev, abis in matrix:
       print(template.format(name=name, arch=arch, rev=rev, api=api))
   if kind == "shell":
     print('ndk={} bash rm_NDK.sh'.format(rev))
-    
+
 

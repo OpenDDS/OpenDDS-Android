@@ -151,6 +151,11 @@ matrix:
         - arch=arm
         - ndk=r13b
         - api=16
+    - name: "r13b-arm-21"
+      env:
+        - arch=arm
+        - ndk=r13b
+        - api=21
 # r12b ========================================
     - name: "r12b-arm-16"
       env:
