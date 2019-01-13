@@ -52,4 +52,3 @@ for rev, abis in matrix:
   if kind == "shell":
     print('ndk={} bash rm_NDK.sh'.format(rev))
 
-
