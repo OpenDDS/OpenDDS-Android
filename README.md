@@ -2,7 +2,7 @@
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
 against various combinations of Android NDK, API versions, and
-CPUs, either on Travis-CI or in a regular Unix enviroment.
+CPUs, either on Travis-CI or in a regular Unix environment.
 
 # Matrix
 
@@ -47,3 +47,17 @@ bash get-NDK.sh
 
 Alternatively you can reuse ones already downloaded/built by using links and
 the `host_tools` option in `settings.sh`.
+
+To build the single case that's now set up, run:
+
+```sh
+bash single_round.sh
+```
+
+## All the Cases
+
+To run all the cases in the matrix, just run:
+
+```sh
+bash shell_matrix.sh
+```
