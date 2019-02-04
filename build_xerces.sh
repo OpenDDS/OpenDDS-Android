@@ -11,6 +11,7 @@ cd xerces_source
 ./configure \
   --prefix=$dest \
   --host=$target \
+  --enable-transcoder-gnuiconv \
   CC=${target}-${CC:-clang} \
   CXX=${target}-${CC:-clang++} \
   LD=${target}-${LD:-ld} \
