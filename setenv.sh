@@ -44,6 +44,6 @@ export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 
 # Optional Features
 export use_java=${use_java:-false}
-export use_security=${use_security:-false}
+export use_security=${use_security:-true}
 export build_ace_tests=${build_ace_tests:-true}
 export host_tools=${host_tools:-}
