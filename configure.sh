@@ -10,6 +10,8 @@ fi
 
 if $use_security
 then
+  bash build_xerces.sh
+  bash build_openssl.sh
   extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build --security")
 fi
 

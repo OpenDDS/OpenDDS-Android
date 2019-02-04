@@ -4,6 +4,7 @@ mkdir -p xerces_build
 dest=$(pwd)/xerces_build
 
 source setenv.sh
+source make.sh
 
 cd xerces_source
 
@@ -16,5 +17,5 @@ cd xerces_source
   CFLAGS="-fPIE -fPIC" \
   LDFLAGS="-pie" \
 
-make -j 8
+$make
 make install
