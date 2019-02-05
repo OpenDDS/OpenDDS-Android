@@ -5,7 +5,10 @@ source make.sh
 
 # OpenDDS
 pushd $workspace/OpenDDS > /dev/null
-$make
+$make \
+	DDS_Messenger_Idl \
+	DDS_Messenger_Publisher \
+	DDS_Messenger_Subscriber
 popd > /dev/null
 
 # ACE Tests

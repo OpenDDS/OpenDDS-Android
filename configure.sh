@@ -12,7 +12,7 @@ if $use_security
 then
   bash build_xerces.sh
   bash build_openssl.sh
-  extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build --security")
+  extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build" --security)
 fi
 
 if [ ! -z "${host_tools}" ]
@@ -32,7 +32,7 @@ then
 fi
 
 pushd $workspace/OpenDDS > /dev/null
-./configure --no-tests --target=android \
+./configure --target=android \
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \
   --macros=CPPFLAGS+=-Wno-deprecated \

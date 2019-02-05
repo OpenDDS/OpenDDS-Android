@@ -38,7 +38,15 @@ export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}
 export ANDROID_NDK=$workspace/android-ndk-$ndk
 export ACE_ROOT=${workspace}/ACE_TAO/ACE
-export ace_target=$ACE_ROOT/build/target
+if [ -z "$host_tools" ]
+then
+  ace_target="$ACE_ROOT/build/target"
+else
+  export HOST_DDS="$host_tools"
+  export HOST_ACE="$host_tools/ACE_TAO/ACE"
+  ace_target="$ACE_ROOT"
+fi
+export ace_target
 export TAO_ROOT=${workspace}/ACE_TAO/TAO
 export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 
