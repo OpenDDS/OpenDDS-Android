@@ -8,15 +8,7 @@ source make.sh
 
 cd xerces_source
 
-./configure \
-  --prefix=$dest \
-  --host=$target \
-  --enable-transcoder-gnuiconv \
-  CC=${target}-${CC:-clang} \
-  CXX=${target}-${CC:-clang++} \
-  LD=${target}-${LD:-ld} \
-  CFLAGS="-fPIE -fPIC" \
-  LDFLAGS="-pie" \
+cmake "-DCMAKE_INSTALL_PREFIX=$dest" "-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake" "-DANDROID_ABI=$abi" "-DANDROID_PLATFORM=android-$api" "-DANDROID_CPP_FEATURES=rtti exceptions"
 
 $make
 make install
