@@ -109,7 +109,7 @@ for kind in Kind:
           for arch, apis in abis.items():
             if api in apis:
               found_archs.append(arch)
-          print('|', ','.join(found_archs) if found_archs else '-', end= ' ', file=file)
+          print('|', ', '.join(found_archs) if found_archs else '-', end= ' ', file=file)
         print('|', file=file)
     else:
       raise NotImplementedError
