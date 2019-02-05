@@ -1,12 +1,12 @@
 language: cpp
 dist: xenial
 install:
-- bash get-NDK.sh
+- bash get_ndk.sh
 - bash mk_toolchain.sh
-- bash get-ACE-TAO.sh
-- bash get-OpenDDS.sh
-- bash get-Xerces.sh
-- bash get-OpenSSL.sh
+- bash get_ace_tao.sh
+- bash get_opendds.sh
+- bash get_xerces.sh
+- bash get_openssl.sh
 script:
 - bash configure.sh
 - bash build.sh

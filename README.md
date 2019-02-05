@@ -25,6 +25,7 @@ CPUs, either on Travis-CI or in a regular Unix environment.
 To change the matrix, edit the `matrix` structure in `matrix.py` and run the
 script with Python 3. It will update `shell_matrix.sh`, `.travis.yml` and this file.
 
+<!-- TODO: FIX
 # Running the Matrix
 
 ## One Case At a Time
@@ -61,3 +62,4 @@ To run all the cases in the matrix, just run:
 ```sh
 bash shell_matrix.sh
 ```
+-->

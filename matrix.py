@@ -79,13 +79,13 @@ for kind in Kind:
       for rev, abis in matrix:
         comment(file, kind, rev, '========================================')
         if kind == Kind.SHELL:
-          print('ndk={} bash get-NDK.sh'.format(rev), file=file)
+          print('ndk={} bash get_ndk.sh'.format(rev), file=file)
         for arch, apis in abis.items():
           for api in apis:
             name = '{}-{}-{}'.format(rev, arch, api)
             print(case_template.format(name=name, arch=arch, rev=rev, api=api), file=file)
         if kind == Kind.SHELL:
-          print('ndk={} bash rm_NDK.sh'.format(rev), file=file)
+          print('ndk={} bash rm_ndk.sh'.format(rev), file=file)
     elif kind == Kind.MARKDOWN:
       all_apis = set()
       for rev, abis in matrix:
