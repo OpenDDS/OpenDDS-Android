@@ -23,7 +23,7 @@ function get {
 basename="libiconv-1.15"
 tarname="libiconv-1.15.tar.gz"
 url="https://ftp.gnu.org/pub/gnu/libiconv/$tarname"
-ourname="libiconv_source"
+ourname="iconv_source"
 get
 
 # Get Xerces

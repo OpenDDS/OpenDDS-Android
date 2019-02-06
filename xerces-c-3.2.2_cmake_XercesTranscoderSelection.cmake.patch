@@ -1,14 +1,21 @@
 --- xerces_source/cmake/XercesTranscoderSelection.cmake	2018-02-14 19:22:34.000000000 -0600
-+++ XercesTranscoderSelection.cmake	2019-02-05 18:38:11.221792974 -0600
-@@ -67,6 +67,11 @@
-   endif()
- endif()
++++ XercesTranscoderSelection.cmake	2019-02-05 23:02:56.731912583 -0600
+@@ -56,16 +56,8 @@
+ check_function_exists(iconv_close HAVE_ICONV_CLOSE)
+ check_function_exists(iconv HAVE_ICONV)
  
-+if($ENV{GNU_ICONV_ROOT})
-+  set(gnuiconv_available 1)
-+  list(APPEND transcoders gnuiconv)
-+endif()
-+
+-set(gnuiconv_available 0)
+-if(HAVE_ICONV_H AND HAVE_WCHAR_H AND HAVE_STRING_H AND HAVE_STDLIB_H AND
+-    HAVE_STDIO_H AND HAVE_CTYPE_H AND HAVE_LOCALE_H AND HAVE_ERRNO_H)
+-  if (HAVE_ENDIAN_H OR HAVE_MACHINE_ENDIAN_H OR HAVE_ARPA_NAMESER_COMPAT_H)
+-    if(HAVE_ICONV_OPEN AND HAVE_ICONV_CLOSE AND HAVE_ICONV)
+-      set(gnuiconv_available 1)
+-      list(APPEND transcoders gnuiconv)
+-    endif()
+-  endif()
+-endif()
++set(gnuiconv_available 1)
++list(APPEND transcoders gnuiconv)
+ 
  # Windows
  
- if(WIN32)

@@ -7,8 +7,8 @@
 /jdk
 /xerces_source
 /xerces_build
-/libiconv_source
-/libiconv_build
+/iconv_source
+/iconv_build
 /settings.sh
 /openssl_source
 /openssl_build

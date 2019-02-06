@@ -1,15 +1,13 @@
---- xerces_source/src/CMakeLists.txt	2018-05-01 18:58:20.000000000 -0500
-+++ CMakeLists.txt	2019-02-05 18:39:45.625966643 -0600
-@@ -1272,6 +1272,12 @@
+--- ../xerces-c-3.2.2/src/CMakeLists.txt	2018-05-01 18:58:20.000000000 -0500
++++ xerces_source/src/CMakeLists.txt	2019-02-05 23:38:57.832510132 -0600
+@@ -1271,6 +1271,10 @@
+ add_library(xerces-c
    ${libxerces_c_SOURCES}
    ${libxerces_c_RESOURCES})
- target_link_libraries(xerces-c ${libxerces_c_DEPS})
-+if($ENV{GNU_ICONV_ROOT})
-+  target_include_directories(xerces-c BEFORE "$ENV{GNU_ICONV_ROOT}/include")
-+  target_link_directories(xerces-c BEFORE "$ENV{GNU_ICONV_ROOT}/lib")
-+  target_link_libraries(xerces-c "iconv")
-+endif()
 +
++target_include_directories(xerces-c BEFORE PUBLIC "$ENV{GNU_ICONV_ROOT}/include")
++list(APPEND libxerces_c_DEPS "$ENV{GNU_ICONV_ROOT}/lib/libiconv.so")
++
+ target_link_libraries(xerces-c ${libxerces_c_DEPS})
  if(XERCES_USE_NETACCESSOR_CURL)
    target_include_directories(xerces-c SYSTEM PRIVATE ${CURL_INCLUDE_DIRS})
- endif()
