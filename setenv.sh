@@ -52,6 +52,7 @@ export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 export GNU_ICONV_ROOT=${workspace}/iconv_build
 export XERCESCROOT=${workspace}/xerces_build
 export SSL_ROOT=${workspace}/openssl_build
+export TRAVIS=${TRAVIS:-false}
 
 # Optional Features
 export use_java=${use_java:-false}
