@@ -39,5 +39,6 @@ then
   patch "$ourname/src/CMakeLists.txt" "${basename}_src_CMakeLists.txt.patch"
   patch "$ourname/cmake/XercesTranscoderSelection.cmake" "${basename}_cmake_XercesTranscoderSelection.cmake.patch"
   patch "$ourname/src/xercesc/util/Transcoders/IconvGNU/IconvGNUTransService.hpp" "${basename}_IconvGNUTransService.hpp.patch"
+  patch "$ourname/CMakeLists.txt" "${basename}_CMakeLists.txt.patch"
   md5sum -c "${basename}.md5"
 fi
