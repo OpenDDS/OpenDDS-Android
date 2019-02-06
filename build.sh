@@ -5,6 +5,13 @@ source make.sh
 
 # OpenDDS
 pushd $workspace/OpenDDS > /dev/null
+if [ -z "$host_tools" ]
+then
+  pushd build/host > /dev/null
+  $make TAO_IDL_EXE opendds_idl
+  popd > /dev/null
+  cd build/target
+fi
 $make \
 	DDS_Messenger_Idl \
 	DDS_Messenger_Publisher \
