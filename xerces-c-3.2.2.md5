@@ -1,2 +1,3 @@
-c2bb8eac5e1761f00157c19e9539ca4f  xerces_source/src/CMakeLists.txt
+92d3da27e776ac20fce8016479db074a  xerces_source/src/CMakeLists.txt
 eddf9f4fef75a3afbca19ae95f5221aa  xerces_source/cmake/XercesTranscoderSelection.cmake
+2da5272c28fc433dcac95fc624289368  xerces_source/src/xercesc/util/Transcoders/IconvGNU/IconvGNUTransService.hpp

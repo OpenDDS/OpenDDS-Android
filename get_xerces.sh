@@ -38,5 +38,6 @@ if ! md5sum -c "${basename}.md5" --status
 then
   patch "$ourname/src/CMakeLists.txt" "${basename}_src_CMakeLists.txt.patch"
   patch "$ourname/cmake/XercesTranscoderSelection.cmake" "${basename}_cmake_XercesTranscoderSelection.cmake.patch"
+  patch "$ourname/src/xercesc/util/Transcoders/IconvGNU/IconvGNUTransService.hpp" "${basename}_IconvGNUTransService.hpp.patch"
   md5sum -c "${basename}.md5"
 fi
