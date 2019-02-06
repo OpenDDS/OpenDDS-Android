@@ -10,8 +10,8 @@ fi
 
 if $use_security
 then
-  bash build_xerces.sh
-  bash build_openssl.sh
+  bash build_xerces.sh &> /dev/null || echo "build_xerces.sh failed"
+  bash build_openssl.sh &> /dev/null || echo "build_openssl.sh failed"
   extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build" --security)
 fi
 
