@@ -14,6 +14,6 @@ export PATH=$path:$PATH
 
 echo $PATH
 cd openssl_source
-./Configure android-$arch -D__ANDROID_API__=$api --prefix=$dest
+./Configure no-tests android-$arch -D__ANDROID_API__=$api --prefix=$dest
 make -j 8
 make install
