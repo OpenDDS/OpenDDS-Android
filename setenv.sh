@@ -49,6 +49,9 @@ fi
 export ace_target
 export TAO_ROOT=${workspace}/ACE_TAO/TAO
 export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
+export GNU_ICONV_ROOT=${workspace}/iconv_build
+export XERCESCROOT=${workspace}/xerces_build
+export SSL_ROOT=${workspace}/openssl_build
 
 # Optional Features
 export use_java=${use_java:-false}

@@ -1,0 +1,14 @@
+--- xerces_source/cmake/XercesTranscoderSelection.cmake	2018-02-14 19:22:34.000000000 -0600
++++ XercesTranscoderSelection.cmake	2019-02-05 18:38:11.221792974 -0600
+@@ -67,6 +67,11 @@
+   endif()
+ endif()
+ 
++if($ENV{GNU_ICONV_ROOT})
++  set(gnuiconv_available 1)
++  list(APPEND transcoders gnuiconv)
++endif()
++
+ # Windows
+ 
+ if(WIN32)
