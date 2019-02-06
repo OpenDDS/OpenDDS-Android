@@ -19,7 +19,7 @@ popd
 
 pushd xerces_source
 cmake "-DCMAKE_INSTALL_PREFIX=$XERCESCROOT" "-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake" "-DANDROID_ABI=$abi" "-DANDROID_PLATFORM=android-$api" "-DANDROID_CPP_FEATURES=rtti exceptions"
-$make VERBOSE=1
+$make
 mkdir -p $XERCESCROOT
 make install
 popd
