@@ -1,5 +1,6 @@
 set -e
 source setenv.sh
+source make.sh
 
 dest=$(pwd)/openssl_build
 mkdir -p $dest
@@ -15,5 +16,5 @@ export PATH=$path:$PATH
 echo $PATH
 cd openssl_source
 ./Configure no-tests android-$arch -D__ANDROID_API__=$api --prefix=$dest
-make -j 8
-make install
+$make
+$make install_sw # No documentation, see https://github.com/openssl/openssl/issues/8170
