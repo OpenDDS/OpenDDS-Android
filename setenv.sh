@@ -1,12 +1,14 @@
+export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
+
 # Getting Configuration
 if [ -z ${ndk+x} ]
 then
-  if ! [ -f settings.sh ]
+  if ! [ -f ${workspace}/settings.sh ]
   then
     echo "Warning: ndk is not set and there are no settings.sh, copying default.settings.sh"
-    cp default.settings.sh settings.sh
+    cp ${workspace}/default.settings.sh ${workspace}/settings.sh
   fi
-  source settings.sh
+  source ${workspace}/settings.sh
 fi
 
 # Convert arch to target and abi
@@ -32,7 +34,7 @@ else
 fi
 
 # Set Rest of Enviroment
-export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
+export DDS_ROOT=$workspace/OpenDDS
 export MPC_ROOT=$workspace/MPC
 export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}

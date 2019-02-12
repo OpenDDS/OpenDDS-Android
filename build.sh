@@ -11,11 +11,13 @@ then
   $make TAO_IDL_EXE opendds_idl
   popd > /dev/null
   cd build/target
+  $make \
+    DDS_Messenger_Idl \
+    DDS_Messenger_Publisher \
+    DDS_Messenger_Subscriber
+else
+  $make
 fi
-$make \
-	DDS_Messenger_Idl \
-	DDS_Messenger_Publisher \
-	DDS_Messenger_Subscriber
 popd > /dev/null
 
 # ACE Tests

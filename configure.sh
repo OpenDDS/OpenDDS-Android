@@ -23,7 +23,7 @@ fi
 
 if [ ! -z "${host_tools}" ]
 then
-  extra_configure_flags+=("--host-tools=$host_tools")
+  extra_configure_flags+=("--host-tools=$host_tools" "--no-tests")
 fi
 
 major_rev=$(echo $ndk | grep -oE '[0-9]+')
