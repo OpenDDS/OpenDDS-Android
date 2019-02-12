@@ -28,6 +28,9 @@ elif [ "$arch" = "x86" ]
 then
   export target=i686-linux-android
   export abi="x86"
+elif [ "$arch" = "NONE" ] # Bypass
+then
+  true
 else
   echo "Invalid Arch: $arch, must be arm, arm64, x86, or x86_64"
   exit 1
@@ -35,7 +38,7 @@ fi
 
 # Set Rest of Enviroment
 export DDS_ROOT=$workspace/OpenDDS
-export MPC_ROOT=$workspace/MPC
+export MPC_ROOT=${MPC_ROOT-$workspace/MPC}
 export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}
 export ANDROID_NDK=$workspace/android-ndk-$ndk
