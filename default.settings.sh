@@ -1,7 +1,7 @@
 # Android Target, Required
-export ndk=r18b
+export ndk=r19
 export arch=arm64
-export api=27
+export api=28
 
 # Optional Features
 # Java, defaults to false
