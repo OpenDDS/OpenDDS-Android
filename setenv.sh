@@ -37,6 +37,11 @@ else
 fi
 
 # Set Rest of Enviroment
+export TRAVIS=${TRAVIS:-false}
+if $TRAVIS
+then
+  export host_tools=$workspace/host_tools/ubuntu_18.04_x86_64
+fi
 export DDS_ROOT=$workspace/OpenDDS
 export MPC_ROOT=${MPC_ROOT-$workspace/MPC}
 export toolchain_name=$ndk-$arch-android-$api-toolchain
@@ -57,10 +62,9 @@ export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 export GNU_ICONV_ROOT=${workspace}/iconv_build
 export XERCESCROOT=${workspace}/xerces_build
 export SSL_ROOT=${workspace}/openssl_build
-export TRAVIS=${TRAVIS:-false}
 
 # Optional Features
 export use_java=${use_java:-false}
-export use_security=${use_security:-true}
+export use_security=${use_security:-false}
 export build_ace_tests=${build_ace_tests:-true}
 export host_tools=${host_tools:-}

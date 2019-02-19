@@ -5,8 +5,8 @@ install:
 - bash mk_toolchain.sh
 - bash get_ace_tao.sh
 - bash get_opendds.sh
-- bash get_xerces.sh
-- bash get_openssl.sh
+# - bash get_xerces.sh
+# - bash get_openssl.sh
 script:
 - bash configure.sh
 - bash build.sh

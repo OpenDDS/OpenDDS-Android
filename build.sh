@@ -8,10 +8,10 @@ pushd $workspace/OpenDDS > /dev/null
 if [ -z "$host_tools" ]
 then
   pushd build/host > /dev/null
-  $make TAO_IDL_EXE opendds_idl
+  $make TAO_IDL_EXE opendds_idl idl2jni_codegen
   popd > /dev/null
   cd build/target
-  $make \
+  $make messenger_idl_test \
     DDS_Messenger_Idl \
     DDS_Messenger_Publisher \
     DDS_Messenger_Subscriber
