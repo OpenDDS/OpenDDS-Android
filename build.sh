@@ -7,14 +7,18 @@ source make.sh
 pushd $workspace/OpenDDS > /dev/null
 if [ -z "$host_tools" ]
 then
+  host_targets="TAO_IDL_EXE opendds_idl"
+  target_targets="DDS_Messenger_Idl DDS_Messenger_Publisher DDS_Messenger_Subscriber"
+  if $use_java
+  then
+    host_targets="$host_targets idl2jni_codegen"
+    target_targets="$target_targets messenger_idl_test"
+  fi
   pushd build/host > /dev/null
-  $make TAO_IDL_EXE opendds_idl idl2jni_codegen
+  $make $host_targets
   popd > /dev/null
   cd build/target
-  $make messenger_idl_test \
-    DDS_Messenger_Idl \
-    DDS_Messenger_Publisher \
-    DDS_Messenger_Subscriber
+  $make $target_targets
 else
   $make
 fi
