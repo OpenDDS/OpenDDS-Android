@@ -16,7 +16,7 @@ then
     ln -s ../../$ndk_dir
     exit 0
   fi
-  wget https://dl.google.com/android/repository/$ndk_zip
+  wget --no-verbose https://dl.google.com/android/repository/$ndk_zip
   unzip -qq $ndk_zip
   rm -f $ndk_zip
 fi
