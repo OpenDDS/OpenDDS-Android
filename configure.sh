@@ -41,6 +41,7 @@ pushd $workspace/OpenDDS > /dev/null
 ./configure --target=android \
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \
+  --tests \
   --macros=CPPFLAGS+=-Wno-deprecated \
   --macros=CPPFLAGS+=-Wno-deprecated-declarations \
   --no-inline \
