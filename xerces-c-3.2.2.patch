@@ -1,0 +1,62 @@
+Assuming the current directory has xerces-c-3.2.2 source directory and this
+file which is called xerces-c-3.2.2.patch, run this to apply this patch:
+
+  patch -s -p0 -d xerces-c-3.2.2 < xerces-c-3.2.2.patch
+
+--- CMakeLists.txt	2018-02-19 18:17:32.000000000 -0600
++++ CMakeLists.txt	2019-02-06 00:46:38.003699913 -0600
+@@ -177,8 +177,6 @@
+ # Process subdirectories
+ add_subdirectory(doc)
+ add_subdirectory(src)
+-add_subdirectory(tests)
+-add_subdirectory(samples)
+ 
+ # Display configuration summary
+ message(STATUS "")
+--- cmake/XercesTranscoderSelection.cmake	2018-02-14 19:22:34.000000000 -0600
++++ cmake/XercesTranscoderSelection.cmake	2019-02-05 23:02:56.731912583 -0600
+@@ -56,16 +56,8 @@
+ check_function_exists(iconv_close HAVE_ICONV_CLOSE)
+ check_function_exists(iconv HAVE_ICONV)
+ 
+-set(gnuiconv_available 0)
+-if(HAVE_ICONV_H AND HAVE_WCHAR_H AND HAVE_STRING_H AND HAVE_STDLIB_H AND
+-    HAVE_STDIO_H AND HAVE_CTYPE_H AND HAVE_LOCALE_H AND HAVE_ERRNO_H)
+-  if (HAVE_ENDIAN_H OR HAVE_MACHINE_ENDIAN_H OR HAVE_ARPA_NAMESER_COMPAT_H)
+-    if(HAVE_ICONV_OPEN AND HAVE_ICONV_CLOSE AND HAVE_ICONV)
+-      set(gnuiconv_available 1)
+-      list(APPEND transcoders gnuiconv)
+-    endif()
+-  endif()
+-endif()
++set(gnuiconv_available 1)
++list(APPEND transcoders gnuiconv)
+ 
+ # Windows
+ 
+--- src/xercesc/util/Transcoders/IconvGNU/IconvGNUTransService.hpp	2018-02-14 19:22:38.000000000 -0600
++++ src/xercesc/util/Transcoders/IconvGNU/IconvGNUTransService.hpp	2019-02-06 00:09:04.707945899 -0600
+@@ -25,7 +25,7 @@
+ #include <xercesc/util/TransService.hpp>
+ #include <xercesc/util/Mutexes.hpp>
+ 
+-#include <iconv.h>
++#include ICONV_INCLUDE
+ 
+ XERCES_CPP_NAMESPACE_BEGIN
+ 
+--- src/CMakeLists.txt	2018-05-01 18:58:20.000000000 -0500
++++ src/CMakeLists.txt	2019-02-06 00:11:41.607086142 -0600
+@@ -1271,6 +1271,11 @@
+ add_library(xerces-c
+   ${libxerces_c_SOURCES}
+   ${libxerces_c_RESOURCES})
++
++target_include_directories(xerces-c BEFORE PUBLIC "$ENV{GNU_ICONV_ROOT}/include")
++list(APPEND libxerces_c_DEPS "$ENV{GNU_ICONV_ROOT}/lib/libiconv.so")
++add_definitions("-DICONV_INCLUDE=\"$ENV{GNU_ICONV_ROOT}/include/iconv.h\"")
++
+ target_link_libraries(xerces-c ${libxerces_c_DEPS})
+ if(XERCES_USE_NETACCESSOR_CURL)
+   target_include_directories(xerces-c SYSTEM PRIVATE ${CURL_INCLUDE_DIRS})
