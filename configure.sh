@@ -5,7 +5,12 @@ extra_configure_flags=()
 
 if $use_java
 then
-  extra_configure_flags+=("--java=${workspace}/jdk")
+  if [ -z "${jdk}" ]
+  then
+    extra_configure_flags+=("--java")
+  else
+    extra_configure_flags+=("--java=${jdk}")
+  fi
 fi
 
 if $use_security
