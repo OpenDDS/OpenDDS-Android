@@ -1,49 +1,145 @@
-matrix = [
-  ("r21",  {"arm": ["16", "17", "18", "19",      "21", "22", "23", "24",       "26", "27", "28", "29"], "arm64": ["29",], "x86_64": ["29",], }),
-  ("r20b", {"arm": ["16",                                                                  "28", "29"],                                      }),
-  ("r19c", {"arm": ["16",                                                                  "28",     ],                                      }),
-  ("r18b", {"arm": ["16",                                                                  "28",     ],                                      }),
-  ("r17c", {"arm": ["16",                                          "24",                   "28",     ],                                      }),
-  ("r15c", {"arm": ["16",                        "21",             "24",                             ],                                      }),
-  ("r14b", {"arm": ["16",                        "21",                                               ],                                      }),
-  ("r12b", {"arm": ["16",                                                                            ],                                      }),
-]
-
 import sys
-from enum import Enum, auto
+from enum import Enum
+
+debug = False
+default_arch = "arm64"
+
+class Build:
+  def __init__(self, ndk, api, arch=default_arch, flags={}):
+    self.ndk = ndk
+    self.api = api
+    self.arch = arch
+    self.flags = dict(
+      use_security=False,
+      use_java=False,
+    )
+    self.flags.update(flags)
+
+  def __str__(self):
+    result = '{}-{}-{}'.format(self.ndk, self.arch, self.api)
+    for k, v in self.flags.items():
+      if v:
+        result += '-' + k
+    return result
+
+  def __repr__(self):
+    return '<Build {}>'.format(str(self))
+
+  def case_format(self, format_str, flag_convert):
+    format_flags = {}
+    for k, v in self.flags.items():
+      format_flags[k] = flag_convert(v)
+    return format_str.format(
+      name=str(self), arch=self.arch, rev=self.ndk, api=self.api,
+      **format_flags)
+
+class Matrix:
+  def __init__(self):
+    self.ndks = []
+    self.builds = []
+    self.builds_by_ndk = {}
+    self.skip_apis = [20, 25]
+    self.apis = []
+
+  def archs_for_build(self, ndk, api):
+    archs = set()
+    for build in matrix.builds_by_ndk[ndk]:
+      if build.api == api:
+        archs.add(build.arch)
+    return archs
+
+  def add_ndk(self, name, *apis, api_range=None, default_flags={}, flags_on_edges={}):
+    self.ndks.append(name)
+    builds = []
+    api_list=list(apis)
+    if api_range:
+      for api in range(api_range[0], api_range[1] + 1):
+        if api not in apis and api not in self.skip_apis:
+          api_list.append(api)
+    api_list.sort(reverse=True)
+    self.apis = list(set(self.apis) | set(api_list))
+    self.apis.sort()
+    last = len(api_list) - 1
+    for i, api in enumerate(api_list):
+      flags = default_flags.copy()
+      if i == 0 or i == last:
+        flags.update(flags_on_edges)
+      builds.append(Build(name, api, flags=flags))
+    self.builds.extend(builds)
+    self.builds_by_ndk[name] = builds
+
+matrix = Matrix()
+
+# Matrix Definition ##########################################################
+matrix.add_ndk("r21", api_range=(16, 29),
+  flags_on_edges=dict(
+    use_security=True,
+    use_java=True,
+  ),
+)
+matrix.add_ndk("r20b", 16, 29)
+matrix.add_ndk("r19c", 16, 28)
+matrix.add_ndk("r18b", 16, 28)
+matrix.add_ndk("r17c", 16, 24, 28)
+matrix.add_ndk("r15c", 16, 21, 24)
+matrix.add_ndk("r14b", 16, 21)
+matrix.add_ndk("r12b", 16)
+
+if debug:
+  for ndk in matrix.ndks:
+    print(ndk)
+    for build in matrix.builds_by_ndk[ndk]:
+      print(' ', str(build))
+
+def travis(matrix, file):
+  for ndk in matrix.ndks:
+    comment(file, Kind.TRAVIS, ndk, '========================================')
+    for build in matrix.builds_by_ndk[ndk]:
+      print(build.case_format('''\
+    - name: "{name}"
+      env:
+        - arch={arch}
+        - ndk={rev}
+        - api={api}
+        - use_security={use_security}
+        - use_java={use_java}''',
+        lambda b: "true" if b else "false"), file=file)
+
+def markdown(matrix, file):
+  def print_row(cells):
+    print('|', ' | '.join(cells), '|', file=file)
+  # Print Table Header
+  print_row(['NDK'] + list(map(str, matrix.apis)))
+  print_row(['---'] * (len(matrix.apis) + 1))
+  # Print Rows
+  for ndk in matrix.ndks:
+    cells = [ndk]
+    for api in matrix.apis:
+      archs = matrix.archs_for_build(ndk, api)
+      cells.append(','.join(archs) if archs else '-')
+    print_row(cells)
 
 class Kind(Enum):
-  SHELL = auto()
-  TRAVIS = auto()
-  MARKDOWN = auto()
-
-files = {
-  Kind.SHELL: 'shell_matrix.sh',
-  Kind.TRAVIS: '.travis.yml',
-  Kind.MARKDOWN: 'README.md',
-}
+  TRAVIS = ('.travis.yml', '# {}', travis),
+  MARKDOWN = ('README.md', '<!-- {} -->', markdown),
 
 def get_comment(kind, *args, **kw):
   kind = Kind(kind)
   sep = kw['sep'] if 'sep' in kw else ' '
-  if kind == Kind.SHELL or kind == Kind.TRAVIS:
-    comment_format = '# {}'
-  elif kind == Kind.MARKDOWN:
-    comment_format = '<!-- {} -->'
-  else:
-    raise NotImplementedError
-  return comment_format.format(sep.join(args))
+  return kind.value[0][1].format(sep.join(args))
 
 def comment(file, kind, *args, **kw):
   print(get_comment(kind, *args, **kw), file=file, **kw)
 
 def read_file(kind):
+  kind = Kind(kind)
   begin = get_comment(kind, 'BEGIN MATRIX') + '\n'
   end = get_comment(kind, 'END MATRIX') + '\n'
   mode = 0
   before = []
   after = []
-  with open(files[kind]) as file:
+  filename = kind.value[0][0]
+  with open(filename) as file:
     for line in file:
       if mode == 0:
         before.append(line)
@@ -55,63 +151,26 @@ def read_file(kind):
           mode = 2
       else:
         after.append(line)
-  return (before, after)
+  return (filename, before, after)
 
-case_templates = {
-  Kind.SHELL: '''echo {rev}-{arch}-{api}
-ndk={rev} arch={arch} api={api} bash single_round.sh &> {name}.log || (echo FAIL; bash rm_toolchain.sh; exit 0)''',
-  Kind.TRAVIS: '''    - name: "{name}"
-      env:
-        - arch={arch}
-        - ndk={rev}
-        - api={api}''',
-}
+class NullContext:
+  def __enter__(self):
+    pass
+  def __exit__(self, *args):
+    pass
 
 for kind in Kind:
-  before, after = read_file(kind)
-  filename = files[kind]
-  with open(filename, 'w') as file:
+  filename, before, after = read_file(kind)
+  if debug:
+    file_context = NullContext()
+    file = sys.stdout
+    print(kind, '################################################################')
+  else:
+    file_context = file = open(filename, 'w')
+  with file_context:
     for line in before:
       print(line, end='', file=file)
     comment(file, kind, 'This part is generated by matrix.py')
-    if kind in (Kind.SHELL, Kind.TRAVIS):
-      case_template = case_templates[kind]
-      for rev, abis in matrix:
-        comment(file, kind, rev, '========================================')
-        if kind == Kind.SHELL:
-          print('ndk={} bash get_ndk.sh'.format(rev), file=file)
-        for arch, apis in abis.items():
-          for api in apis:
-            name = '{}-{}-{}'.format(rev, arch, api)
-            print(case_template.format(name=name, arch=arch, rev=rev, api=api), file=file)
-        if kind == Kind.SHELL:
-          print('ndk={} bash rm_ndk.sh'.format(rev), file=file)
-    elif kind == Kind.MARKDOWN:
-      all_apis = set()
-      for rev, abis in matrix:
-        for arch, apis in abis.items():
-          all_apis |= set(apis)
-      all_apis = list(all_apis)
-      all_apis.sort(key=lambda i: int(i))
-      print('| NDK ', end='', file=file)
-      next_line = ['| ']
-      for api in all_apis:
-        print('|', '{:3}'.format(api), end=' ', file=file)
-        next_line.append(' | ')
-      print('|', file=file)
-      next_line.append(' |')
-      print('---'.join(next_line), file=file)
-
-      for rev, abis in matrix:
-        print('|', rev, end=' ', file=file)
-        for api in all_apis:
-          found_archs = []
-          for arch, apis in abis.items():
-            if api in apis:
-              found_archs.append(arch)
-          print('|', ', '.join(found_archs) if found_archs else '-', end= ' ', file=file)
-        print('|', file=file)
-    else:
-      raise NotImplementedError
+    kind.value[0][2](matrix, file)
     for line in after:
       print(line, end='', file=file)
