@@ -2,13 +2,12 @@ import sys
 from enum import Enum
 
 debug = False
-default_arch = "arm64"
 
 class Build:
-  def __init__(self, ndk, api, arch=default_arch, flags={}):
+  def __init__(self, ndk, api, arch=None, flags={}):
     self.ndk = ndk
     self.api = api
-    self.arch = arch
+    self.arch = ("arm64" if api >= 21 else "arm") if arch is None else arch
     self.flags = dict(
       use_security=False,
       use_java=False,
@@ -18,6 +17,8 @@ class Build:
   def __str__(self):
     result = '{}-{}-{}'.format(self.ndk, self.arch, self.api)
     for k, v in self.flags.items():
+      if k.startswith('use_'):
+        k = k[4:]
       if v:
         result += '-' + k
     return result
