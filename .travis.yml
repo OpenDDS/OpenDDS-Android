@@ -7,8 +7,8 @@ before_script:
 - bash get_ace_tao.sh
 - bash get_opendds.sh
 - if $use_security ; then bash get_xerces.sh; fi
-- if $use_security ; then bash get_xerces.sh; fi
-- if $use_security ; then bash build_openssl.sh; fi
+- if $use_security ; then bash build_xerces.sh; fi
+- if $use_security ; then bash get_openssl.sh; fi
 - if $use_security ; then bash build_openssl.sh; fi
 - bash configure.sh
 
