@@ -3,14 +3,10 @@
 /MPC
 /android-ndk-*
 /*-toolchain
-/*.log
 /jdk
 /xerces_source
-/xerces_build
 /iconv_source
-/iconv_build
 /settings.sh
 /openssl_source
-/openssl_build
 /ACE_wrappers
 /ACE+TAO-2.2a_with_latest_patches.tar.gz

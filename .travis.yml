@@ -1,15 +1,20 @@
+dist: bionic
 language: cpp
-dist: xenial
-install:
+
+before_script:
 - bash get_ndk.sh
 - bash mk_toolchain.sh
 - bash get_ace_tao.sh
 - bash get_opendds.sh
-- bash get_xerces.sh
-- bash get_openssl.sh
-script:
+- if $use_security ; then bash get_xerces.sh; fi
+- if $use_security ; then bash get_xerces.sh; fi
+- if $use_security ; then bash build_openssl.sh; fi
+- if $use_security ; then bash build_openssl.sh; fi
 - bash configure.sh
+
+script:
 - bash build.sh
+
 matrix:
   include:
 # BEGIN MATRIX

@@ -23,7 +23,7 @@ then
     bash build_xerces.sh
     bash build_openssl.sh
   fi
-  extra_configure_flags+=("--xerces3=${workspace}/xerces_build" "--openssl=${workspace}/openssl_build" --security)
+  extra_configure_flags+=("--xerces3=${XERCESCROOT}" "--openssl=${SSL_ROOT}" --security)
 fi
 
 if [ ! -z "${host_tools}" ]
