@@ -12,7 +12,5 @@
 /settings.sh
 /openssl_source
 /openssl_build
-/reports
-/ace_tests*
-/messenger*
-/package
+/ACE_wrappers
+/ACE+TAO-2.2a_with_latest_patches.tar.gz

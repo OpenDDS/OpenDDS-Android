@@ -43,11 +43,23 @@ export TRAVIS=${TRAVIS:-false}
 #   export host_tools=$workspace/host_tools/ubuntu_18.04_x86_64
 # fi
 export DDS_ROOT=$workspace/OpenDDS
-export MPC_ROOT=${MPC_ROOT-$workspace/MPC}
 export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}
 export ANDROID_NDK=$workspace/android-ndk-$ndk
-export ACE_ROOT=${workspace}/ACE_TAO/ACE
+export use_oci_ace_tao=${use_oci_ace_tao-"false"}
+if $use_oci_ace_tao
+then
+  mpc_dir="ACE_wrappers/MPC"
+  ace_dir="ACE_wrappers"
+  tao_dir="ACE_wrappers/TAO"
+else
+  mpc_dir="MPC"
+  ace_dir="ACE_TAO/ACE"
+  tao_dir="ACE_TAO/TAO"
+fi
+export MPC_ROOT="${MPC_ROOT-"$workspace/${mpc_dir}"}"
+export ACE_ROOT="${workspace}/${ace_dir}"
+export TAO_ROOT="${workspace}/${tao_dir}"
 if [ -z "$host_tools" ]
 then
   ace_target="$ACE_ROOT/build/target"
@@ -57,7 +69,6 @@ else
   ace_target="$ACE_ROOT"
 fi
 export ace_target
-export TAO_ROOT=${workspace}/ACE_TAO/TAO
 export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
 export GNU_ICONV_ROOT=${workspace}/secdeps_prefix
 export XERCESCROOT=${workspace}/secdeps_prefix
