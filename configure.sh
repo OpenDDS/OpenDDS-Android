@@ -47,12 +47,13 @@ pushd $workspace/OpenDDS > /dev/null
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \
   --tests \
-  --macros=CPPFLAGS+=-Wno-deprecated \
-  --macros=CPPFLAGS+=-Wno-deprecated-declarations \
   --no-inline \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}"
 popd > /dev/null
+
+echo '#define ACE_DISABLE_MKTEMP' >> $ace_target/ace/config.h
+echo '#define ACE_DISABLE_TEMPNAM' >> $ace_target/ace/config.h
 
 if $build_ace_tests
 then
