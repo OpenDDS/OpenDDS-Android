@@ -77,10 +77,10 @@ matrix.add_ndk("r21", api_range=(16, 29),
     use_java=True,
   ),
 )
-matrix.add_ndk("r20b", 16, 29)
-matrix.add_ndk("r19c", 16, 28)
-matrix.add_ndk("r18b", 16, 28)
-matrix.add_ndk("r17c", 16, 24, 28)
+matrix.add_ndk("r20b", 16,         28, 29)
+matrix.add_ndk("r19c", 16,         28)
+matrix.add_ndk("r18b", 16,         28)
+matrix.add_ndk("r17c", 16,     24, 28)
 matrix.add_ndk("r15c", 16, 21, 24)
 matrix.add_ndk("r14b", 16, 21)
 matrix.add_ndk("r12b", 16)
