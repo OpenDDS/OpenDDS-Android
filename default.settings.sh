@@ -14,3 +14,5 @@ export api=21
 #export build_ace_tests=false
 # Prebuilt Host Tools Root, defaults to blank (Build Tools)
 #export host_tools=
+# Use OCI ACE/TAO, defaults to false
+#export use_oci_ace_tao=true

@@ -11,6 +11,7 @@ class Build:
     self.flags = dict(
       use_security=False,
       use_java=False,
+      use_oci_ace_tao=False,
     )
     self.flags.update(flags)
 
@@ -34,6 +35,7 @@ class Build:
       name=str(self), arch=self.arch, rev=self.ndk, api=self.api,
       **format_flags)
 
+
 class Matrix:
   def __init__(self):
     self.ndks = []
@@ -50,7 +52,9 @@ class Matrix:
     return archs
 
   def add_ndk(self, name, *apis, api_range=None, default_flags={}, flags_on_edges={}):
-    self.ndks.append(name)
+    new_ndk = name not in self.ndks
+    if new_ndk:
+      self.ndks.append(name)
     builds = []
     api_list=list(apis)
     if api_range:
@@ -67,7 +71,9 @@ class Matrix:
         flags.update(flags_on_edges)
       builds.append(Build(name, api, flags=flags))
     self.builds.extend(builds)
-    self.builds_by_ndk[name] = builds
+    if new_ndk:
+      self.builds_by_ndk[name] = []
+    self.builds_by_ndk[name].extend(builds)
 
 matrix = Matrix()
 
@@ -76,6 +82,11 @@ matrix.add_ndk("r21", api_range=(16, 29),
   flags_on_edges=dict(
     use_security=True,
     use_java=True,
+  ),
+)
+matrix.add_ndk("r21", api_range=(16, 29),
+  default_flags=dict(
+    use_oci_ace_tao=True,
   ),
 )
 matrix.add_ndk("r20b", 16,         28, 29)
@@ -103,7 +114,8 @@ def travis(matrix, file):
         - ndk={rev}
         - api={api}
         - use_security={use_security}
-        - use_java={use_java}''',
+        - use_java={use_java}
+        - use_oci_ace_tao={use_oci_ace_tao}''',
         lambda b: "true" if b else "false"), file=file)
 
 def markdown(matrix, file):
