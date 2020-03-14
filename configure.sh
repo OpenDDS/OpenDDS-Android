@@ -42,6 +42,11 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
+if $use_oci_ace_tao
+then
+  extra_configure_flags+=("--macros=CPPFLAGS+=-Wno-deprecated-declarations")
+fi
+
 pushd $workspace/OpenDDS > /dev/null
 ./configure --target=android \
   --ace=$ACE_ROOT \
