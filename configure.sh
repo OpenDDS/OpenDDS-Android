@@ -17,7 +17,7 @@ if $use_security
 then
   if $TRAVIS
   then
-    travis_wait 20 bash build_xerces.sh || echo "build_xerces.sh failed"
+    travis_wait 20 bash build_xerces.sh &> /dev/null || echo "build_xerces.sh failed"
     travis_wait 15 bash build_openssl.sh &> /dev/null || echo "build_openssl.sh failed"
   else
     bash build_xerces.sh

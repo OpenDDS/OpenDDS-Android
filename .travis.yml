@@ -8,9 +8,9 @@ before_script:
 - bash get_opendds.sh
 - if $use_security ; then bash get_xerces.sh; fi
 - if $use_security ; then bash get_openssl.sh; fi
-- bash configure.sh
 
 script:
+- bash configure.sh
 - bash build.sh
 
 matrix:
