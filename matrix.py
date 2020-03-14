@@ -2,26 +2,29 @@ import sys
 from enum import Enum
 
 debug = False
+default_flags = dict(
+  use_security=False,
+  use_java=False,
+  use_oci_ace_tao=False,
+)
 
 class Build:
   def __init__(self, ndk, api, arch=None, flags={}):
     self.ndk = ndk
     self.api = api
     self.arch = ("arm64" if api >= 21 else "arm") if arch is None else arch
-    self.flags = dict(
-      use_security=False,
-      use_java=False,
-      use_oci_ace_tao=False,
-    )
+    self.flags = default_flags.copy()
     self.flags.update(flags)
 
   def __str__(self):
     result = '{}-{}-{}'.format(self.ndk, self.arch, self.api)
     for k, v in self.flags.items():
       if k.startswith('use_'):
-        k = k[4:]
-      if v:
-        result += '-' + k
+        flag = k[4:]
+      else:
+        flag = k
+      if v != default_flags[k]:
+        result += '-' + flag.replace('_', '-')
     return result
 
   def __repr__(self):
@@ -107,16 +110,17 @@ def travis(matrix, file):
   for ndk in matrix.ndks:
     comment(file, Kind.TRAVIS, ndk, '========================================')
     for build in matrix.builds_by_ndk[ndk]:
+      shell_boolean = lambda b: "true" if b else "false"
       print(build.case_format('''\
     - name: "{name}"
       env:
         - arch={arch}
         - ndk={rev}
-        - api={api}
-        - use_security={use_security}
-        - use_java={use_java}
-        - use_oci_ace_tao={use_oci_ace_tao}''',
-        lambda b: "true" if b else "false"), file=file)
+        - api={api}''', shell_boolean), file=file)
+      for k, v in build.flags.items():
+        if v != default_flags[k]:
+          print(build.case_format('''\
+        - ''' + k + '''={''' + k + '''}''', shell_boolean), file=file)
 
 def markdown(matrix, file):
   def print_row(cells):

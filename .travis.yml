@@ -25,87 +25,56 @@ matrix:
         - api=29
         - use_security=true
         - use_java=true
-        - use_oci_ace_tao=false
     - name: "r21-arm64-28"
       env:
         - arch=arm64
         - ndk=r21
         - api=28
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-27"
       env:
         - arch=arm64
         - ndk=r21
         - api=27
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-26"
       env:
         - arch=arm64
         - ndk=r21
         - api=26
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-24"
       env:
         - arch=arm64
         - ndk=r21
         - api=24
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-23"
       env:
         - arch=arm64
         - ndk=r21
         - api=23
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-22"
       env:
         - arch=arm64
         - ndk=r21
         - api=22
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm64-21"
       env:
         - arch=arm64
         - ndk=r21
         - api=21
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm-19"
       env:
         - arch=arm
         - ndk=r21
         - api=19
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm-18"
       env:
         - arch=arm
         - ndk=r21
         - api=18
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm-17"
       env:
         - arch=arm
         - ndk=r21
         - api=17
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r21-arm-16-security-java"
       env:
         - arch=arm
@@ -113,102 +82,77 @@ matrix:
         - api=16
         - use_security=true
         - use_java=true
-        - use_oci_ace_tao=false
-    - name: "r21-arm64-29-oci_ace_tao"
+    - name: "r21-arm64-29-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=29
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-28-oci_ace_tao"
+    - name: "r21-arm64-28-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=28
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-27-oci_ace_tao"
+    - name: "r21-arm64-27-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=27
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-26-oci_ace_tao"
+    - name: "r21-arm64-26-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=26
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-24-oci_ace_tao"
+    - name: "r21-arm64-24-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=24
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-23-oci_ace_tao"
+    - name: "r21-arm64-23-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=23
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-22-oci_ace_tao"
+    - name: "r21-arm64-22-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=22
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm64-21-oci_ace_tao"
+    - name: "r21-arm64-21-oci-ace-tao"
       env:
         - arch=arm64
         - ndk=r21
         - api=21
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm-19-oci_ace_tao"
+    - name: "r21-arm-19-oci-ace-tao"
       env:
         - arch=arm
         - ndk=r21
         - api=19
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm-18-oci_ace_tao"
+    - name: "r21-arm-18-oci-ace-tao"
       env:
         - arch=arm
         - ndk=r21
         - api=18
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm-17-oci_ace_tao"
+    - name: "r21-arm-17-oci-ace-tao"
       env:
         - arch=arm
         - ndk=r21
         - api=17
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
-    - name: "r21-arm-16-oci_ace_tao"
+    - name: "r21-arm-16-oci-ace-tao"
       env:
         - arch=arm
         - ndk=r21
         - api=16
-        - use_security=false
-        - use_java=false
         - use_oci_ace_tao=true
 # r20b ========================================
     - name: "r20b-arm64-29"
@@ -216,132 +160,84 @@ matrix:
         - arch=arm64
         - ndk=r20b
         - api=29
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r20b-arm64-28"
       env:
         - arch=arm64
         - ndk=r20b
         - api=28
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r20b-arm-16"
       env:
         - arch=arm
         - ndk=r20b
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r19c ========================================
     - name: "r19c-arm64-28"
       env:
         - arch=arm64
         - ndk=r19c
         - api=28
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r19c-arm-16"
       env:
         - arch=arm
         - ndk=r19c
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r18b ========================================
     - name: "r18b-arm64-28"
       env:
         - arch=arm64
         - ndk=r18b
         - api=28
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r18b-arm-16"
       env:
         - arch=arm
         - ndk=r18b
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r17c ========================================
     - name: "r17c-arm64-28"
       env:
         - arch=arm64
         - ndk=r17c
         - api=28
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r17c-arm64-24"
       env:
         - arch=arm64
         - ndk=r17c
         - api=24
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r17c-arm-16"
       env:
         - arch=arm
         - ndk=r17c
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r15c ========================================
     - name: "r15c-arm64-24"
       env:
         - arch=arm64
         - ndk=r15c
         - api=24
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r15c-arm64-21"
       env:
         - arch=arm64
         - ndk=r15c
         - api=21
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r15c-arm-16"
       env:
         - arch=arm
         - ndk=r15c
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r14b ========================================
     - name: "r14b-arm64-21"
       env:
         - arch=arm64
         - ndk=r14b
         - api=21
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
     - name: "r14b-arm-16"
       env:
         - arch=arm
         - ndk=r14b
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
 # r12b ========================================
     - name: "r12b-arm-16"
       env:
         - arch=arm
         - ndk=r12b
         - api=16
-        - use_security=false
-        - use_java=false
-        - use_oci_ace_tao=false
