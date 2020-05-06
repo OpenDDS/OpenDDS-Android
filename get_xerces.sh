@@ -35,7 +35,7 @@ get
 # Get Xerces
 basename="xerces-c-3.2.2"
 tarname="$basename.tar.gz"
-url="http://apache.cs.utah.edu/xerces/c/3/sources/$tarname"
+url="https://archive.apache.org/dist/xerces/c/3/sources/$tarname"
 ourname="xerces_source"
 get
 
