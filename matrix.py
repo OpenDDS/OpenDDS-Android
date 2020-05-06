@@ -81,24 +81,24 @@ class Matrix:
 matrix = Matrix()
 
 # Matrix Definition ##########################################################
-matrix.add_ndk("r21", api_range=(16, 29),
+matrix.add_ndk("r21b", api_range=(16, 29),
   flags_on_edges=dict(
     use_security=True,
     use_java=True,
   ),
 )
-matrix.add_ndk("r21", api_range=(16, 29),
+matrix.add_ndk("r21b", api_range=(16, 29),
   default_flags=dict(
     use_oci_ace_tao=True,
   ),
 )
-matrix.add_ndk("r20b", 16,         28, 29)
-matrix.add_ndk("r19c", 16,         28)
-matrix.add_ndk("r18b", 16,         28)
-matrix.add_ndk("r17c", 16,     24, 28)
-matrix.add_ndk("r15c", 16, 21, 24)
-matrix.add_ndk("r14b", 16, 21)
-matrix.add_ndk("r12b", 16)
+matrix.add_ndk("r20b", 16,                 28, 29)
+matrix.add_ndk("r19c", 16,                 28)
+matrix.add_ndk("r18b", 16,                 28)
+matrix.add_ndk("r17c", 16,         26, 27, 28)
+matrix.add_ndk("r15c", 16,     24, 26)
+matrix.add_ndk("r14b", 16,     24)
+matrix.add_ndk("r12b", 16, 21, 24)
 
 if debug:
   for ndk in matrix.ndks:
