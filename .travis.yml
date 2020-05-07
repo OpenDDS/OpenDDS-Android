@@ -10,6 +10,7 @@ before_script:
 - if ${use_security:-false} ; then bash get_openssl.sh; fi
 
 script:
+- set -e
 - bash configure.sh
 - bash build.sh
 
