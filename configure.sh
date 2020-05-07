@@ -1,4 +1,4 @@
-set -ex
+set -e
 source setenv.sh
 
 extra_configure_flags=()

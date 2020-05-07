@@ -3,19 +3,23 @@ set -e
 source setenv.sh
 source make.sh
 
-pushd iconv_source
-./configure \
-  --prefix=$GNU_ICONV_ROOT\
-  --host=$target \
-  CC=${target}-${CC:-clang} \
-  CXX=${target}-${CC:-clang++} \
-  LD=${target}-${LD:-ld} \
-  CFLAGS="-fPIE -fPIC" \
-  LDFLAGS="-pie"
-$make
-mkdir -p $GNU_ICONV_ROOT
-make install
-popd
+need_iconv=true
+if [[ $api -ge 28 ]]
+then
+  pushd iconv_source
+  ./configure \
+    --prefix=$GNU_ICONV_ROOT\
+    --host=$target \
+    CC=${target}-${CC:-clang} \
+    CXX=${target}-${CC:-clang++} \
+    LD=${target}-${LD:-ld} \
+    CFLAGS="-fPIE -fPIC" \
+    LDFLAGS="-pie"
+  $make
+  mkdir -p $GNU_ICONV_ROOT
+  make install
+  popd
+fi
 
 pushd xerces_source
 cmake \
