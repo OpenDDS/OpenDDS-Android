@@ -1,5 +1,18 @@
 set -e
 
+intre='^[0-9]+$'
+if [[ ! $api =~ $intre ]]
+then
+  echo 'for get_xerces.sh $api must be defined' 1>&2
+  exit 1
+fi
+
+need_iconv=true
+if [[ $api -ge 28 ]]
+then
+  need_iconv=false
+fi
+
 function get {
   if [ ! -d "$ourname" ]
   then
@@ -26,11 +39,14 @@ function get {
 }
 
 # Get GNU libiconv
-basename="libiconv-1.15"
-tarname="libiconv-1.15.tar.gz"
-url="https://ftp.gnu.org/pub/gnu/libiconv/$tarname"
-ourname="iconv_source"
-get
+if $need_iconv
+then
+  basename="libiconv-1.15"
+  tarname="libiconv-1.15.tar.gz"
+  url="https://ftp.gnu.org/pub/gnu/libiconv/$tarname"
+  ourname="iconv_source"
+  get
+fi
 
 # Get Xerces
 basename="xerces-c-3.2.2"
@@ -45,8 +61,11 @@ then
 fi
 
 # Patch Xerces To Use Our Libiconv
-if ! md5sum -c "${basename}.md5" --status
+if $need_iconv
 then
-  patch -s -p0 -d ${ourname} < ${basename}.patch
-  md5sum -c "${basename}.md5"
+  if ! md5sum -c "${basename}.md5" --status
+  then
+    patch -s -p0 -d ${ourname} < ${basename}.patch
+    md5sum -c "${basename}.md5"
+  fi
 fi

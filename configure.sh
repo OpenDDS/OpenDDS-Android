@@ -1,4 +1,4 @@
-set -e
+set -ex
 source setenv.sh
 
 extra_configure_flags=()
@@ -49,6 +49,7 @@ fi
 
 pushd $workspace/OpenDDS > /dev/null
 ./configure --target=android \
+  --verbose \
   --ace=$ACE_ROOT \
   --tao=$TAO_ROOT \
   --tests \

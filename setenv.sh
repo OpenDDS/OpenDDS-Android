@@ -32,7 +32,7 @@ elif [ "$arch" = "NONE" ] # Bypass
 then
   true
 else
-  echo "Invalid Arch: $arch, must be arm, arm64, x86, or x86_64"
+  echo "Invalid Arch: $arch, must be arm, arm64, x86, or x86_64" 1>&2
   exit 1
 fi
 
