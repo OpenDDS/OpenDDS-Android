@@ -3,8 +3,7 @@ set -e
 source setenv.sh
 source make.sh
 
-need_iconv=true
-if [[ $api -ge 28 ]]
+if [[ $api -lt 28 ]]
 then
   pushd iconv_source
   ./configure \

@@ -15,14 +15,8 @@ fi
 
 if $use_security
 then
-  if $TRAVIS
-  then
-    bash build_xerces.sh &> /dev/null || echo "build_xerces.sh failed"
-    bash build_openssl.sh &> /dev/null || echo "build_openssl.sh failed"
-  else
-    bash build_xerces.sh
-    bash build_openssl.sh
-  fi
+  bash build_xerces.sh
+  bash build_openssl.sh
   extra_configure_flags+=("--xerces3=${XERCESCROOT}" "--openssl=${SSL_ROOT}" --security)
 fi
 
