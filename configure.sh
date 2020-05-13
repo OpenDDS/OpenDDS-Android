@@ -54,9 +54,6 @@ popd > /dev/null
 
 echo '#define ACE_DISABLE_MKTEMP' >> $ace_target/ace/config.h
 echo '#define ACE_DISABLE_TEMPNAM' >> $ace_target/ace/config.h
-echo '#if ACE_ANDROID_NDK_LESS_THAN(14, 0) || __ANDROID_API__ < 24' >> $ace_target/ace/config.h
-echo '#  define ACE_LACKS_IF_NAMEINDEX' >> $ace_target/ace/config.h
-echo '#endif' >> $ace_target/ace/config.h
 
 if $build_ace_tests
 then
