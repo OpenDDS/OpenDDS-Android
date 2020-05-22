@@ -23,3 +23,19 @@ against various combinations of Android NDK and API versions on Travis-CI.
 
 To change the matrix, edit `matrix.py` and run the script with Python 3. It
 will update `.travis.yml` and `README.md` (this file).
+
+## Running Locally
+
+There used to be a shell version of the matrix but I never used it beyond
+initial testing so eventually I removed it. These instructions are for doing a
+single build. Also because these are bash scripts, there were designed for a
+Unix system, particualrly a Linux system, but still might need some
+modifcations to work on macOS.
+
+1. Copy `default.settings.sh` to `settings.sh` and modify it as you see fit.
+2. Run `run.sh`.
+
+That's it, assuming nothing goes wrong.
+
+What ACE/TAO and OpenDDS repos it clones can be controlled using
+`ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and `OPENDDS_BRANCH`.
