@@ -55,6 +55,12 @@ popd > /dev/null
 echo '#define ACE_DISABLE_MKTEMP' >> $ace_target/ace/config.h
 echo '#define ACE_DISABLE_TEMPNAM' >> $ace_target/ace/config.h
 
+if $use_oci_ace_tao && [ -n "$ace_host" ]
+then
+  echo 'CPPFLAGS += -Wno-deprecated-declarations' >> \
+    "$ace_host/include/makeinclude/platform_macros.GNU"
+fi
+
 if $build_ace_tests
 then
   pushd $ace_target/tests > /dev/null

@@ -63,6 +63,7 @@ export TAO_ROOT="${workspace}/${tao_dir}"
 if [ -z "$host_tools" ]
 then
   ace_target="$ACE_ROOT/build/target"
+  ace_host="$ACE_ROOT/build/host"
 else
   export HOST_DDS="$host_tools"
   export HOST_ACE="$host_tools/ACE_TAO/ACE"
