@@ -5,7 +5,7 @@ if [ -z ${ndk+x} ]
 then
   if ! [ -f ${workspace}/settings.sh ]
   then
-    echo "Warning: ndk is not set and there are no settings.sh, copying default.settings.sh"
+    echo "Warning: ndk is not set and there are no settings.sh, copying default.settings.sh" 1>&2
     cp ${workspace}/default.settings.sh ${workspace}/settings.sh
   fi
   source ${workspace}/settings.sh
