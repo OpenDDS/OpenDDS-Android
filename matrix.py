@@ -81,13 +81,13 @@ class Matrix:
 matrix = Matrix()
 
 # Matrix Definition ##########################################################
-matrix.add_ndk("r21b", api_range=(16, 29),
+matrix.add_ndk("r21d", api_range=(16, 29),
   flags_on_edges=dict(
     use_security=True,
     use_java=True,
   ),
 )
-matrix.add_ndk("r21b", api_range=(16, 29),
+matrix.add_ndk("r21d", api_range=(16, 29),
   default_flags=dict(
     use_oci_ace_tao=True,
   ),
