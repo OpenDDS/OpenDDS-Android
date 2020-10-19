@@ -7,7 +7,7 @@ before_script:
 - bash get_ace_tao.sh
 - bash get_opendds.sh
 - if ${use_security:-false}; then bash get_xerces.sh; fi
-- if ${use_security:-false} ; then bash get_openssl.sh; fi
+- if ${use_security:-false}; then bash get_openssl.sh; fi
 
 script:
 - set -e

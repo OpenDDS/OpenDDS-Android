@@ -80,7 +80,7 @@ class Matrix:
 
 matrix = Matrix()
 
-# Matrix Definition ##########################################################
+# Start Matrix Definition ====================================================
 matrix.add_ndk("r21d", api_range=(16, 29),
   flags_on_edges=dict(
     use_security=True,
@@ -99,6 +99,7 @@ matrix.add_ndk("r17c", 16,         26, 27, 28)
 matrix.add_ndk("r15c", 16,     24, 26)
 matrix.add_ndk("r14b", 16,     24)
 matrix.add_ndk("r12b", 16, 21, 24)
+# End Matrix Definition ======================================================
 
 if debug:
   for ndk in matrix.ndks:
@@ -106,11 +107,13 @@ if debug:
     for build in matrix.builds_by_ndk[ndk]:
       print(' ', str(build))
 
+def shell_boolean(value):
+  return "true" if value else "false"
+
 def travis(matrix, file):
   for ndk in matrix.ndks:
     comment(file, Kind.TRAVIS, ndk, '========================================')
     for build in matrix.builds_by_ndk[ndk]:
-      shell_boolean = lambda b: "true" if b else "false"
       print(build.case_format('''\
     - name: "{name}"
       env:
@@ -120,7 +123,22 @@ def travis(matrix, file):
       for k, v in build.flags.items():
         if v != default_flags[k]:
           print(build.case_format('''\
-        - ''' + k + '''={''' + k + '''}''', shell_boolean), file=file)
+        - ''' + k + '={' + k + '}', shell_boolean), file=file)
+
+def github(matrix, file):
+  for ndk in matrix.ndks:
+    comment(file, Kind.GITHUB, ndk, '========================================')
+    for build in matrix.builds_by_ndk[ndk]:
+      print(build.case_format('''\
+        include:
+          env:
+            - arch: {arch}
+            - ndk: {rev}
+            - api: {api}''', shell_boolean), file=file)
+      for k, v in build.flags.items():
+        if v != default_flags[k]:
+          print(build.case_format('''\
+            - ''' + k + ': {' + k + '}', shell_boolean), file=file)
 
 def markdown(matrix, file):
   def print_row(cells):
@@ -138,6 +156,7 @@ def markdown(matrix, file):
 
 class Kind(Enum):
   TRAVIS = ('.travis.yml', '# {}', travis),
+  GITHUB = ('.github/workflows/matrix.yml', '# {}', github),
   MARKDOWN = ('README.md', '<!-- {} -->', markdown),
 
 def get_comment(kind, *args, **kw):
