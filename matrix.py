@@ -9,12 +9,15 @@ default_flags = dict(
 )
 
 class Build:
+  builtin_properties = ['name', 'arch', 'ndk', 'api']
+
   def __init__(self, ndk, api, arch=None, flags={}):
     self.ndk = ndk
     self.api = api
     self.arch = ("arm64" if api >= 21 else "arm") if arch is None else arch
     self.flags = default_flags.copy()
     self.flags.update(flags)
+    self.all_properties = self.builtin_properties + list(self.flags.keys())
 
   def __str__(self):
     result = '{}-{}-{}'.format(self.ndk, self.arch, self.api)
@@ -35,7 +38,7 @@ class Build:
     for k, v in self.flags.items():
       format_flags[k] = flag_convert(v)
     return format_str.format(
-      name=str(self), arch=self.arch, rev=self.ndk, api=self.api,
+      name=str(self), arch=self.arch, ndk=self.ndk, api=self.api,
       **format_flags)
 
 
@@ -118,7 +121,7 @@ def travis(matrix, file):
     - name: "{name}"
       env:
         - arch={arch}
-        - ndk={rev}
+        - ndk={ndk}
         - api={api}''', shell_boolean), file=file)
       for k, v in build.flags.items():
         if v != default_flags[k]:
@@ -129,16 +132,14 @@ def github(matrix, file):
   for ndk in matrix.ndks:
     comment(file, Kind.GITHUB, ndk, '========================================')
     for build in matrix.builds_by_ndk[ndk]:
-      print(build.case_format('''\
-        include:
-          env:
-            - arch: {arch}
-            - ndk: {rev}
-            - api: {api}''', shell_boolean), file=file)
-      for k, v in build.flags.items():
-        if v != default_flags[k]:
-          print(build.case_format('''\
-            - ''' + k + ': {' + k + '}', shell_boolean), file=file)
+      first = True
+      for prop in build.all_properties:
+        if first:
+          print('          - ', end='', file=file)
+          first = False
+        else:
+          print('            ', end='',  file=file)
+        print(build.case_format(prop + ': {' + prop + '}', shell_boolean), file=file)
 
 def markdown(matrix, file):
   def print_row(cells):
