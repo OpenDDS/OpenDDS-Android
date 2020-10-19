@@ -1,7 +1,8 @@
-# An ACE/TAO/OpenDDS Build Matrix for Android [![Build Status](https://travis-ci.org/iguessthislldo/OpenDDS-Android.svg?branch=master)](https://travis-ci.org/iguessthislldo/OpenDDS-Android)
+# An ACE/TAO/OpenDDS Build Matrix for Android [![Build Status](https://travis-ci.org/iguessthislldo/OpenDDS-Android.svg?branch=master)](https://travis-ci.org/iguessthislldo/OpenDDS-Android) ![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
-against various combinations of Android NDK and API versions on Travis-CI.
+against various combinations of Android NDK and API versions on Travis-CI and
+GitHub Actions.
 
 ## Matrix
 
@@ -22,20 +23,31 @@ against various combinations of Android NDK and API versions on Travis-CI.
 ### Modifying the Matrix
 
 To change the matrix, edit `matrix.py` and run the script with Python 3. It
-will update `.travis.yml` and `README.md` (this file).
+will update `.travis.yml`, `.github/workflows/matrix.yml`, and `README.md`
+(this file).
 
 ## Running Locally
 
 There used to be a shell version of the matrix but I never used it beyond
 initial testing so eventually I removed it. These instructions are for doing a
-single build. Also because these are bash scripts, there were designed for a
-Unix system, particualrly a Linux system, but still might need some
-modifcations to work on macOS.
+single build. These are bash scripts developed on a Ubuntu Linux system. They
+might need some modifications to work on other Linux systems or macOS.
 
 1. Copy `default.settings.sh` to `settings.sh` and modify it as you see fit.
+   You can also set the environment variables in this file instead. See next
+   section about that.
 2. Run `run.sh`.
 
-That's it, assuming nothing goes wrong.
+That's it, assuming nothing goes wrong. Doing multiple builds in a row will
+require some cleanup.
 
-What ACE/TAO and OpenDDS repos it clones can be controlled using
-`ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and `OPENDDS_BRANCH`.
+## Environment Variables
+
+There are several environment variables that are the normal settings for the
+build. These all can be found in `default.settings.sh`. The first three: `ndk`,
+`arch`, and `api` are required so set to some example values. The rest are
+optional.
+
+In addition to those, what ACE/TAO and OpenDDS it clones can optionally be
+controlled using `ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and
+`OPENDDS_BRANCH`.
