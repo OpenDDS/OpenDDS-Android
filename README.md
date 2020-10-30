@@ -1,4 +1,4 @@
-# An ACE/TAO/OpenDDS Build Matrix for Android [![Build Status](https://travis-ci.org/iguessthislldo/OpenDDS-Android.svg?branch=master)](https://travis-ci.org/iguessthislldo/OpenDDS-Android) ![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)
+# An ACE/TAO/OpenDDS Build Matrix for Android [![Build Status](https://travis-ci.org/iguessthislldo/OpenDDS-Android.svg?branch=master)](https://travis-ci.org/iguessthislldo/OpenDDS-Android) [![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
 against various combinations of Android NDK and API versions on Travis-CI and
