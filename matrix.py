@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from enum import Enum
 
@@ -84,7 +86,7 @@ class Matrix:
 matrix = Matrix()
 
 # Start Matrix Definition ====================================================
-matrix.add_ndk("r21d", api_range=(16, 29),
+matrix.add_ndk("r22-beta1", api_range=(16, 29),
   flags_on_edges=dict(
     use_security=True,
     use_java=True,
