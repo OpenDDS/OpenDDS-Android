@@ -86,7 +86,7 @@ class Matrix:
 matrix = Matrix()
 
 # Start Matrix Definition ====================================================
-matrix.add_ndk("r22-beta1", api_range=(16, 29),
+matrix.add_ndk("r22-beta1", api_range=(16, 30),
   flags_on_edges=dict(
     use_security=True,
     use_java=True,

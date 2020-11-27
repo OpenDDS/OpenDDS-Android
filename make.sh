@@ -3,13 +3,7 @@ set -e
 
 make_command="make"
 
-# Use Number of Cores For Job Count, Default to 4
-core_count="$(grep -c ^processor /proc/cpuinfo)"
-if [ $? -ne 0 ]
-then
-  core_count=4
-fi
-make="$make_command -j $core_count"
+make="$make_command -j $(nproc)"
 
 # If not on Travis and Make version is at least 4, sync job output
 function make_version {

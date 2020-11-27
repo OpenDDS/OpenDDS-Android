@@ -45,7 +45,7 @@ export TRAVIS=${TRAVIS:-false}
 export DDS_ROOT=$workspace/OpenDDS
 export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}
-export ANDROID_NDK=$workspace/android-ndk-$ndk
+export ANDROID_NDK=${ANDROID_NDK-$workspace/android-ndk-$ndk}
 export use_oci_ace_tao=${use_oci_ace_tao-"false"}
 if $use_oci_ace_tao
 then
