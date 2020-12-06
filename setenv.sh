@@ -37,11 +37,6 @@ else
 fi
 
 # Set Rest of Enviroment
-export TRAVIS=${TRAVIS:-false}
-# if $TRAVIS
-# then
-#   export host_tools=$workspace/host_tools/ubuntu_18.04_x86_64
-# fi
 export DDS_ROOT=$workspace/OpenDDS
 export toolchain_name=$ndk-$arch-android-$api-toolchain
 export android_toolchain=${workspace}/${toolchain_name}

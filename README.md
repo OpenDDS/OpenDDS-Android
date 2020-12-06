@@ -1,8 +1,7 @@
-# An ACE/TAO/OpenDDS Build Matrix for Android [![Build Status](https://travis-ci.org/iguessthislldo/OpenDDS-Android.svg?branch=master)](https://travis-ci.org/iguessthislldo/OpenDDS-Android) [![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
+# An ACE/TAO/OpenDDS Build Matrix for Android  [![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
-against various combinations of Android NDK and API versions on Travis-CI and
-GitHub Actions.
+against various combinations of Android NDK and API versions on GitHub Actions.
 
 ## Matrix
 
@@ -24,8 +23,7 @@ GitHub Actions.
 ### Modifying the Matrix
 
 To change the matrix, edit `matrix.py` and run the script with Python 3. It
-will update `.travis.yml`, `.github/workflows/matrix.yml`, and `README.md`
-(this file).
+will update `.github/workflows/matrix.yml` and `README.md` (this file).
 
 ## Running Locally
 

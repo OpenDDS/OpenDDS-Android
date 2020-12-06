@@ -115,21 +115,6 @@ if debug:
 def shell_boolean(value):
   return "true" if value else "false"
 
-def travis(matrix, file):
-  for ndk in matrix.ndks:
-    comment(file, Kind.TRAVIS, ndk, '========================================')
-    for build in matrix.builds_by_ndk[ndk]:
-      print(build.case_format('''\
-    - name: "{name}"
-      env:
-        - arch={arch}
-        - ndk={ndk}
-        - api={api}''', shell_boolean), file=file)
-      for k, v in build.flags.items():
-        if v != default_flags[k]:
-          print(build.case_format('''\
-        - ''' + k + '={' + k + '}', shell_boolean), file=file)
-
 def github(matrix, file):
   for ndk in matrix.ndks:
     comment(file, Kind.GITHUB, ndk, '========================================')
@@ -158,7 +143,6 @@ def markdown(matrix, file):
     print_row(cells)
 
 class Kind(Enum):
-  TRAVIS = ('.travis.yml', '# {}', travis),
   GITHUB = ('.github/workflows/matrix.yml', '# {}', github),
   MARKDOWN = ('README.md', '<!-- {} -->', markdown),
 
