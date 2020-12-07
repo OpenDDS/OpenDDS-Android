@@ -41,6 +41,14 @@ then
   extra_configure_flags+=("--macros=CPPFLAGS+=-Wno-deprecated-declarations")
 fi
 
+if ! $use_toolchain
+then
+  extra_configure_flags+=(
+    "--macros=android_ndk:=$ANDROID_NDK"
+    "--macros=android_api:=$api"
+  )
+fi
+
 pushd $workspace/OpenDDS > /dev/null
 ./configure --target=android \
   --verbose \
@@ -52,8 +60,10 @@ pushd $workspace/OpenDDS > /dev/null
   "${extra_configure_flags[@]}"
 popd > /dev/null
 
-echo '#define ACE_DISABLE_MKTEMP' >> $ace_target/ace/config.h
-echo '#define ACE_DISABLE_TEMPNAM' >> $ace_target/ace/config.h
+# Avoid Deprecated POSIX Functions in ACE that OpenDDS Doesn't Use
+echo '#define ACE_DISABLE_MKTEMP' >> "$ace_target/ace/config.h"
+echo '#define ACE_DISABLE_TEMPNAM' >> "$ace_target/ace/config.h"
+echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
 
 if $use_oci_ace_tao && [ -n "$ace_host" ]
 then

@@ -55,7 +55,7 @@ else
   then
     git clone --depth 1 \
       ${ACE_TAO_REPO:-https://github.com/DOCGroup/ACE_TAO} \
-      --branch ${ACE_TAO_BRANCH:-master}
+      --branch ${ACE_TAO_BRANCH:-$ace_tao_default_branch}
   fi
 
 fi

@@ -36,12 +36,50 @@ else
   exit 1
 fi
 
-# Set Rest of Enviroment
-export DDS_ROOT=$workspace/OpenDDS
-export toolchain_name=$ndk-$arch-android-$api-toolchain
-export android_toolchain=${workspace}/${toolchain_name}
-export ANDROID_NDK=${ANDROID_NDK-$workspace/android-ndk-$ndk}
+# Android NDK
+export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
+export use_toolchain=${use_toolchain-"false"}
+if $use_toolchain
+then
+  export toolchain_name="$ndk-$arch-android-$api-toolchain"
+  export android_toolchain="${workspace}/${toolchain_name}"
+  export PATH=${PATH}:"$android_toolchain/bin"
+fi
+
+# OpenDDS
+export DDS_ROOT="${DDS_ROOT-"$workspace/OpenDDS"}"
+
+# ACE/TAO
 export use_oci_ace_tao=${use_oci_ace_tao-"false"}
+if $use_oci_ace_tao
+then
+  ace_tao='oci'
+fi
+export ace_tao=${ace_tao-'doc_group_master'}
+case $ace_tao in
+  'doc_group_master')
+    export ace_tao_default_branch='master'
+    # TODO: Remove
+    export ACE_TAO_REPO=https://github.com/iguessthislldo/ACE_TAO
+    export ACE_TAO_BRANCH=igtd/android-ndk-compile
+    ;;
+
+  'doc_group_ace6_tao2')
+    export ace_tao_default_branch='ace6tao2'
+    # TODO: Remove
+    export ACE_TAO_REPO=https://github.com/iguessthislldo/ACE_TAO
+    export ACE_TAO_BRANCH=igtd/android-ndk-compile-ace6
+    ;;
+
+  'oci')
+    use_oci_ace_tao='true'
+    ;;
+
+  *)
+    echo "Invalid ace_tao: $ace_tao" 1>&2
+    exit 1
+    ;;
+esac
 if $use_oci_ace_tao
 then
   mpc_dir="ACE_wrappers/MPC"
@@ -52,9 +90,9 @@ else
   ace_dir="ACE_TAO/ACE"
   tao_dir="ACE_TAO/TAO"
 fi
-export MPC_ROOT="${MPC_ROOT-"$workspace/${mpc_dir}"}"
-export ACE_ROOT="${workspace}/${ace_dir}"
-export TAO_ROOT="${workspace}/${tao_dir}"
+export MPC_ROOT="${MPC_ROOT-"${workspace}/${mpc_dir}"}"
+export ACE_ROOT="${ACE_ROOT-"${workspace}/${ace_dir}"}"
+export TAO_ROOT="${TAO_ROOT-"${workspace}/${tao_dir}"}"
 if [ -z "$host_tools" ]
 then
   ace_target="$ACE_ROOT/build/target"
@@ -65,13 +103,16 @@ else
   ace_target="$ACE_ROOT"
 fi
 export ace_target
-export PATH=${PATH}:$android_toolchain/bin:$ACE_ROOT/bin
-export GNU_ICONV_ROOT=${workspace}/secdeps_prefix
-export XERCESCROOT=${workspace}/secdeps_prefix
-export SSL_ROOT=${workspace}/secdeps_prefix
+export PATH=${PATH}:"$ACE_ROOT/bin"
 
 # Optional Features
 export use_java=${use_java:-false}
 export use_security=${use_security:-false}
+if $use_security
+then
+  export GNU_ICONV_ROOT="${GNU_ICONV_ROOT-"${workspace}/secdeps_prefix"}"
+  export XERCESCROOT="${XERCESCROOT-"${workspace}/secdeps_prefix"}"
+  export SSL_ROOT="${SSL_ROOT-"${workspace}/secdeps_prefix"}"
+fi
 export build_ace_tests=${build_ace_tests:-true}
 export host_tools=${host_tools:-}
