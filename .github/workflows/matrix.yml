@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test
   schedule:
     - cron: "0 3 * * 5"
 
