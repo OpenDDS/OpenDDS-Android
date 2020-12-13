@@ -1,3 +1,6 @@
+if ${OPENDDS_ANDROID_SETENV:-false}; then return; fi
+export OPENDDS_ANDROID_SETENV='true'
+
 export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
 
 # Getting Configuration
@@ -39,7 +42,16 @@ fi
 # Android NDK
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
 export use_toolchain=${use_toolchain-"false"}
-if $use_toolchain
+need_toolchain=$use_toolchain
+# Toolchain is needed for Iconv and Xerces
+# TODO: See if they can be built without the toolchain
+export use_security=${use_security:-false}
+if $use_security
+then
+  need_toolchain=true
+fi
+export need_toolchain
+if $need_toolchain
 then
   export toolchain_name="$ndk-$arch-android-$api-toolchain"
   export android_toolchain="${workspace}/${toolchain_name}"
@@ -107,7 +119,6 @@ export PATH=${PATH}:"$ACE_ROOT/bin"
 
 # Optional Features
 export use_java=${use_java:-false}
-export use_security=${use_security:-false}
 if $use_security
 then
   export GNU_ICONV_ROOT="${GNU_ICONV_ROOT-"${workspace}/secdeps_prefix"}"
