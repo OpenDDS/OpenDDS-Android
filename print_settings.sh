@@ -1,4 +1,4 @@
-# For for Quickly Reproducing Failing CI Builds
+# For Quickly Reproducing Failing CI Builds
 source setenv.sh
 cat << EOF
 export arch=$arch
