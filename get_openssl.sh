@@ -25,7 +25,7 @@ function get {
   fi
 }
 
-basename="openssl-1.1.1a"
+basename="openssl-1.1.1i"
 tarname="$basename.tar.gz"
 url="https://www.openssl.org/source/$tarname"
 ourname="openssl_source"
