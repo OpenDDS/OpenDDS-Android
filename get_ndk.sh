@@ -16,7 +16,11 @@ then
     ln -s ../../$ndk_dir
     exit 0
   fi
-  wget --no-verbose https://dl.google.com/android/repository/$ndk_zip
+  url=https://dl.google.com/android/repository/$ndk_zip
+  echo "Downloading $url..."
+  wget --no-verbose $url
+  echo "Done, Unziping $ndk_zip..."
   unzip -qq $ndk_zip
+  echo "Done"
   rm -f $ndk_zip
 fi
