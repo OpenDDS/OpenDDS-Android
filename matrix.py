@@ -15,15 +15,18 @@ default_default_flags = dict(
 
 def get_matrices():
   def latest_ndk(matrix, extras=False):
-    ndk = 'r21d'
-    maxapi = 29
+    ndk = 'r22'
+    maxapi = 30
+    # Build all APIs using NDK directly with security and Java on max and min
+    # APIs.
     matrix.add_ndk(ndk, api_range=(16, maxapi),
       flags_on_edges=dict(
         use_security=extras,
         use_java=extras,
       ),
     )
-    matrix.add_ndk('r21d', maxapi,
+    # Build Max API using standalone toolchain.
+    matrix.add_ndk(ndk, maxapi,
       default_flags=dict(
         use_toolchain=True,
       ),
@@ -35,7 +38,7 @@ def get_matrices():
     ace_tao='doc_group_master',
   )
   latest_ndk(doc_group_master_matrix, extras=True)
-  doc_group_master_matrix.add_ndk("r22-beta1", api_range=(16, 30))
+  doc_group_master_matrix.add_ndk("r21d", 16, 29) # TODO: r21d is marked as an "LTS" so maybe test it more?
   doc_group_master_matrix.add_ndk("r20b", 16, 29)
   doc_group_master_matrix.add_ndk("r19c", 16, 28)
   doc_group_master_matrix.add_ndk("r18b", 16, 28,
