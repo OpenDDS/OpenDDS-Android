@@ -1,5 +1,5 @@
 # Android Target, Required
-export ndk=r21
+export ndk=r22
 export arch=arm64
 export api=21
 
