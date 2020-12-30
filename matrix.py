@@ -35,6 +35,7 @@ def get_matrices():
   # DOC Group master branch
   doc_group_master_matrix = Matrix(
     'doc_group_master', mark='M',
+    url='https://github.com/DOCGroup/ACE_TAO',
     ace_tao='doc_group_master',
   )
   latest_ndk(doc_group_master_matrix, extras=True)
@@ -50,6 +51,7 @@ def get_matrices():
   # DOC Group master ace6_tao2 branch
   doc_group_ace6_tao2_matrix = Matrix(
     'doc_group_ace6_tao2', mark='6',
+    url='https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2',
     ace_tao='doc_group_ace6_tao2',
   )
   latest_ndk(doc_group_ace6_tao2_matrix)
@@ -68,6 +70,7 @@ def get_matrices():
   # OCI ACE/TAO Latest Release
   oci_matrix = Matrix(
     'oci', mark='O',
+    url='https://theaceorb.com/',
     ace_tao='oci',
     use_toolchain=True,
   )
@@ -116,9 +119,10 @@ class Build:
 
 
 class Matrix:
-  def __init__(self, name, mark=None, **default_flags):
+  def __init__(self, name, mark=None, url=None, **default_flags):
     self.name = name
     self.mark = name[0] if mark is None else mark
+    self.url = url
     self.ndks = []
     self.builds = []
     self.builds_by_ndk = {}
@@ -260,7 +264,10 @@ def markdown(matrices, file):
 
   # Print Legend
   for matrix in matrices:
-    print('{} = {}'.format(matrix.mark, matrix.name), file=file)
+    name = '`{}`'.format(matrix.name)
+    if matrix.url is not None:
+      name = '[{}]({})'.format(name, matrix.url)
+    print('`{}` = {}'.format(matrix.mark, name), file=file)
 
   # Print Table Header
   print_row([''] + list(map(str, apis)))
@@ -272,7 +279,7 @@ def markdown(matrices, file):
       marks = []
       for matrix in matrices:
         if matrix.has_build_for(ndk, api):
-          marks.append(matrix.mark)
+          marks.append('`{}`'.format(matrix.mark))
       cells.append(','.join(marks) if marks else '-')
     print_row(cells)
 
