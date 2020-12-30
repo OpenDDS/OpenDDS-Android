@@ -16,17 +16,17 @@ default_default_flags = dict(
 def get_matrices():
   def latest_ndk(matrix, extras=False):
     ndk = 'r22'
-    maxapi = 30
+    min_max_apis = (16, 30)
     # Build all APIs using NDK directly with security and Java on max and min
     # APIs.
-    matrix.add_ndk(ndk, api_range=(16, maxapi),
+    matrix.add_ndk(ndk, api_range=min_max_apis,
       flags_on_edges=dict(
         use_security=extras,
         use_java=extras,
       ),
     )
-    # Build Max API using standalone toolchain.
-    matrix.add_ndk(ndk, maxapi,
+    # Build Min and Max APIs using standalone toolchain.
+    matrix.add_ndk(ndk, *min_max_apis,
       default_flags=dict(
         use_toolchain=True,
       ),

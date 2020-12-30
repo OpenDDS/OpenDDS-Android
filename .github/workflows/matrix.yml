@@ -167,6 +167,14 @@ jobs:
             use_java: false
             use_toolchain: true
             ace_tao: "doc_group_master"
+          - name: r22-arm-16-toolchain-doc-group-master
+            arch: arm
+            ndk: r22
+            api: 16
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            ace_tao: "doc_group_master"
 # r21d ---------------------------------------------------------------------------
           - name: r21d-arm64-29-doc-group-master
             arch: arm64
@@ -349,6 +357,14 @@ jobs:
             use_java: false
             use_toolchain: true
             ace_tao: "doc_group_ace6_tao2"
+          - name: r22-arm-16-toolchain-doc-group-ace6-tao2
+            arch: arm
+            ndk: r22
+            api: 16
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            ace_tao: "doc_group_ace6_tao2"
 # r19c ---------------------------------------------------------------------------
           - name: r19c-arm64-28-doc-group-ace6-tao2
             arch: arm64
@@ -510,6 +526,14 @@ jobs:
             arch: arm64
             ndk: r22
             api: 30
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            ace_tao: "oci"
+          - name: r22-arm-16-toolchain-oci
+            arch: arm
+            ndk: r22
+            api: 16
             use_security: false
             use_java: false
             use_toolchain: true
