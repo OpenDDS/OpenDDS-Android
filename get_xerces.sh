@@ -1,5 +1,7 @@
 set -e
 
+source setenv.sh
+
 intre='^[0-9]+$'
 if [[ ! $api =~ $intre ]]
 then
@@ -41,8 +43,8 @@ function get {
 # Get GNU libiconv
 if $need_iconv
 then
-  basename="libiconv-1.15"
-  tarname="libiconv-1.15.tar.gz"
+  basename="libiconv-1.16"
+  tarname="$basename.tar.gz"
   url="https://ftp.gnu.org/pub/gnu/libiconv/$tarname"
   ourname="iconv_source"
   get

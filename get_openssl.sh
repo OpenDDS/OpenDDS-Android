@@ -1,5 +1,7 @@
 set -e
 
+source setenv.sh
+
 function get {
   if [ ! -d "$ourname" ]
   then
@@ -29,7 +31,7 @@ basename="openssl-1.1.1i"
 tarname="$basename.tar.gz"
 url="https://www.openssl.org/source/$tarname"
 ourname="openssl_source"
-if [ "$ndk" != 'r22-beta1' ]
+if [ "$ndk" != 'r22' ]
 then
   get
 else
