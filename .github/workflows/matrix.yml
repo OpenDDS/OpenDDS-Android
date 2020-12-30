@@ -25,6 +25,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Print the Equivalent settings.sh
+      # For for Quickly Reproducing Failing CI Builds
+      run: |
+        bash print_settings.sh
+
     - name: Get NDK
       run: |
         bash get_ndk.sh
