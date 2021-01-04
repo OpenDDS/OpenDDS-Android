@@ -50,3 +50,8 @@ optional.
 In addition to those, what ACE/TAO and OpenDDS it clones can optionally be
 controlled using `ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and
 `OPENDDS_BRANCH`.
+
+## Legal
+
+By running this you are implicitly agreeing to the licences for the Android SDK
+and the Android NDK, as well as OpenDDS, ACE/TAO, as well as anything else.
