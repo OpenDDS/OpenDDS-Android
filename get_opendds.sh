@@ -1,5 +1,7 @@
 set -e
 
+source setenv.sh
+
 if [ ! -d OpenDDS ]
 then
   git clone --recursive --depth 1 \
