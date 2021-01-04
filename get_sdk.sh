@@ -36,5 +36,5 @@ then
   fi
 
   # Install target API platform
-  $sdkmanager "platforms;android-$api"
+  $sdkmanager "platforms;android-$target_api"
 fi
