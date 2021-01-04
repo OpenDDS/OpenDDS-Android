@@ -40,6 +40,8 @@ else
 fi
 
 # Android NDK
+ndk_major_rev=$(echo $ndk | grep -oE '[0-9]+')
+ndk_minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
 export use_toolchain=${use_toolchain-"false"}
 need_toolchain=$use_toolchain
@@ -55,7 +57,7 @@ if $need_toolchain
 then
   export toolchain_name="$ndk-$arch-android-$api-toolchain"
   export android_toolchain="${workspace}/${toolchain_name}"
-  export PATH=${PATH}:"$android_toolchain/bin"
+  export PATH="$android_toolchain/bin":${PATH}
 fi
 
 # OpenDDS

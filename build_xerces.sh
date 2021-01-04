@@ -5,13 +5,21 @@ source make.sh
 
 if [[ $api -lt 28 ]]
 then
+  LD=${target}-ld
+  if [ $ndk_major_rev -ge 22 ]
+  then
+    # ${target}-ld doesn't exist in r22. GNU linker is still there under
+    # different names, but we should use LLVM linker.
+    LD=$android_toolchain/bin/ld.lld
+  fi
+  export LD
+
   pushd iconv_source
   ./configure \
     --prefix=$GNU_ICONV_ROOT\
     --host=$target \
-    CC=${target}-${CC:-clang} \
-    CXX=${target}-${CC:-clang++} \
-    LD=${target}-${LD:-ld} \
+    CC=${target}-clang \
+    CXX=${target}-clang++ \
     CFLAGS="-fPIE -fPIC" \
     LDFLAGS="-pie"
   $make
