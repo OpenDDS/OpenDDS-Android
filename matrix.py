@@ -4,6 +4,7 @@ import sys
 from enum import Enum
 import re
 from functools import cmp_to_key
+import argparse
 
 debug = False
 default_default_flags = dict(
@@ -12,6 +13,10 @@ default_default_flags = dict(
   use_toolchain=False,
 )
 
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--get-ndk-major', metavar='NDK')
+arg_parser.add_argument('--get-ndk-minor', metavar='NDK')
+args = arg_parser.parse_args()
 
 def get_matrices():
   def latest_ndk(matrix, extras=False):
@@ -206,19 +211,28 @@ def github(matrices, file):
 
 
 ndk_regex = re.compile(r'^r(\d+)([a-z]?)(?:-beta(\d+))?$')
+def convert_ndk(r):
+  m = ndk_regex.match(r)
+  if m is None:
+    raise ValueError(r)
+  r = m.groups()
+  return (
+    int(r[0]),
+    0 if not r[1] else ord(r[1]) - ord('a'),
+    None if r[2] is None else int(r[2]),
+  )
+
+if args.get_ndk_major is not None:
+  print(convert_ndk(args.get_ndk_major)[0])
+  sys.exit(0)
+
+if args.get_ndk_minor is not None:
+  print(convert_ndk(args.get_ndk_minor)[1])
+  sys.exit(0)
+
 def compare_ndk(a, b):
-  def convert(r):
-    m = ndk_regex.match(r)
-    if m is None:
-      raise ValueError(r)
-    r = m.groups()
-    return (
-      int(r[0]),
-      0 if not r[1] else ord(r[1]) - ord('a'),
-      None if r[2] is None else int(r[2]),
-    )
-  a = convert(a)
-  b = convert(b)
+  a = convert_ndk(a)
+  b = convert_ndk(b)
   if a[0] == b[0]:
     if a[1] == b[1]:
       if a[2] is None and b[2] is None:

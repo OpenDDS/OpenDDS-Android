@@ -46,6 +46,8 @@ else
 fi
 
 # Android NDK
+export ndk_major_rev=$(./matrix.py --get-ndk-major $ndk)
+export ndk_minor_rev=$(./matrix.py --get-ndk-minor $ndk)
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
 export use_toolchain=${use_toolchain-"false"}
 need_toolchain=$use_toolchain
