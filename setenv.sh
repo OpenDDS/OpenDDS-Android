@@ -75,16 +75,10 @@ export ace_tao=${ace_tao-'doc_group_master'}
 case $ace_tao in
   'doc_group_master')
     export ace_tao_default_branch='master'
-    # TODO: Remove
-    export ACE_TAO_REPO=https://github.com/iguessthislldo/ACE_TAO
-    export ACE_TAO_BRANCH=igtd/android-ndk-compile
     ;;
 
   'doc_group_ace6_tao2')
     export ace_tao_default_branch='ace6tao2'
-    # TODO: Remove
-    export ACE_TAO_REPO=https://github.com/iguessthislldo/ACE_TAO
-    export ACE_TAO_BRANCH=igtd/android-ndk-compile-ace6
     ;;
 
   'oci')
