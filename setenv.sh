@@ -57,7 +57,7 @@ if $need_toolchain
 then
   export toolchain_name="$ndk-$arch-android-$api-toolchain"
   export android_toolchain="${workspace}/${toolchain_name}"
-  export PATH="$android_toolchain/bin":${PATH}
+  export PATH=${PATH}:"$android_toolchain/bin"
 fi
 
 # OpenDDS
