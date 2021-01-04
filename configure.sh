@@ -11,6 +11,7 @@ then
   else
     extra_configure_flags+=("--java=${jdk}")
   fi
+  extra_configure_flags+=("--macros=ANDROID_API_PATH=$ANDROID_SDK/platforms/android-$target_api")
 fi
 
 if $use_security

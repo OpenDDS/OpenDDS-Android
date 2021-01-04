@@ -117,6 +117,11 @@ export PATH=${PATH}:"$ACE_ROOT/bin"
 
 # Optional Features
 export use_java=${use_java:-false}
+if $use_java
+then
+  export ANDROID_SDK="${ANDROID_SDK-"${workspace}/android-sdk"}"
+  export target_api="${target_api-"30"}"
+fi
 if $use_security
 then
   export GNU_ICONV_ROOT="${GNU_ICONV_ROOT-"${workspace}/secdeps_prefix"}"
