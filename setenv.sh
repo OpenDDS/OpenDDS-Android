@@ -1,10 +1,6 @@
 if ${OPENDDS_ANDROID_SETENV:-false}; then return; fi
 export OPENDDS_ANDROID_SETENV='true'
 
-export OPENDDS_REPO=https://github.com/ClaytonCalabrese/OpenDDS
-export OPENDDS_BRANCH=android_api30_reconnect
-export use_java=true
-
 export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
 
 # Getting Configuration
@@ -16,6 +12,12 @@ then
     cp ${workspace}/default.settings.sh ${workspace}/settings.sh
   fi
   source ${workspace}/settings.sh
+fi
+
+# Alternate settings.sh that can be committed temporarily for branches.
+if [ -f override_settings.sh ]
+then
+  source override_settings.sh
 fi
 
 # Convert arch to target and abi
