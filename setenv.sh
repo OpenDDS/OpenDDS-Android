@@ -40,8 +40,8 @@ else
 fi
 
 # Android NDK
-ndk_major_rev=$(echo $ndk | grep -oE '[0-9]+')
-ndk_minor_rev=$(echo $ndk | grep -oE '[a-j]' | tr '[a-j]' '[0-9]')
+export ndk_major_rev=$(./matrix.py --get-ndk-major $ndk)
+export ndk_minor_rev=$(./matrix.py --get-ndk-minor $ndk)
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
 export use_toolchain=${use_toolchain-"false"}
 need_toolchain=$use_toolchain
