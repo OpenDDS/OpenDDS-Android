@@ -11,6 +11,7 @@ default_default_flags = dict(
   use_security=False,
   use_java=False,
   use_toolchain=False,
+  target_api=30,
 )
 
 arg_parser = argparse.ArgumentParser()
@@ -44,10 +45,19 @@ def get_matrices():
     ace_tao='doc_group_master',
   )
   latest_ndk(doc_group_master_matrix, extras=True)
-  doc_group_master_matrix.add_ndk("r21d", 16, 29) # TODO: r21d is marked as an "LTS" so maybe test it more?
+  # TODO: r21d is marked as an "LTS" so maybe test it more?
+  doc_group_master_matrix.add_ndk("r21d", 16, 29)
   doc_group_master_matrix.add_ndk("r20b", 16, 29)
   doc_group_master_matrix.add_ndk("r19c", 16, 28)
-  doc_group_master_matrix.add_ndk("r18b", 16, 28,
+  doc_group_master_matrix.add_ndk("r18b", 16,
+    default_flags=dict(
+      use_toolchain=True,
+      use_java=True,
+      # Make sure API<24 work because of NetworkCallback
+      target_api=16,
+    ),
+  )
+  doc_group_master_matrix.add_ndk("r18b", 28,
     default_flags=dict(
       use_toolchain=True,
     ),
@@ -100,15 +110,19 @@ class Build:
 
   def __str__(self):
     result = '{}-{}-{}'.format(self.ndk, self.arch, self.api)
+    def append(result, s):
+      return '{}-{}'.format(result, s.replace('_', '-'))
     for k, v in self.flags.items():
       if k.startswith('use_'):
         flag = k[4:]
+      elif k in ('target_api',):
+        flag = '{}-{}'.format(k, v)
       else:
         flag = k
       if k in default_default_flags and v != default_default_flags[k]:
-        result += '-' + flag.replace('_', '-')
+        result = append(result, flag)
       elif isinstance(v, str):
-        result += '-' + v.replace('_', '-')
+        result = append(result, v)
     return result
 
   def __repr__(self):
@@ -181,8 +195,11 @@ def shell_value(value):
     return "true" if value else "false"
   elif isinstance(value, str):
     return '"{}"'.format(value)
+  elif isinstance(value, int):
+    return str(value)
   else:
     raise TypeError('Unexpected Type: ' + repr(type(value)))
+
 
 def fill_line(line, char, length = 80):
   if line:
@@ -222,13 +239,16 @@ def convert_ndk(r):
     None if r[2] is None else int(r[2]),
   )
 
+
 if args.get_ndk_major is not None:
   print(convert_ndk(args.get_ndk_major)[0])
   sys.exit(0)
 
+
 if args.get_ndk_minor is not None:
   print(convert_ndk(args.get_ndk_minor)[1])
   sys.exit(0)
+
 
 def compare_ndk(a, b):
   a = convert_ndk(a)
