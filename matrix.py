@@ -20,8 +20,12 @@ arg_parser.add_argument('--get-ndk-minor', metavar='NDK')
 args = arg_parser.parse_args()
 
 def get_matrices():
-  def latest_ndk(matrix, extras=False):
-    ndk = 'r22'
+  beta_ndk = 'r23-beta2'
+  stable_ndk = 'r22b'
+  # TODO: Test LTS releases more than edge APIs?
+  lts_ndk = 'r21e'
+
+  def comprehensive(matrix, ndk, extras=False):
     min_max_apis = (16, 30)
     # Build all APIs using NDK directly with security and Java on max and min
     # APIs.
@@ -44,9 +48,9 @@ def get_matrices():
     url='https://github.com/DOCGroup/ACE_TAO',
     ace_tao='doc_group_master',
   )
-  latest_ndk(doc_group_master_matrix, extras=True)
-  # TODO: r21d is marked as an "LTS" so maybe test it more?
-  doc_group_master_matrix.add_ndk("r21d", 16, 29)
+  comprehensive(doc_group_master_matrix, stable_ndk, extras=True)
+  comprehensive(doc_group_master_matrix, beta_ndk, extras=True)
+  doc_group_master_matrix.add_ndk(lts_ndk, 16, 29)
   doc_group_master_matrix.add_ndk("r20b", 16, 29)
   doc_group_master_matrix.add_ndk("r19c", 16, 28)
   doc_group_master_matrix.add_ndk("r18b", 16,
@@ -69,7 +73,7 @@ def get_matrices():
     url='https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2',
     ace_tao='doc_group_ace6_tao2',
   )
-  latest_ndk(doc_group_ace6_tao2_matrix)
+  comprehensive(doc_group_ace6_tao2_matrix, stable_ndk)
   doc_group_ace6_tao2_matrix.add_ndk("r19c", 16, 28)
   doc_group_ace6_tao2_matrix.add_ndk("r18b", 16, 28,
     default_flags=dict(
@@ -89,7 +93,7 @@ def get_matrices():
     ace_tao='oci',
     use_toolchain=True,
   )
-  latest_ndk(oci_matrix)
+  comprehensive(oci_matrix, stable_ndk)
 
   return [
     doc_group_master_matrix,
