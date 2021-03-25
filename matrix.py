@@ -19,24 +19,37 @@ arg_parser.add_argument('--get-ndk-major', metavar='NDK')
 arg_parser.add_argument('--get-ndk-minor', metavar='NDK')
 args = arg_parser.parse_args()
 
+
+def populate_ndks():
+  Ndk('r23-beta2', 16, 30)
+  Ndk('r22b', 16, 30, latest_stable=True)
+  Ndk('r21e', 16, 29, latest_lts=True)
+  Ndk("r20b", 16, 29)
+  Ndk("r19c", 16, 28)
+  Ndk('r18b', 16, 28)
+  Ndk('r12b', 16, 24)
+
+
+non_existent_apis = set([20, 25])
+
+
+def default_arch(api):
+  return "arm64" if api >= 21 else "arm"
+
+
 def get_matrices():
-  beta_ndk = 'r23-beta2'
-  stable_ndk = 'r22b'
-  # TODO: Test LTS releases more than edge APIs?
-  lts_ndk = 'r21e'
 
   def comprehensive(matrix, ndk, extras=False):
-    min_max_apis = (16, 30)
     # Build all APIs using NDK directly with security and Java on max and min
     # APIs.
-    matrix.add_ndk(ndk, api_range=min_max_apis,
+    matrix.add_ndk(ndk, 'all',
       flags_on_edges=dict(
         use_security=extras,
         use_java=extras,
       ),
     )
     # Build Min and Max APIs using standalone toolchain.
-    matrix.add_ndk(ndk, *min_max_apis,
+    matrix.add_ndk(ndk, 'minmax',
       default_flags=dict(
         use_toolchain=True,
       ),
@@ -48,12 +61,12 @@ def get_matrices():
     url='https://github.com/DOCGroup/ACE_TAO',
     ace_tao='doc_group_master',
   )
-  comprehensive(doc_group_master_matrix, stable_ndk, extras=True)
-  comprehensive(doc_group_master_matrix, beta_ndk, extras=True)
-  doc_group_master_matrix.add_ndk(lts_ndk, 16, 29)
-  doc_group_master_matrix.add_ndk("r20b", 16, 29)
-  doc_group_master_matrix.add_ndk("r19c", 16, 28)
-  doc_group_master_matrix.add_ndk("r18b", 16,
+  comprehensive(doc_group_master_matrix, 'latest_stable', extras=True)
+  comprehensive(doc_group_master_matrix, 'latest_beta', extras=True)
+  doc_group_master_matrix.add_ndk('latest_lts', 'minmax')
+  doc_group_master_matrix.add_ndk('r20b', 'minmax')
+  doc_group_master_matrix.add_ndk('r19c', 'minmax')
+  doc_group_master_matrix.add_ndk('r18b', 'min',
     default_flags=dict(
       use_toolchain=True,
       use_java=True,
@@ -61,7 +74,7 @@ def get_matrices():
       target_api=16,
     ),
   )
-  doc_group_master_matrix.add_ndk("r18b", 28,
+  doc_group_master_matrix.add_ndk('r18b', 'max',
     default_flags=dict(
       use_toolchain=True,
     ),
@@ -73,14 +86,14 @@ def get_matrices():
     url='https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2',
     ace_tao='doc_group_ace6_tao2',
   )
-  comprehensive(doc_group_ace6_tao2_matrix, stable_ndk)
-  doc_group_ace6_tao2_matrix.add_ndk("r19c", 16, 28)
-  doc_group_ace6_tao2_matrix.add_ndk("r18b", 16, 28,
+  comprehensive(doc_group_ace6_tao2_matrix, 'latest_stable')
+  doc_group_ace6_tao2_matrix.add_ndk('r19c', 'minmax')
+  doc_group_ace6_tao2_matrix.add_ndk('r18b', 'minmax',
     default_flags=dict(
       use_toolchain=True,
     ),
   )
-  doc_group_ace6_tao2_matrix.add_ndk("r12b", 16, 24,
+  doc_group_ace6_tao2_matrix.add_ndk('r12b', 'minmax',
     default_flags=dict(
       use_toolchain=True,
       # r12b's make_standalone_toolchain.py only works with Python 2 and 18.04
@@ -98,7 +111,7 @@ def get_matrices():
     ace_tao='oci',
     use_toolchain=True,
   )
-  comprehensive(oci_matrix, stable_ndk)
+  comprehensive(oci_matrix, 'latest_stable')
 
   return [
     doc_group_master_matrix,
@@ -107,13 +120,69 @@ def get_matrices():
   ]
 
 
+def get_api_range(api_range):
+  rv = set()
+  if api_range:
+    rv = set(range(api_range[0], api_range[1] + 1)) - non_existent_apis
+  return rv
+
+
+class Ndk:
+  all_ndks = {}
+  valid_nicknames = ['latest_stable', 'latest_lts', 'latest_beta']
+
+  def __init__(self, name, min_api, max_api, latest_stable=False, latest_lts=False):
+    self.name = name
+    self.min_api = min_api
+    self.max_api = max_api
+    self.latest_stable = latest_stable
+    self.latest_lts = latest_lts
+    self.latest_beta = 'beta' in name
+    self.all_ndks[name] = self
+    self.nicknames = \
+      [nickname for nickname in self.valid_nicknames if getattr(self, nickname)]
+
+  @classmethod
+  def get(cls, name):
+    if name in cls.all_ndks:
+      return cls.all_ndks[name]
+    # Find by nickname
+    for ndk in cls.all_ndks.values():
+      if name in ndk.nicknames:
+        return ndk
+    if ndk in cls.valid_nicknames:
+      return None
+    raise ValueError("Couldn't find a NDK named or nicknamed {}".format(repr(name)))
+
+  def all_apis(self):
+    return list(get_api_range((self.min_api, self.max_api)))
+
+  def apis_by_name(self, name):
+    if name == 'all':
+      return self.all_apis()
+    elif name == 'minmax':
+      return [self.min_api, self.max_api]
+    elif name == 'min':
+      return [self.min_api]
+    elif name == 'max':
+      return [self.max_api]
+    else:
+      raise ValueError("Invalid API list name: {}".format(repr(name)))
+
+  def __str__(self):
+    return self.name
+
+
+populate_ndks()
+
+
 class Build:
   builtin_properties = ['name', 'arch', 'ndk', 'api']
 
   def __init__(self, ndk, api, arch=None, flags={}):
     self.ndk = ndk
     self.api = api
-    self.arch = ("arm64" if api >= 21 else "arm") if arch is None else arch
+    self.arch = default_arch(api) if arch is None else arch
     self.flags = flags
     self.all_properties = self.builtin_properties + list(self.flags.keys())
 
@@ -154,7 +223,6 @@ class Matrix:
     self.ndks = []
     self.builds = []
     self.builds_by_ndk = {}
-    self.skip_apis = [20, 25]
     self.apis = []
     self.default_flags = default_default_flags.copy()
     self.default_flags.update(default_flags)
@@ -173,20 +241,32 @@ class Matrix:
           return True
     return False
 
-  def add_ndk(self, name, *apis, api_range=None, default_flags={}, flags_on_edges={}):
+  def add_ndk(self, ndk, *args, api_range=None, default_flags={}, flags_on_edges={}):
+    ndk = Ndk.get(ndk)
+    if ndk is None:
+      print("Skipping {} {} {}: No such NDK at the moment".format(ndk, args, api_range));
+    name = str(ndk)
     new_ndk = name not in self.ndks
     if new_ndk:
       self.ndks.append(name)
-    builds = []
-    api_list=list(apis)
-    if api_range:
-      for api in range(api_range[0], api_range[1] + 1):
-        if api not in apis and api not in self.skip_apis:
-          api_list.append(api)
+
+    # See if any args are API list names, else assume they are API numbers
+    apis = []
+    for arg in args:
+      if isinstance(arg, str):
+        apis.extend(ndk.apis_by_name(arg))
+      else:
+        apis.append(arg)
+
+    # Turn args and api_range into a proper list of APIs
+    api_list = list(set(apis) | get_api_range(api_range))
     api_list.sort(reverse=True)
     self.apis = list(set(self.apis) | set(api_list))
     self.apis.sort()
     last = len(api_list) - 1
+
+    # Create Specific Builds
+    builds = []
     for i, api in enumerate(api_list):
       flags = self.default_flags.copy()
       flags.update(default_flags)
