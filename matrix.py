@@ -83,6 +83,11 @@ def get_matrices():
   doc_group_ace6_tao2_matrix.add_ndk("r12b", 16, 24,
     default_flags=dict(
       use_toolchain=True,
+      # r12b's make_standalone_toolchain.py only works with Python 2 and 18.04
+      # is the last Ubuntu to have Python 2.
+      # TODO: Might have to remove r12b builds if GitHub stops supporting
+      # 18.04, but we might drop support for ACE6 before that happens.
+      os='ubuntu-18.04',
     ),
   )
 
