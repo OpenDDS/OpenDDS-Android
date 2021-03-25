@@ -41,21 +41,29 @@ jobs:
       run: |
         bash get_sdk.sh
 
+    - name: Get Xerces
+      if: ${{ matrix.use_security }}
+      run: |
+        bash get_xerces.sh
+
+    - name: Get OpenSSL
+      if: ${{ matrix.use_security }}
+      run: |
+        bash get_openssl.sh
+
     - name: Get ACE/TAO and OpenDDS
       run: |
         bash get_ace_tao.sh
         bash get_opendds.sh
 
-    - name: Get Security Dependencies
-      if: ${{ matrix.use_security }}
-      run: |
-        bash get_xerces.sh
-        bash get_openssl.sh
-
-    - name: Configure and Build Security Dependencies
+    - name: Configure and Build Xerces
       if: ${{ matrix.use_security }}
       run: |
         bash build_xerces.sh
+
+    - name: Configure and Build OpenSSL
+      if: ${{ matrix.use_security }}
+      run: |
         bash build_openssl.sh
 
     - name: Configure ACE/TAO and OpenDDS
