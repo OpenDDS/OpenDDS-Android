@@ -27,17 +27,14 @@ function get {
   fi
 }
 
-basename="openssl-1.1.1i"
+if [ $ndk_major_rev -lt 22 ]
+then
+  version="1.1.1k"
+else
+  version="3.0.0-alpha13"
+fi
+basename="openssl-$version"
 tarname="$basename.tar.gz"
 url="https://www.openssl.org/source/$tarname"
 ourname="openssl_source"
-if [ "$ndk" != 'r22' ]
-then
-  get
-else
-  if [ ! -d openssl_source ]
-  then
-    git clone --depth 1 'https://github.com/iguessthislldo/openssl' \
-      --branch 'igtd/android-ndk-r22-beta1' openssl_source
-  fi
-fi
+get
