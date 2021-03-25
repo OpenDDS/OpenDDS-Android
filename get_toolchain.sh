@@ -1,5 +1,7 @@
 set -e
 
+echo get_toolchain.sh =========================================================
+
 source setenv.sh
 
 if $need_toolchain && [ ! -d $toolchain_name ]

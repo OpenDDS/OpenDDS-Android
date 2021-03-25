@@ -1,5 +1,7 @@
 set -e
 
+echo get_opendds.sh ===========================================================
+
 source setenv.sh
 
 if [ ! -d OpenDDS ]

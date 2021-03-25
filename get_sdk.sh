@@ -1,6 +1,8 @@
 # TODO: Support SDK that comes with Android Studio
 set -e
 
+echo get_sdk.sh ===============================================================
+
 source setenv.sh
 
 sdk_dir=android-sdk

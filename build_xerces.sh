@@ -1,5 +1,7 @@
 set -e
 
+echo build_xerces.sh ==========================================================
+
 source setenv.sh
 source make.sh
 

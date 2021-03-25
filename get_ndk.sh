@@ -1,5 +1,7 @@
 set -e
 
+echo get_ndk.sh ===============================================================
+
 source setenv.sh
 
 ndk_dir=android-ndk-$ndk

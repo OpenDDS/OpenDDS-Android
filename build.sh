@@ -1,5 +1,7 @@
 set -e
 
+echo build.sh =================================================================
+
 source setenv.sh
 source make.sh
 

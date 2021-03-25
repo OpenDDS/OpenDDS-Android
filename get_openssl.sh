@@ -1,5 +1,7 @@
 set -e
 
+echo get_openssl.sh ===========================================================
+
 source setenv.sh
 
 function get {

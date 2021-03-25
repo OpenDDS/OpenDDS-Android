@@ -1,6 +1,8 @@
 set -e
 source setenv.sh
 
+echo configure.sh =============================================================
+
 extra_configure_flags=()
 
 if $use_java

@@ -1,4 +1,7 @@
 set -e
+
+echo build_openssl.sh =========================================================
+
 source setenv.sh
 source make.sh
 

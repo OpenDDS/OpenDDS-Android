@@ -1,5 +1,7 @@
 set -e
 
+echo get_ace_tao.sh ===========================================================
+
 source setenv.sh
 
 if $use_oci_ace_tao
