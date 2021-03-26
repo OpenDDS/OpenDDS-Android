@@ -16,6 +16,7 @@ export PATH=$path:$PATH
 echo ====================== OPENSSL DEBUG =====================================
 echo $PATH
 ls $ANDROID_NDK/toolchains/llvm/prebuilt/$ndk_platform_name/bin
+which clang
 echo ====================== END OPENSSL DEBUG =================================
 
 cd openssl_source
