@@ -5,8 +5,24 @@ echo get_sdk.sh ===============================================================
 
 source setenv.sh
 
+case $host_os in
+  'linux')
+    sdk_platform_name="linux"
+    ;;
+
+  'macos')
+    sdk_platform_name="mac"
+    ;;
+
+  *)
+    echo "Unknown host_os: \"$host_os\"" 1>&2
+    exit 1
+    ;;
+esac
+
 sdk_dir=android-sdk
-sdk_zip=commandlinetools-linux-6858069_latest.zip
+# TODO: Support Different SDK Versions?
+sdk_zip=commandlinetools-$sdk_platform_name-6858069_latest.zip
 
 sdkmanager="./$sdk_dir/cmdline-tools/bin/sdkmanager --sdk_root=android-sdk"
 

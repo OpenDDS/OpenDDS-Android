@@ -5,7 +5,7 @@ echo build_openssl.sh =========================================================
 source setenv.sh
 source make.sh
 
-path=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
+path=$ANDROID_NDK/toolchains/llvm/prebuilt/$ndk_platform_name/bin
 if [ ! -d $path ]
 then
   echo "$path does not exist!"

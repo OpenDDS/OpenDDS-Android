@@ -79,6 +79,14 @@ def get_matrices():
       use_toolchain=True,
     ),
   )
+  # Make sure everything works on macOS.
+  doc_group_master_matrix.add_ndk('latest_stable', 'max',
+    default_flags=dict(
+      use_java=True,
+      use_security=True,
+      os='macos-latest',
+    ),
+  )
 
   # DOC Group master ace6_tao2 branch
   doc_group_ace6_tao2_matrix = Matrix(
