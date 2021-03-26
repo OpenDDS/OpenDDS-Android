@@ -1,9 +1,11 @@
 # Try to craft the optimal make command and export it as $make
 set -e
 
+source "host.sh"
+
 make_command="make"
 
-make="$make_command -j $(nproc)"
+make="$make_command -j $logical_cores"
 
 # If Make version is at least 4, sync job output
 function make_version {

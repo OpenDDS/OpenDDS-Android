@@ -50,7 +50,7 @@ then
     rm -f $sdk_zip
 
     # Agree to all the licenses
-    yes | $sdkmanager --licenses
+    for i in {1..20}; do echo y; done | $sdkmanager --licenses
   fi
 
   # Install target API platform

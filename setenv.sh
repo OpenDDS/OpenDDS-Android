@@ -3,20 +3,18 @@ export OPENDDS_ANDROID_SETENV='true'
 
 export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
 
-# Detect Host OS
-case $OSTYPE in
-  'linux-gnu'*)
-    host_os='linux'
+source "host.sh"
+case $host_os in
+  'linux')
     ndk_platform_name="linux-x86_64"
     ;;
 
-  'darwin'*)
-    host_os='macos'
+  'macos')
     ndk_platform_name="darwin-x86_64"
     ;;
 
   *)
-    echo "Unsupported OSTYPE: \"$OSTYPE\"" 1>&2
+    echo "Unknown host_os: \"$host_os\"" 1>&2
     exit 1
     ;;
 esac
