@@ -19,6 +19,11 @@ case $host_os in
     ;;
 esac
 
+download_file() {
+  echo "Downloading $1 ..."
+  curl --remote-name --remote-header-name --location --retry 3 --silent --show-error "$1"
+}
+
 # Getting Configuration
 if [ -z ${ndk+x} ]
 then

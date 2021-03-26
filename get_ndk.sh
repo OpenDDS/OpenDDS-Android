@@ -19,8 +19,7 @@ then
     exit 0
   fi
   url=https://dl.google.com/android/repository/$ndk_zip
-  echo "Downloading $url..."
-  wget --no-verbose $url
+  download_file "$url"
   echo "Done, Unziping $ndk_zip..."
   unzip -qq $ndk_zip
   echo "Done"

@@ -39,9 +39,7 @@ then
       ln -s ../../$sdk_dir
       exit 0
     fi
-    url=https://dl.google.com/android/repository/$sdk_zip
-    echo "Downloading $url..."
-    wget --no-verbose $url
+    download_file "https://dl.google.com/android/repository/$sdk_zip"
     echo "Done, Unziping $sdk_zip..."
     unzip -qq $sdk_zip
 
