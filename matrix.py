@@ -8,6 +8,8 @@ import argparse
 
 debug = False
 default_default_flags = dict(
+  # TODO: os='ubuntu-latest',
+  os='ubuntu-18.04',
   use_security=False,
   use_java=False,
   use_toolchain=False,
@@ -79,14 +81,14 @@ def get_matrices():
       use_toolchain=True,
     ),
   )
-  # Make sure everything works on macOS.
-  doc_group_master_matrix.add_ndk('latest_stable', 'max',
-    default_flags=dict(
-      use_java=True,
-      use_security=True,
-      os='macos-latest',
-    ),
-  )
+  # # Make sure everything works on macOS.
+  # doc_group_master_matrix.add_ndk('latest_stable', 'max',
+  #   default_flags=dict(
+  #     use_java=True,
+  #     use_security=True,
+  #     os='macos-latest',
+  #   ),
+  # )
 
   # DOC Group master ace6_tao2 branch
   doc_group_ace6_tao2_matrix = Matrix(
@@ -203,10 +205,16 @@ class Build:
         flag = k[4:]
       elif k in ('target_api',):
         flag = '{}-{}'.format(k, v)
+      elif k in default_default_flags and isinstance(v, str):
+        if k == 'os' and v.endswith('-latest'):
+          flag = v[:-7]
+        else:
+          flag = v
       else:
         flag = k
-      if k in default_default_flags and v != default_default_flags[k]:
-        result = append(result, flag)
+      if k in default_default_flags:
+        if v != default_default_flags[k]:
+          result = append(result, flag)
       elif isinstance(v, str):
         result = append(result, v)
     return result
