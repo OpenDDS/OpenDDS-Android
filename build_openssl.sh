@@ -13,6 +13,11 @@ then
 fi
 export PATH=$path:$PATH
 
+echo ====================== OPENSSL DEBUG =====================================
+echo $PATH
+ls $ANDROID_NDK/toolchains/llvm/prebuilt/$ndk_platform_name/bin
+echo ====================== END OPENSSL DEBUG =================================
+
 cd openssl_source
 ./Configure no-tests no-shared android-$arch -D__ANDROID_API__=$api --prefix=$SSL_ROOT
 $make_command install_sw # No documentation, see https://github.com/openssl/openssl/issues/8170
