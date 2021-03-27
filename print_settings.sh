@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # For Quickly Reproducing Failing CI Builds
 source setenv.sh
 cat << EOF

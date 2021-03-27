@@ -1,7 +1,12 @@
-set -e
-source setenv.sh
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
 
 echo configure.sh =============================================================
+
+source setenv.sh
 
 extra_configure_flags=()
 

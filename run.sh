@@ -1,4 +1,10 @@
-set -ex
+#!/usr/bin/env bash
+
+set -x
+set -o pipefail
+set -o errexit
+set -o nounset
+
 source settings.sh
 use_security=${use_security:-false}
 

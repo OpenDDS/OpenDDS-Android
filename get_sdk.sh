@@ -1,9 +1,14 @@
-# TODO: Support SDK that comes with Android Studio
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
 
 echo get_sdk.sh ===============================================================
 
 source setenv.sh
+
+# TODO: Support SDK that comes with Android Studio
 
 case $host_os in
   'linux')

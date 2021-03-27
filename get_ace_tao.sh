@@ -1,4 +1,8 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
 
 echo get_ace_tao.sh ===========================================================
 
