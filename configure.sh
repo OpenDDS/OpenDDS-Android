@@ -26,7 +26,7 @@ then
   extra_configure_flags+=("--xerces3=${XERCESCROOT}" "--openssl=${SSL_ROOT}" --security)
 fi
 
-if [ -z "${host_tools+x}" ]
+if [ -n "$host_tools" ]
 then
   extra_configure_flags+=("--host-tools=$host_tools" "--no-tests")
 fi
@@ -70,7 +70,7 @@ echo '#define ACE_DISABLE_MKTEMP' >> "$ace_target/ace/config.h"
 echo '#define ACE_DISABLE_TEMPNAM' >> "$ace_target/ace/config.h"
 echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
 
-if $use_oci_ace_tao && [ -n "$ace_host" ]
+if $use_oci_ace_tao && [ ! -z "${ace_host+x}" ]
 then
   echo 'CPPFLAGS += -Wno-deprecated-declarations' >> \
     "$ace_host/include/makeinclude/platform_macros.GNU"

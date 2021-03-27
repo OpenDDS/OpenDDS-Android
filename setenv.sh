@@ -128,7 +128,8 @@ fi
 export MPC_ROOT="${MPC_ROOT-"${workspace}/${mpc_dir}"}"
 export ACE_ROOT="${ACE_ROOT-"${workspace}/${ace_dir}"}"
 export TAO_ROOT="${TAO_ROOT-"${workspace}/${tao_dir}"}"
-if [ -z "${host_tools+x}" ]
+export host_tools=${host_tools:-}
+if [ -z "$host_tools" ]
 then
   ace_target="$ACE_ROOT/build/target"
   ace_host="$ACE_ROOT/build/host"
@@ -158,4 +159,3 @@ then
   export SSL_ROOT="${SSL_ROOT-"${workspace}/secdeps_prefix"}"
 fi
 export build_ace_tests=${build_ace_tests:-true}
-export host_tools=${host_tools:-}
