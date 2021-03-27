@@ -14,7 +14,7 @@ case $OSTYPE in
     ;;
 
   *)
-    echo "Unsupported OSTYPE: \"$OSTYPE\"" 1>&2
+    echo "Error: Unsupported OSTYPE: \"$OSTYPE\"" 1>&2
     exit 1
     ;;
 esac

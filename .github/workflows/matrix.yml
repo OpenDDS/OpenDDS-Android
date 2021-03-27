@@ -171,6 +171,16 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
+          - name: r22b-arm-20-doc-group-master
+            arch: arm
+            ndk: r22b
+            api: 20
+            os: "ubuntu-18.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_master"
           - name: r22b-arm-19-doc-group-master
             arch: arm
             ndk: r22b
@@ -316,6 +326,16 @@ jobs:
             arch: arm64
             ndk: r23-beta2
             api: 21
+            os: "ubuntu-18.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_master"
+          - name: r23-beta2-arm-20-doc-group-master
+            arch: arm
+            ndk: r23-beta2
+            api: 20
             os: "ubuntu-18.04"
             use_security: false
             use_java: false
@@ -558,6 +578,16 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
+          - name: r22b-arm-20-doc-group-ace6-tao2
+            arch: arm
+            ndk: r22b
+            api: 20
+            os: "ubuntu-18.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
           - name: r22b-arm-19-doc-group-ace6-tao2
             arch: arm
             ndk: r22b
@@ -767,6 +797,16 @@ jobs:
             arch: arm64
             ndk: r22b
             api: 21
+            os: "ubuntu-18.04"
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            target_api: 30
+            ace_tao: "oci"
+          - name: r22b-arm-20-toolchain-oci
+            arch: arm
+            ndk: r22b
+            api: 20
             os: "ubuntu-18.04"
             use_security: false
             use_java: false

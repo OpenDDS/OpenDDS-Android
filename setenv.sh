@@ -14,7 +14,7 @@ case $host_os in
     ;;
 
   *)
-    echo "Unknown host_os: \"$host_os\"" 1>&2
+    echo "Error: Unknown host_os: \"$host_os\"" 1>&2
     exit 1
     ;;
 esac
@@ -62,7 +62,7 @@ elif [ "$arch" = "NONE" ] # Bypass
 then
   true
 else
-  echo "Invalid Arch: $arch, must be arm, arm64, x86, or x86_64" 1>&2
+  echo "Error: \"$arch\" is invalid, must be arm, arm64, x86, or x86_64" 1>&2
   exit 1
 fi
 
@@ -111,7 +111,7 @@ case $ace_tao in
     ;;
 
   *)
-    echo "Invalid ace_tao: $ace_tao" 1>&2
+    echo "Error: Invalid ace_tao: $ace_tao" 1>&2
     exit 1
     ;;
 esac
@@ -145,7 +145,11 @@ export use_java=${use_java:-false}
 if $use_java
 then
   export ANDROID_SDK="${ANDROID_SDK-"${workspace}/android-sdk"}"
-  export target_api="${target_api-"30"}"
+  if [ -z ${target_api+x} ]
+  then
+    echo "Error: use_java is true, but target_api isn't set" 1>&2
+    exit 1
+  fi
 fi
 if $use_security
 then

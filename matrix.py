@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
+# Generates the combinations of Android NDK revisions, API levels, and other
+# information to build.
+
 import sys
 from enum import Enum
 import re
 from functools import cmp_to_key
 import argparse
 
-debug = False
+# Start of matrix data ========================================================
+# This is what needs to be kept to date
+
 default_default_flags = dict(
   # TODO: os='ubuntu-latest',
   os='ubuntu-18.04',
@@ -16,13 +21,10 @@ default_default_flags = dict(
   target_api=30,
 )
 
-arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('--get-ndk-major', metavar='NDK')
-arg_parser.add_argument('--get-ndk-minor', metavar='NDK')
-args = arg_parser.parse_args()
 
-
-def populate_ndks():
+def define_ndks():
+  # Define NDK versions, their min and max API Levels, and if they have
+  # nicknames.
   Ndk('r23-beta2', 16, 30)
   Ndk('r22b', 16, 30, latest_stable=True)
   Ndk('r21e', 16, 29, latest_lts=True)
@@ -32,7 +34,8 @@ def populate_ndks():
   Ndk('r12b', 16, 24)
 
 
-non_existent_apis = set([20, 25])
+# API Level 25 was Android Wear-only
+skip_apis = set([25])
 
 
 def default_arch(api):
@@ -129,11 +132,20 @@ def get_matrices():
     oci_matrix,
   ]
 
+# End of matrix data ==========================================================
+# Below is supposed to be generic code that uses the data
+
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--get-ndk-major', metavar='NDK')
+arg_parser.add_argument('--get-ndk-minor', metavar='NDK')
+arg_parser.add_argument('--debug', action='store_true')
+args = arg_parser.parse_args()
+
 
 def get_api_range(api_range):
   rv = set()
   if api_range:
-    rv = set(range(api_range[0], api_range[1] + 1)) - non_existent_apis
+    rv = set(range(api_range[0], api_range[1] + 1)) - skip_apis
   return rv
 
 
@@ -183,10 +195,14 @@ class Ndk:
     return self.name
 
 
-populate_ndks()
+define_ndks()
 
 
 class Build:
+  '''Represents a single build for a particular Android target with a
+  particular set of options.
+  '''
+
   builtin_properties = ['name', 'arch', 'ndk', 'api']
 
   def __init__(self, ndk, api, arch=None, flags={}):
@@ -230,8 +246,12 @@ class Build:
       name=str(self), arch=self.arch, ndk=self.ndk, api=self.api,
       **format_flags)
 
-
 class Matrix:
+  '''Represents information about a group of builds.
+
+  For now builds are grouped into matrices based on which ACE/TAO they use.
+  '''
+
   def __init__(self, name, mark=None, url=None, **default_flags):
     self.name = name
     self.mark = name[0] if mark is None else mark
@@ -258,6 +278,25 @@ class Matrix:
     return False
 
   def add_ndk(self, ndk, *args, api_range=None, default_flags={}, flags_on_edges={}):
+    '''Adds a build or set of builds for an NDK.
+
+    `ndk` can be an `Ndk` object, the name of the NDK ("r23") or a nickname
+    ("latest_stable").
+    `args` Are the Android API Levels to build. They can be a single API level
+    numbers, or a `str` nickname of a single or series of API levels associated
+    with the NDK. The nicknames are:
+      "min": The minimum API level supported by the NDK.
+      "max": The maximum API level supported by the NDK.
+      "minmax": Equivalent to `"min", "max"`.
+      "all": All the API levels supported by the NDK.
+    These are combined with `api_range` if also passed.
+    `api_range` is a tuple of two `int`s for a range of API levels to use.
+    These are combined with `args` if also passed.
+    `default_flags` are the flags to use on the builds.
+    `flags_on_edges` are the flags to override `default_flags` on the builds
+    with minimum and maximum API levels.
+    '''
+
     ndk = Ndk.get(ndk)
     if ndk is None:
       print("Skipping {} {} {}: No such NDK at the moment".format(ndk, args, api_range));
@@ -316,11 +355,11 @@ def fill_line(line, char, length = 80):
   return char * length
 
 
-def github(matrices, file):
+def github(matrices, file, **kw):
   for matrix in matrices:
-    comment(file, Kind.GITHUB, fill_line(matrix.name, '='))
+    comment(file, Kind.GhActions, fill_line(matrix.name, '='))
     for ndk in matrix.ndks:
-      comment(file, Kind.GITHUB, fill_line(ndk, '-'))
+      comment(file, Kind.GhActions, fill_line(ndk, '-'))
       for build in matrix.builds_by_ndk[ndk]:
         first = True
         for prop in build.all_properties:
@@ -382,7 +421,7 @@ def sort_ndks(ndks):
   return sorted(ndks, key=cmp_to_key(compare_ndk), reverse=True)
 
 
-def markdown(matrices, file):
+def readme(matrices, file, **kw):
   def print_row(cells):
     print('|', ' | '.join(cells), '|', file=file)
 
@@ -423,9 +462,33 @@ def markdown(matrices, file):
     print_row(cells)
 
 
+settings_export = re.compile(r'^(#)?export (\w+)=([^#]*)$')
+def default_settings(matrices, file, **kw):
+  for line in kw['before']:
+    line = line.rstrip('\n')
+    m = settings_export.match(line)
+    if m:
+      commented, name, value = m.groups()
+      if not commented:
+        commented = ''
+      if name == 'ndk':
+        value = str(Ndk.get('latest_stable'))
+      elif name in default_default_flags:
+        value = default_default_flags[name]
+        if commented and isinstance(value, bool):
+          value = shell_value(not value)
+        else:
+          value = shell_value(value)
+      line = '{}export {}={}'.format(commented, name, value)
+    print(line, file=file)
+
+
 class Kind(Enum):
-  GITHUB = ('.github/workflows/matrix.yml', '# {}', github),
-  MARKDOWN = ('README.md', '<!-- {} -->', markdown),
+  GhActions = ('.github/workflows/matrix.yml', '# {}', github),
+  ReadMe = ('README.md', '<!-- {} -->', readme),
+  DefaultSettings = ('default.settings.sh', '# {}', default_settings, {
+    'pass_before': True,
+  }),
 
 
 def get_comment(kind, *args, **kw):
@@ -470,7 +533,7 @@ class NullContext:
 
 matrices = get_matrices()
 for matrix in matrices:
-  if debug:
+  if args.debug:
     print(matrix.name)
     for ndk in matrix.ndks:
       print(' ', ndk)
@@ -479,17 +542,23 @@ for matrix in matrices:
 
 
 for kind in Kind:
+  opts = {
+    'pass_before': False,
+  } if len(kind.value[0]) < 4 else kind.value[0][3]
   filename, before, after = read_file(kind)
-  if debug:
+  if args.debug:
     file_context = NullContext()
     file = sys.stdout
     print(fill_line(str(kind), '#'))
   else:
     file_context = file = open(filename, 'w')
   with file_context:
-    for line in before:
-      print(line, end='', file=file)
-    comment(file, kind, 'This part is generated by matrix.py')
-    kind.value[0][2](matrices, file)
+    if opts['pass_before']:
+      opts['before'] = before
+    else:
+      for line in before:
+        print(line, end='', file=file)
+      comment(file, kind, 'This part is generated by matrix.py')
+    kind.value[0][2](matrices, file, **opts)
     for line in after:
       print(line, end='', file=file)
