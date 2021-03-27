@@ -11,7 +11,7 @@ source make.sh
 
 # OpenDDS
 pushd $workspace/OpenDDS > /dev/null
-if [ -z "$host_tools" ]
+if [ -z "${host_tools+x}" ]
 then
   host_targets="TAO_IDL_EXE opendds_idl"
   target_targets="DDS_Messenger_Idl DDS_Messenger_Publisher DDS_Messenger_Subscriber"
