@@ -12,7 +12,7 @@ extra_configure_flags=()
 
 if $use_java
 then
-  if [ -z "${host_tools+x}" ]
+  if [ -z "${jdk+x}" ]
   then
     extra_configure_flags+=("--java")
   else
@@ -26,7 +26,7 @@ then
   extra_configure_flags+=("--xerces3=${XERCESCROOT}" "--openssl=${SSL_ROOT}" --security)
 fi
 
-if [ ! -z "${host_tools+x}" ]
+if [ -z "${host_tools+x}" ]
 then
   extra_configure_flags+=("--host-tools=$host_tools" "--no-tests")
 fi
