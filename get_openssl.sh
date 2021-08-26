@@ -33,12 +33,14 @@ function get {
   fi
 }
 
-if [ $ndk_major_rev -lt 22 ]
-then
-  version="1.1.1k"
-else
-  version="3.0.0-alpha13"
-fi
+# TODO: OpenDDS can't compile with OpenSSL 3 right now
+# if [ $ndk_major_rev -lt 22 ]
+# then
+#   version="1.1.1k"
+# else
+#   version="3.0.0-alpha13"
+# fi
+version="1.1.1l"
 basename="openssl-$version"
 tarname="$basename.tar.gz"
 url="https://www.openssl.org/source/$tarname"

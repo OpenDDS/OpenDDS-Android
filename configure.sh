@@ -72,7 +72,7 @@ echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
 
 if $use_oci_ace_tao && [ ! -z "${ace_host+x}" ]
 then
-  echo 'CPPFLAGS += -Wno-deprecated-declarations' >> \
+  echo 'CPPFLAGS += -Wno-deprecated-declarations -Wno-deprecated-copy' >> \
     "$ace_host/include/makeinclude/platform_macros.GNU"
 fi
 

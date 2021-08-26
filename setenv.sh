@@ -70,6 +70,7 @@ fi
 export ndk_major_rev=$(./matrix.py --get-ndk-major $ndk)
 export ndk_minor_rev=$(./matrix.py --get-ndk-minor $ndk)
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
+export android_cpp_stdlib="${ANDROID_NDK}/toolchains/llvm/prebuilt/$ndk_platform_name/sysroot/usr/lib/$target/libc++_shared.so"
 export use_toolchain=${use_toolchain-"false"}
 need_toolchain=$use_toolchain
 # Toolchain is needed for Iconv and Xerces
