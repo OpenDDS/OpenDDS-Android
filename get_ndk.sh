@@ -9,7 +9,7 @@ echo get_ndk.sh ===============================================================
 source setenv.sh
 
 ndk_dir=android-ndk-$ndk
-ndk_zip=$ndk_dir-$ndk_platform_name.zip
+ndk_zip=$ndk_dir-$ndk_platform_dl_name.zip
 
 if [ ! \( -d $ndk_dir -o -L $ndk_dir \) ]
 then

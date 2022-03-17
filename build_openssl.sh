@@ -9,13 +9,7 @@ echo build_openssl.sh =========================================================
 source setenv.sh
 source make.sh
 
-path=$ANDROID_NDK/toolchains/llvm/prebuilt/$ndk_platform_name/bin
-if [ ! -d $path ]
-then
-  echo "$path does not exist!"
-  exit 1
-fi
-export PATH=$path:$PATH
+export PATH="$android_toolchain_bin:$PATH"
 
 cd openssl_source
 ./Configure no-tests no-shared android-$arch -D__ANDROID_API__=$api --prefix=$SSL_ROOT
