@@ -25,9 +25,9 @@ default_default_flags = dict(
 def define_ndks():
   # Define NDK versions, their min and max API Levels, and if they have
   # nicknames.
-  Ndk('r23-beta2', 16, 30)
-  Ndk('r22b', 16, 30, latest_stable=True)
-  Ndk('r21e', 16, 29, latest_lts=True)
+  Ndk('r23b', 16, 30, latest_stable=True, latest_lts=True)
+  Ndk('r22b', 16, 30)
+  Ndk('r21e', 16, 29)
   Ndk("r20b", 16, 29)
   Ndk("r19c", 16, 28)
   Ndk('r18b', 16, 28)
@@ -69,6 +69,7 @@ def get_matrices():
   comprehensive(doc_group_master_matrix, 'latest_stable', extras=True)
   comprehensive(doc_group_master_matrix, 'latest_beta', extras=True)
   doc_group_master_matrix.add_ndk('latest_lts', 'minmax')
+  doc_group_master_matrix.add_ndk('r22b', 'minmax')
   doc_group_master_matrix.add_ndk('r20b', 'minmax')
   doc_group_master_matrix.add_ndk('r19c', 'minmax')
   doc_group_master_matrix.add_ndk('r18b', 'min',
@@ -172,7 +173,7 @@ class Ndk:
     for ndk in cls.all_ndks.values():
       if name in ndk.nicknames:
         return ndk
-    if ndk in cls.valid_nicknames:
+    if name in cls.valid_nicknames:
       return None
     raise ValueError("Couldn't find a NDK named or nicknamed {}".format(repr(name)))
 
@@ -297,9 +298,11 @@ class Matrix:
     with minimum and maximum API levels.
     '''
 
-    ndk = Ndk.get(ndk)
-    if ndk is None:
+    tmp_ndk = Ndk.get(ndk)
+    if tmp_ndk is None:
       print("Skipping {} {} {}: No such NDK at the moment".format(ndk, args, api_range));
+      return
+    ndk = tmp_ndk
     name = str(ndk)
     new_ndk = name not in self.ndks
     if new_ndk:
