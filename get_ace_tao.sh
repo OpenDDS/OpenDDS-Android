@@ -1,4 +1,10 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo get_ace_tao.sh ===========================================================
 
 source setenv.sh
 
@@ -7,9 +13,7 @@ then
   name="ACE+TAO-2.2a_with_latest_patches.tar.gz"
   if [ ! -f $name ]
   then
-    url=http://download.objectcomputing.com/TAO-2.2a/$name
-    echo "Downloading $url"
-    wget --no-verbose $url
+    download_file "http://download.objectcomputing.com/TAO-2.2a/$name"
   else
     echo "Already Downloaded $name"
   fi

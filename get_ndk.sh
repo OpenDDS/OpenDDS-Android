@@ -1,9 +1,15 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo get_ndk.sh ===============================================================
 
 source setenv.sh
 
 ndk_dir=android-ndk-$ndk
-ndk_zip=$ndk_dir-linux-x86_64.zip
+ndk_zip=$ndk_dir-$ndk_platform_dl_name.zip
 
 if [ ! \( -d $ndk_dir -o -L $ndk_dir \) ]
 then
@@ -17,8 +23,7 @@ then
     exit 0
   fi
   url=https://dl.google.com/android/repository/$ndk_zip
-  echo "Downloading $url..."
-  wget --no-verbose $url
+  download_file "$url"
   echo "Done, Unziping $ndk_zip..."
   unzip -qq $ndk_zip
   echo "Done"

@@ -3,6 +3,12 @@ export OPENDDS_ANDROID_SETENV='true'
 
 export workspace="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd )"
 
+download_file() {
+  echo "Downloading $1 ..."
+  curl --fail --remote-name --remote-header-name --location \
+    --retry 3 --silent --show-error "$1"
+}
+
 # Getting Configuration
 if [ -z ${ndk+x} ]
 then
@@ -12,6 +18,12 @@ then
     cp ${workspace}/default.settings.sh ${workspace}/settings.sh
   fi
   source ${workspace}/settings.sh
+fi
+
+# Alternate settings.sh that can be committed temporarily for branches.
+if [ -f override_settings.sh ]
+then
+  source override_settings.sh
 fi
 
 # Convert arch to target and abi
@@ -35,24 +47,57 @@ elif [ "$arch" = "NONE" ] # Bypass
 then
   true
 else
-  echo "Invalid Arch: $arch, must be arm, arm64, x86, or x86_64" 1>&2
+  echo "Error: \"$arch\" is invalid, must be arm, arm64, x86, or x86_64" 1>&2
   exit 1
 fi
 
 # Android NDK
 export ndk_major_rev=$(./matrix.py --get-ndk-major $ndk)
 export ndk_minor_rev=$(./matrix.py --get-ndk-minor $ndk)
+source "host.sh"
+case $host_os in
+  'linux')
+    ndk_platform_name="linux-x86_64"
+    if [ $ndk_major_rev -lt 23 ]
+    then
+      ndk_platform_dl_name="linux-x86_64"
+    else
+      ndk_platform_dl_name="linux"
+    fi
+    ;;
+
+  'macos')
+    ndk_platform_name="darwin-x86_64"
+    if [ $ndk_major_rev -lt 23 ]
+    then
+      ndk_platform_dl_name="darwin-x86_64"
+    else
+      ndk_platform_dl_name="darwin"
+    fi
+    ;;
+
+  *)
+    echo "Error: Unknown host_os: \"$host_os\"" 1>&2
+    exit 1
+    ;;
+esac
 export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
-export use_toolchain=${use_toolchain-"false"}
-need_toolchain=$use_toolchain
-# Toolchain is needed for Iconv and Xerces
-# TODO: See if they can be built without the toolchain
-export use_security=${use_security:-false}
-if $use_security
+export android_toolchain_root="${ANDROID_NDK}/toolchains/llvm/prebuilt/$ndk_platform_name"
+export android_cpp_stdlib="${android_toolchain_root}/sysroot/usr/lib/${target}/libc++_shared.so"
+export android_toolchain_bin="${android_toolchain_root}/bin"
+export android_toolchain_prefix="${android_toolchain_bin}/${target}"
+export android_ld="${android_toolchain_prefix}-ld"
+if [ $ndk_major_rev -ge 22 ]
 then
-  need_toolchain=true
+  # ${target}-ld doesn't exist in r22. GNU linker is still there under
+  # different names, but we should use LLVM linker.
+  export android_ld="${android_toolchain_bin}/ld.lld"
 fi
-export need_toolchain
+export android_cc="${android_toolchain_prefix}${api}-clang"
+export android_cxx="${android_cc}++"
+export use_toolchain=${use_toolchain-"false"}
+export need_toolchain=$use_toolchain
+export use_security=${use_security:-false}
 if $need_toolchain
 then
   export toolchain_name="$ndk-$arch-android-$api-toolchain"
@@ -84,7 +129,7 @@ case $ace_tao in
     ;;
 
   *)
-    echo "Invalid ace_tao: $ace_tao" 1>&2
+    echo "Error: Invalid ace_tao: $ace_tao" 1>&2
     exit 1
     ;;
 esac
@@ -101,6 +146,7 @@ fi
 export MPC_ROOT="${MPC_ROOT-"${workspace}/${mpc_dir}"}"
 export ACE_ROOT="${ACE_ROOT-"${workspace}/${ace_dir}"}"
 export TAO_ROOT="${TAO_ROOT-"${workspace}/${tao_dir}"}"
+export host_tools=${host_tools:-}
 if [ -z "$host_tools" ]
 then
   ace_target="$ACE_ROOT/build/target"
@@ -115,6 +161,15 @@ export PATH=${PATH}:"$ACE_ROOT/bin"
 
 # Optional Features
 export use_java=${use_java:-false}
+if $use_java
+then
+  export ANDROID_SDK="${ANDROID_SDK-"${workspace}/android-sdk"}"
+  if [ -z ${target_api+x} ]
+  then
+    echo "Error: use_java is true, but target_api isn't set" 1>&2
+    exit 1
+  fi
+fi
 if $use_security
 then
   export GNU_ICONV_ROOT="${GNU_ICONV_ROOT-"${workspace}/secdeps_prefix"}"
@@ -122,4 +177,3 @@ then
   export SSL_ROOT="${SSL_ROOT-"${workspace}/secdeps_prefix"}"
 fi
 export build_ace_tests=${build_ace_tests:-true}
-export host_tools=${host_tools:-}

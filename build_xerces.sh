@@ -1,4 +1,10 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo build_xerces.sh ==========================================================
 
 source setenv.sh
 source make.sh
@@ -6,19 +12,12 @@ source make.sh
 if [[ $api -lt 28 ]]
 then
   pushd iconv_source
-  iconv_ld=${target}-ld
-  if [ $ndk_major_rev -ge 22 ]
-  then
-    # ${target}-ld doesn't exist in r22. GNU linker is still there under
-    # different names, but we should use LLVM linker.
-    iconv_ld=$android_toolchain/bin/ld.lld
-  fi
   ./configure \
     --prefix=$GNU_ICONV_ROOT \
     --host=$target \
-    CC=${target}-clang \
-    CXX=${target}-clang++ \
-    LD=${iconv_ld} \
+    "CC=${android_cc}" \
+    "CXX=${android_cxx}" \
+    "LD=${android_ld}" \
     CFLAGS="-fPIE -fPIC" \
     LDFLAGS="-pie"
   $make

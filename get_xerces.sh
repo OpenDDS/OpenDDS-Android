@@ -1,4 +1,10 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo get_xerces.sh ============================================================
 
 source setenv.sh
 
@@ -27,7 +33,7 @@ function get {
       then
         ln -s "../../$tarname" "$tarname"
       else
-        curl -OJL "$url"
+        download_file "$url"
       fi
     fi
 

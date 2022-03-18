@@ -1,4 +1,10 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo get_openssl.sh ===========================================================
 
 source setenv.sh
 
@@ -14,7 +20,7 @@ function get {
       then
         ln -s "../../$tarname" "$tarname"
       else
-        curl -OJL "$url"
+        download_file "$url"
       fi
     fi
 
@@ -27,17 +33,9 @@ function get {
   fi
 }
 
-basename="openssl-1.1.1i"
+version="3.0.2"
+basename="openssl-$version"
 tarname="$basename.tar.gz"
 url="https://www.openssl.org/source/$tarname"
 ourname="openssl_source"
-if [ "$ndk" != 'r22' ]
-then
-  get
-else
-  if [ ! -d openssl_source ]
-  then
-    git clone --depth 1 'https://github.com/iguessthislldo/openssl' \
-      --branch 'igtd/android-ndk-r22-beta1' openssl_source
-  fi
-fi
+get

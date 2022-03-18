@@ -1,26 +1,32 @@
-set -e
+#!/usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+set -o nounset
+
+echo configure.sh =============================================================
+
 source setenv.sh
 
 extra_configure_flags=()
 
 if $use_java
 then
-  if [ -z "${jdk}" ]
+  if [ -z "${jdk+x}" ]
   then
     extra_configure_flags+=("--java")
   else
     extra_configure_flags+=("--java=${jdk}")
   fi
+  extra_configure_flags+=("--macros=ANDROID_API_PATH=$ANDROID_SDK/platforms/android-$target_api")
 fi
 
 if $use_security
 then
-  bash build_xerces.sh
-  bash build_openssl.sh
   extra_configure_flags+=("--xerces3=${XERCESCROOT}" "--openssl=${SSL_ROOT}" --security)
 fi
 
-if [ ! -z "${host_tools}" ]
+if [ -n "$host_tools" ]
 then
   extra_configure_flags+=("--host-tools=$host_tools" "--no-tests")
 fi
@@ -54,6 +60,7 @@ pushd $workspace/OpenDDS > /dev/null
   --tao=$TAO_ROOT \
   --tests \
   --no-inline \
+  --mpcopts "-workers $logical_cores" \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}"
 popd > /dev/null
@@ -63,9 +70,9 @@ echo '#define ACE_DISABLE_MKTEMP' >> "$ace_target/ace/config.h"
 echo '#define ACE_DISABLE_TEMPNAM' >> "$ace_target/ace/config.h"
 echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
 
-if $use_oci_ace_tao && [ -n "$ace_host" ]
+if $use_oci_ace_tao && [ ! -z "${ace_host+x}" ]
 then
-  echo 'CPPFLAGS += -Wno-deprecated-declarations' >> \
+  echo 'CPPFLAGS += -Wno-deprecated-declarations -Wno-deprecated-copy' >> \
     "$ace_host/include/makeinclude/platform_macros.GNU"
 fi
 

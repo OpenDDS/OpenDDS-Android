@@ -2,6 +2,8 @@
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
 against various combinations of Android NDK and API versions on GitHub Actions.
+Also can be used to build OpenDDS for Android locally on a Linux or macOS
+machine.
 
 ## Matrix
 
@@ -10,35 +12,60 @@ against various combinations of Android NDK and API versions on GitHub Actions.
 `M` = [`doc_group_master`](https://github.com/DOCGroup/ACE_TAO)
 `6` = [`doc_group_ace6_tao2`](https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2)
 `O` = [`oci`](https://theaceorb.com/)
-|  | 16 | 17 | 18 | 19 | 21 | 22 | 23 | 24 | 26 | 27 | 28 | 29 | 30 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| r22 | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` |
-| r21d | `M` | - | - | - | - | - | - | - | - | - | - | `M` | - |
-| r20b | `M` | - | - | - | - | - | - | - | - | - | - | `M` | - |
-| r19c | `M`,`6` | - | - | - | - | - | - | - | - | - | `M`,`6` | - | - |
-| r18b | `M`,`6` | - | - | - | - | - | - | - | - | - | `M`,`6` | - | - |
-| r12b | `6` | - | - | - | - | - | - | `6` | - | - | - | - | - |
+|  | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 26 | 27 | 28 | 29 | 30 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| r23b | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` | `M`,`6`,`O` |
+| r22b | `M` | - | - | - | - | - | - | - | - | - | - | - | - | `M` |
+| r20b | `M` | - | - | - | - | - | - | - | - | - | - | - | `M` | - |
+| r19c | `M`,`6` | - | - | - | - | - | - | - | - | - | - | `M`,`6` | - | - |
+| r18b | `M`,`6` | - | - | - | - | - | - | - | - | - | - | `M`,`6` | - | - |
+| r12b | `6` | - | - | - | - | - | - | - | `6` | - | - | - | - | - |
 <!-- END MATRIX -->
 
 ### Modifying the Matrix
 
-To change the matrix, edit `matrix.py` and run the script with Python 3. It
-will update `.github/workflows/matrix.yml` and `README.md` (this file).
+The matrix defines the combinations of Android NDK revisions, API levels, and
+other information used for the builds. To change the matrix, edit the early
+parts of `matrix.py` and run the script with Python 3. It will update
+`.github/workflows/matrix.yml`, maybe `default.settings.sh`, and `README.md`
+(this file).
 
 ## Running Locally
 
-There used to be a shell version of the matrix but I never used it beyond
-initial testing so eventually I removed it. These instructions are for doing a
-single build. These are bash scripts developed on a Ubuntu Linux system. They
-might need some modifications to work on other Linux systems or macOS.
+These instructions are for doing a single build. Doing multiple builds in a row
+with the same workspace is possible, but will require figuring out what should
+be kept and what should be cleaned up. There is no script here that will do
+that for you unfortunately.
+
+### Requirements
+
+In addition to standard Unix tools and the normal requirements of OpenDDS on
+Linux or macOS, the following programs are needed:
+
+- CMake
+- Python 3
+- `md5sum`
+- A Java Development Kit (If building with OpenDDS with Java)
+
+If using Linux, all of these are probably already installed or can be installed
+easily from the package manager. If using Homebrew on macOS, these can be
+installed using:
+
+```
+brew install cmake python3 md5sha1sum openjdk
+```
+
+Note that if using Homebrew's OpenJDK, it will not put itself on the `$PATH`,
+so you will have to do that yourself before running these scripts.
+
+### Running
 
 1. Copy `default.settings.sh` to `settings.sh` and modify it as you see fit.
    You can also set the environment variables in this file instead. See next
    section about that.
 2. Run `run.sh`.
 
-That's it, assuming nothing goes wrong. Doing multiple builds in a row will
-require some cleanup.
+That's it, assuming nothing goes wrong.
 
 ## Environment Variables
 
@@ -50,3 +77,8 @@ optional.
 In addition to those, what ACE/TAO and OpenDDS it clones can optionally be
 controlled using `ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and
 `OPENDDS_BRANCH`.
+
+## Legal
+
+By running this you are implicitly agreeing to the licences for the Android SDK
+and the Android NDK, as well as OpenDDS, ACE/TAO, as well as anything else.
