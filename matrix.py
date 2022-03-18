@@ -53,12 +53,6 @@ def get_matrices():
         use_java=extras,
       ),
     )
-    # Build Min and Max APIs using standalone toolchain.
-    matrix.add_ndk(ndk, 'minmax',
-      default_flags=dict(
-        use_toolchain=True,
-      ),
-    )
 
   # DOC Group master branch
   doc_group_master_matrix = Matrix(
@@ -70,6 +64,12 @@ def get_matrices():
   comprehensive(doc_group_master_matrix, 'latest_beta', extras=True)
   doc_group_master_matrix.add_ndk('latest_lts', 'minmax')
   doc_group_master_matrix.add_ndk('r22b', 'minmax')
+  # r23 standalone toolchain script doesn't seem to work anymore.
+  doc_group_master_matrix.add_ndk('r22b', 'minmax',
+    default_flags=dict(
+      use_toolchain=True,
+    ),
+  )
   doc_group_master_matrix.add_ndk('r20b', 'minmax')
   doc_group_master_matrix.add_ndk('r19c', 'minmax')
   doc_group_master_matrix.add_ndk('r18b', 'min',
