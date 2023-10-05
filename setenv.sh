@@ -109,11 +109,6 @@ fi
 export DDS_ROOT="${DDS_ROOT-"$workspace/OpenDDS"}"
 
 # ACE/TAO
-export use_oci_ace_tao=${use_oci_ace_tao-"false"}
-if $use_oci_ace_tao
-then
-  ace_tao='oci'
-fi
 export ace_tao=${ace_tao-'doc_group_master'}
 case $ace_tao in
   'doc_group_master')
@@ -124,25 +119,14 @@ case $ace_tao in
     export ace_tao_default_branch='ace6tao2'
     ;;
 
-  'oci')
-    use_oci_ace_tao='true'
-    ;;
-
   *)
     echo "Error: Invalid ace_tao: $ace_tao" 1>&2
     exit 1
     ;;
 esac
-if $use_oci_ace_tao
-then
-  mpc_dir="ACE_wrappers/MPC"
-  ace_dir="ACE_wrappers"
-  tao_dir="ACE_wrappers/TAO"
-else
-  mpc_dir="MPC"
-  ace_dir="ACE_TAO/ACE"
-  tao_dir="ACE_TAO/TAO"
-fi
+mpc_dir="MPC"
+ace_dir="ACE_TAO/ACE"
+tao_dir="ACE_TAO/TAO"
 export MPC_ROOT="${MPC_ROOT-"${workspace}/${mpc_dir}"}"
 export ACE_ROOT="${ACE_ROOT-"${workspace}/${ace_dir}"}"
 export TAO_ROOT="${TAO_ROOT-"${workspace}/${tao_dir}"}"

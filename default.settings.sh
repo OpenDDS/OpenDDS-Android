@@ -26,7 +26,6 @@ export api=24
 
 # What ACE/TAO to use, defaults to doc_group_master
 #export ace_tao=doc_group_ace6_tao2 # DOC Group ACE 6/TAO 2
-#export ace_tao=oci # OCI ACE/TAO
 
 # Build using a standalone toolchain, defaults to using the NDK directly.
 #export use_toolchain=true
