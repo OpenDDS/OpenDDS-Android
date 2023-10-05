@@ -118,19 +118,9 @@ def get_matrices():
     ),
   )
 
-  # OCI ACE/TAO Latest Release
-  oci_matrix = Matrix(
-    'oci', mark='O',
-    url='https://theaceorb.com/',
-    ace_tao='oci',
-    use_toolchain=True,
-  )
-  comprehensive(oci_matrix, 'latest_stable')
-
   return [
     doc_group_master_matrix,
     doc_group_ace6_tao2_matrix,
-    oci_matrix,
   ]
 
 # End of matrix data ==========================================================
