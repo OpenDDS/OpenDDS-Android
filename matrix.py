@@ -25,13 +25,13 @@ default_default_flags = dict(
 def define_ndks():
   # Define NDK versions, their min and max API Levels, and if they have
   # nicknames.
-  Ndk('r23b', 19, 30, latest_stable=True, latest_lts=True)
-  Ndk('r22b', 19, 30)
-  Ndk('r21e', 19, 29)
-  Ndk("r20b", 19, 29)
-  Ndk("r19c", 19, 28)
-  Ndk('r18b', 19, 28)
-  Ndk('r12b', 19, 24)
+  Ndk('r23b', 16, 30, latest_stable=True, latest_lts=True)
+  Ndk('r22b', 16, 30)
+  Ndk('r21e', 16, 29)
+  Ndk("r20b", 16, 29)
+  Ndk("r19c", 16, 28)
+  Ndk('r18b', 16, 28)
+  Ndk('r12b', 16, 24)
 
 
 # API Level 25 was Android Wear-only

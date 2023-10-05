@@ -190,10 +190,40 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r23b-arm-19-security-java-doc-group-master
+          - name: r23b-arm-19-doc-group-master
             arch: arm
             ndk: r23b
             api: 19
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_master"
+          - name: r23b-arm-18-doc-group-master
+            arch: arm
+            ndk: r23b
+            api: 18
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_master"
+          - name: r23b-arm-17-doc-group-master
+            arch: arm
+            ndk: r23b
+            api: 17
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_master"
+          - name: r23b-arm-16-security-java-doc-group-master
+            arch: arm
+            ndk: r23b
+            api: 16
             os: "ubuntu-22.04"
             use_security: true
             use_java: true
@@ -210,10 +240,10 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r23b-arm-19-doc-group-master
+          - name: r23b-arm-16-doc-group-master
             arch: arm
             ndk: r23b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -231,10 +261,10 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r22b-arm-19-doc-group-master
+          - name: r22b-arm-16-doc-group-master
             arch: arm
             ndk: r22b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -251,10 +281,10 @@ jobs:
             use_toolchain: true
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r22b-arm-19-toolchain-doc-group-master
+          - name: r22b-arm-16-toolchain-doc-group-master
             arch: arm
             ndk: r22b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -272,10 +302,10 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r20b-arm-19-doc-group-master
+          - name: r20b-arm-16-doc-group-master
             arch: arm
             ndk: r20b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -293,10 +323,10 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_master"
-          - name: r19c-arm-19-doc-group-master
+          - name: r19c-arm-16-doc-group-master
             arch: arm
             ndk: r19c
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -304,10 +334,10 @@ jobs:
             target_api: 30
             ace_tao: "doc_group_master"
 # r18b ---------------------------------------------------------------------------
-          - name: r18b-arm-19-java-toolchain-target-api-16-doc-group-master
+          - name: r18b-arm-16-java-toolchain-target-api-16-doc-group-master
             arch: arm
             ndk: r18b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: true
@@ -436,6 +466,36 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
+          - name: r23b-arm-18-doc-group-ace6-tao2
+            arch: arm
+            ndk: r23b
+            api: 18
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
+          - name: r23b-arm-17-doc-group-ace6-tao2
+            arch: arm
+            ndk: r23b
+            api: 17
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
+          - name: r23b-arm-16-doc-group-ace6-tao2
+            arch: arm
+            ndk: r23b
+            api: 16
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: false
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
 # r19c ---------------------------------------------------------------------------
           - name: r19c-arm64-28-doc-group-ace6-tao2
             arch: arm64
@@ -447,10 +507,10 @@ jobs:
             use_toolchain: false
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
-          - name: r19c-arm-19-doc-group-ace6-tao2
+          - name: r19c-arm-16-doc-group-ace6-tao2
             arch: arm
             ndk: r19c
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -468,10 +528,10 @@ jobs:
             use_toolchain: true
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
-          - name: r18b-arm-19-toolchain-doc-group-ace6-tao2
+          - name: r18b-arm-16-toolchain-doc-group-ace6-tao2
             arch: arm
             ndk: r18b
-            api: 19
+            api: 16
             os: "ubuntu-22.04"
             use_security: false
             use_java: false
@@ -489,10 +549,10 @@ jobs:
             use_toolchain: true
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
-          - name: r12b-arm-19-ubuntu-18.04-toolchain-doc-group-ace6-tao2
+          - name: r12b-arm-16-ubuntu-18.04-toolchain-doc-group-ace6-tao2
             arch: arm
             ndk: r12b
-            api: 19
+            api: 16
             os: "ubuntu-18.04"
             use_security: false
             use_java: false
