@@ -40,15 +40,10 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
-if $use_oci_ace_tao
-then
-  extra_configure_flags+=("--macros=CPPFLAGS+=-Wno-deprecated-declarations")
-fi
-
 if ! $use_toolchain
 then
   extra_configure_flags+=(
-    "--macros=android_ndk:=$ANDROID_NDK"
+    "--macros=android_ndk:=$OPENDDS_ANDROID_NDK"
     "--macros=android_api:=$api"
   )
 fi
@@ -69,12 +64,6 @@ popd > /dev/null
 echo '#define ACE_DISABLE_MKTEMP' >> "$ace_target/ace/config.h"
 echo '#define ACE_DISABLE_TEMPNAM' >> "$ace_target/ace/config.h"
 echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
-
-if $use_oci_ace_tao && [ ! -z "${ace_host+x}" ]
-then
-  echo 'CPPFLAGS += -Wno-deprecated-declarations -Wno-deprecated-copy' >> \
-    "$ace_host/include/makeinclude/platform_macros.GNU"
-fi
 
 if $build_ace_tests
 then

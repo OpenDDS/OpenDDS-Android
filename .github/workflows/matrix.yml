@@ -10,6 +10,13 @@ on:
   workflow_dispatch:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   matrix:
     runs-on: ${{ matrix.os }}
@@ -87,7 +94,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 30
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: true
             use_java: true
             use_toolchain: false
@@ -97,7 +104,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 29
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -107,7 +114,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -117,7 +124,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 27
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -127,7 +134,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 26
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -137,7 +144,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 24
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -147,7 +154,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 23
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -157,7 +164,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 22
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -167,7 +174,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 21
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -177,7 +184,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 20
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -187,7 +194,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 19
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -197,7 +204,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 18
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -207,7 +214,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 17
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -217,7 +224,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: true
             use_java: true
             use_toolchain: false
@@ -227,7 +234,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 30
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -237,7 +244,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -248,7 +255,7 @@ jobs:
             arch: arm64
             ndk: r22b
             api: 30
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -258,7 +265,7 @@ jobs:
             arch: arm
             ndk: r22b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -268,7 +275,7 @@ jobs:
             arch: arm64
             ndk: r22b
             api: 30
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: true
@@ -278,7 +285,7 @@ jobs:
             arch: arm
             ndk: r22b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: true
@@ -289,7 +296,7 @@ jobs:
             arch: arm64
             ndk: r20b
             api: 29
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -299,7 +306,7 @@ jobs:
             arch: arm
             ndk: r20b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -310,7 +317,7 @@ jobs:
             arch: arm64
             ndk: r19c
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -320,7 +327,7 @@ jobs:
             arch: arm
             ndk: r19c
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -331,7 +338,7 @@ jobs:
             arch: arm
             ndk: r18b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: true
             use_toolchain: true
@@ -341,7 +348,7 @@ jobs:
             arch: arm64
             ndk: r18b
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: true
@@ -353,7 +360,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 30
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -363,7 +370,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 29
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -373,7 +380,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -383,7 +390,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 27
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -393,7 +400,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 26
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -403,7 +410,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 24
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -413,7 +420,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 23
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -423,7 +430,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 22
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -433,7 +440,7 @@ jobs:
             arch: arm64
             ndk: r23b
             api: 21
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -443,7 +450,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 20
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -453,7 +460,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 19
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -463,7 +470,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 18
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -473,7 +480,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 17
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -483,7 +490,7 @@ jobs:
             arch: arm
             ndk: r23b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -494,7 +501,7 @@ jobs:
             arch: arm64
             ndk: r19c
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -504,7 +511,7 @@ jobs:
             arch: arm
             ndk: r19c
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: false
@@ -515,7 +522,7 @@ jobs:
             arch: arm64
             ndk: r18b
             api: 28
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: true
@@ -525,172 +532,9 @@ jobs:
             arch: arm
             ndk: r18b
             api: 16
-            os: "ubuntu-20.04"
+            os: "ubuntu-22.04"
             use_security: false
             use_java: false
             use_toolchain: true
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
-# r12b ---------------------------------------------------------------------------
-          - name: r12b-arm64-24-toolchain-doc-group-ace6-tao2
-            arch: arm64
-            ndk: r12b
-            api: 24
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "doc_group_ace6_tao2"
-          - name: r12b-arm-16-toolchain-doc-group-ace6-tao2
-            arch: arm
-            ndk: r12b
-            api: 16
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "doc_group_ace6_tao2"
-# oci ============================================================================
-# r23b ---------------------------------------------------------------------------
-          - name: r23b-arm64-30-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 30
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-29-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 29
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-28-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 28
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-27-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 27
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-26-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 26
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-24-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 24
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-23-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 23
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-22-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 22
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm64-21-toolchain-oci
-            arch: arm64
-            ndk: r23b
-            api: 21
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm-20-toolchain-oci
-            arch: arm
-            ndk: r23b
-            api: 20
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm-19-toolchain-oci
-            arch: arm
-            ndk: r23b
-            api: 19
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm-18-toolchain-oci
-            arch: arm
-            ndk: r23b
-            api: 18
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm-17-toolchain-oci
-            arch: arm
-            ndk: r23b
-            api: 17
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"
-          - name: r23b-arm-16-toolchain-oci
-            arch: arm
-            ndk: r23b
-            api: 16
-            os: "ubuntu-20.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "oci"

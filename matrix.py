@@ -14,7 +14,7 @@ import argparse
 
 default_default_flags = dict(
   # TODO: os='ubuntu-latest',
-  os='ubuntu-18.04',
+  os='ubuntu-22.04',
   use_security=False,
   use_java=False,
   use_toolchain=False,
@@ -107,30 +107,10 @@ def get_matrices():
       use_toolchain=True,
     ),
   )
-  doc_group_ace6_tao2_matrix.add_ndk('r12b', 'minmax',
-    default_flags=dict(
-      use_toolchain=True,
-      # r12b's make_standalone_toolchain.py only works with Python 2 and 18.04
-      # is the last Ubuntu to have Python 2.
-      # TODO: Might have to remove r12b builds if GitHub stops supporting
-      # 18.04, but we might drop support for ACE6 before that happens.
-      os='ubuntu-18.04',
-    ),
-  )
-
-  # OCI ACE/TAO Latest Release
-  oci_matrix = Matrix(
-    'oci', mark='O',
-    url='https://theaceorb.com/',
-    ace_tao='oci',
-    use_toolchain=True,
-  )
-  comprehensive(oci_matrix, 'latest_stable')
 
   return [
     doc_group_master_matrix,
     doc_group_ace6_tao2_matrix,
-    oci_matrix,
   ]
 
 # End of matrix data ==========================================================
