@@ -538,24 +538,3 @@ jobs:
             use_toolchain: true
             target_api: 30
             ace_tao: "doc_group_ace6_tao2"
-# r12b ---------------------------------------------------------------------------
-          - name: r12b-arm64-24-ubuntu-18.04-toolchain-doc-group-ace6-tao2
-            arch: arm64
-            ndk: r12b
-            api: 24
-            os: "ubuntu-18.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "doc_group_ace6_tao2"
-          - name: r12b-arm-16-ubuntu-18.04-toolchain-doc-group-ace6-tao2
-            arch: arm
-            ndk: r12b
-            api: 16
-            os: "ubuntu-18.04"
-            use_security: false
-            use_java: false
-            use_toolchain: true
-            target_api: 30
-            ace_tao: "doc_group_ace6_tao2"
