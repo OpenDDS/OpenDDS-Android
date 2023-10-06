@@ -43,7 +43,7 @@ fi
 if ! $use_toolchain
 then
   extra_configure_flags+=(
-    "--macros=android_ndk:=$ANDROID_NDK"
+    "--macros=android_ndk:=$OPENDDS_ANDROID_NDK"
     "--macros=android_api:=$api"
   )
 fi

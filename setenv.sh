@@ -81,8 +81,8 @@ case $host_os in
     exit 1
     ;;
 esac
-export ANDROID_NDK="${ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
-export android_toolchain_root="${ANDROID_NDK}/toolchains/llvm/prebuilt/$ndk_platform_name"
+export OPENDDS_ANDROID_NDK="${OPENDDS_ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
+export android_toolchain_root="${OPENDDS_ANDROID_NDK}/toolchains/llvm/prebuilt/$ndk_platform_name"
 export android_cpp_stdlib="${android_toolchain_root}/sysroot/usr/lib/${target}/libc++_shared.so"
 export android_toolchain_bin="${android_toolchain_root}/bin"
 export android_toolchain_prefix="${android_toolchain_bin}/${target}"

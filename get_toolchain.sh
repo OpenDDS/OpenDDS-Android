@@ -16,7 +16,7 @@ then
   then
     py=python2
   fi
-  $py $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
+  $py $OPENDDS_ANDROID_NDK/build/tools/make_standalone_toolchain.py \
     --arch $arch --api $api --install-dir $toolchain_name
   echo "Done"
 fi
