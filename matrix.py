@@ -19,6 +19,7 @@ default_default_flags = dict(
   use_java=False,
   use_toolchain=False,
   target_api=30,
+  install_python2=False,
 )
 
 
@@ -105,6 +106,12 @@ def get_matrices():
   doc_group_ace6_tao2_matrix.add_ndk('r18b', 'minmax',
     default_flags=dict(
       use_toolchain=True,
+    ),
+  )
+  doc_group_ace6_tao2_matrix.add_ndk('r12b', 'minmax',
+    default_flags=dict(
+      use_toolchain=True,
+      install_python2=True,
     ),
   )
 

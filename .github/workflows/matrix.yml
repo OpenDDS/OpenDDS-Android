@@ -41,6 +41,11 @@ jobs:
       run: |
         bash print_settings.sh
 
+    - name: Install Python 2
+      if: ${{ matrix.install_python2 }}
+      run: |
+        sudo apt install python2
+
     - name: Get NDK and Toolchain
       run: |
         bash get_ndk.sh
@@ -99,6 +104,7 @@ jobs:
             use_java: true
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-29-doc-group-master
             arch: arm64
@@ -109,6 +115,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-28-doc-group-master
             arch: arm64
@@ -119,6 +126,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-27-doc-group-master
             arch: arm64
@@ -129,6 +137,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-26-doc-group-master
             arch: arm64
@@ -139,6 +148,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-24-doc-group-master
             arch: arm64
@@ -149,6 +159,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-23-doc-group-master
             arch: arm64
@@ -159,6 +170,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-22-doc-group-master
             arch: arm64
@@ -169,6 +181,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-21-doc-group-master
             arch: arm64
@@ -179,6 +192,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-20-doc-group-master
             arch: arm
@@ -189,6 +203,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-19-doc-group-master
             arch: arm
@@ -199,6 +214,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-18-doc-group-master
             arch: arm
@@ -209,6 +225,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-17-doc-group-master
             arch: arm
@@ -219,6 +236,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-16-security-java-doc-group-master
             arch: arm
@@ -229,6 +247,7 @@ jobs:
             use_java: true
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm64-30-doc-group-master
             arch: arm64
@@ -239,6 +258,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r23b-arm-16-doc-group-master
             arch: arm
@@ -249,6 +269,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
 # r22b ---------------------------------------------------------------------------
           - name: r22b-arm64-30-doc-group-master
@@ -260,6 +281,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r22b-arm-16-doc-group-master
             arch: arm
@@ -270,6 +292,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r22b-arm64-30-toolchain-doc-group-master
             arch: arm64
@@ -280,6 +303,7 @@ jobs:
             use_java: false
             use_toolchain: true
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r22b-arm-16-toolchain-doc-group-master
             arch: arm
@@ -290,6 +314,7 @@ jobs:
             use_java: false
             use_toolchain: true
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
 # r20b ---------------------------------------------------------------------------
           - name: r20b-arm64-29-doc-group-master
@@ -301,6 +326,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r20b-arm-16-doc-group-master
             arch: arm
@@ -311,6 +337,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
 # r19c ---------------------------------------------------------------------------
           - name: r19c-arm64-28-doc-group-master
@@ -322,6 +349,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r19c-arm-16-doc-group-master
             arch: arm
@@ -332,6 +360,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
 # r18b ---------------------------------------------------------------------------
           - name: r18b-arm-16-java-toolchain-target-api-16-doc-group-master
@@ -343,6 +372,7 @@ jobs:
             use_java: true
             use_toolchain: true
             target_api: 16
+            install_python2: false
             ace_tao: "doc_group_master"
           - name: r18b-arm64-28-toolchain-doc-group-master
             arch: arm64
@@ -353,6 +383,7 @@ jobs:
             use_java: false
             use_toolchain: true
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_master"
 # doc_group_ace6_tao2 ============================================================
 # r23b ---------------------------------------------------------------------------
@@ -365,6 +396,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-29-doc-group-ace6-tao2
             arch: arm64
@@ -375,6 +407,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-28-doc-group-ace6-tao2
             arch: arm64
@@ -385,6 +418,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-27-doc-group-ace6-tao2
             arch: arm64
@@ -395,6 +429,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-26-doc-group-ace6-tao2
             arch: arm64
@@ -405,6 +440,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-24-doc-group-ace6-tao2
             arch: arm64
@@ -415,6 +451,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-23-doc-group-ace6-tao2
             arch: arm64
@@ -425,6 +462,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-22-doc-group-ace6-tao2
             arch: arm64
@@ -435,6 +473,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm64-21-doc-group-ace6-tao2
             arch: arm64
@@ -445,6 +484,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm-20-doc-group-ace6-tao2
             arch: arm
@@ -455,6 +495,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm-19-doc-group-ace6-tao2
             arch: arm
@@ -465,6 +506,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm-18-doc-group-ace6-tao2
             arch: arm
@@ -475,6 +517,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm-17-doc-group-ace6-tao2
             arch: arm
@@ -485,6 +528,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r23b-arm-16-doc-group-ace6-tao2
             arch: arm
@@ -495,6 +539,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
 # r19c ---------------------------------------------------------------------------
           - name: r19c-arm64-28-doc-group-ace6-tao2
@@ -506,6 +551,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r19c-arm-16-doc-group-ace6-tao2
             arch: arm
@@ -516,6 +562,7 @@ jobs:
             use_java: false
             use_toolchain: false
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
 # r18b ---------------------------------------------------------------------------
           - name: r18b-arm64-28-toolchain-doc-group-ace6-tao2
@@ -527,6 +574,7 @@ jobs:
             use_java: false
             use_toolchain: true
             target_api: 30
+            install_python2: false
             ace_tao: "doc_group_ace6_tao2"
           - name: r18b-arm-16-toolchain-doc-group-ace6-tao2
             arch: arm
@@ -537,4 +585,28 @@ jobs:
             use_java: false
             use_toolchain: true
             target_api: 30
+            install_python2: false
+            ace_tao: "doc_group_ace6_tao2"
+# r12b ---------------------------------------------------------------------------
+          - name: r12b-arm64-24-toolchain-install-python2-doc-group-ace6-tao2
+            arch: arm64
+            ndk: r12b
+            api: 24
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            target_api: 30
+            install_python2: true
+            ace_tao: "doc_group_ace6_tao2"
+          - name: r12b-arm-16-toolchain-install-python2-doc-group-ace6-tao2
+            arch: arm
+            ndk: r12b
+            api: 16
+            os: "ubuntu-22.04"
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            target_api: 30
+            install_python2: true
             ace_tao: "doc_group_ace6_tao2"
