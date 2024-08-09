@@ -10,11 +10,11 @@ download_file() {
 }
 
 # Getting Configuration
-if [ -z ${ndk+x} ]
+if [ -z "${ndk+x}" -o -z "${arch+x}" -o -z "${api+x}" ]
 then
   if ! [ -f ${workspace}/settings.sh ]
   then
-    echo "Warning: ndk is not set and there are no settings.sh, copying default.settings.sh" 1>&2
+    echo 'Warning: $ndk, $arch, or $api not set and there is no settings.sh, copying default.settings.sh' 1>&2
     cp ${workspace}/default.settings.sh ${workspace}/settings.sh
   fi
   source ${workspace}/settings.sh
@@ -113,6 +113,10 @@ export ace_tao=${ace_tao-'doc_group_master'}
 case $ace_tao in
   'doc_group_master')
     export ace_tao_default_branch='master'
+    if [ $ndk_major_rev -lt 27 ]
+    then
+      export force_cpp_std="c++17"
+    fi
     ;;
 
   'doc_group_ace6_tao2')

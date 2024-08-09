@@ -26,12 +26,20 @@ then
   popd
 fi
 
+extra_configure_opts=()
+
+if [ ! -z "${force_cpp_std+x}" ]
+then
+  extra_configure_opts+=("-DCMAKE_CXX_STANDARD=$force_cpp_std")
+fi
+
 pushd xerces_source
 cmake \
   "-DCMAKE_INSTALL_PREFIX=$XERCESCROOT" \
   "-DCMAKE_TOOLCHAIN_FILE=$OPENDDS_ANDROID_NDK/build/cmake/android.toolchain.cmake" \
   "-DANDROID_ABI=$abi" "-DANDROID_PLATFORM=android-$api" \
-  "-DANDROID_CPP_FEATURES=rtti exceptions"
+  "-DANDROID_CPP_FEATURES=rtti exceptions" \
+  "${extra_configure_opts[@]}"
 $make
 mkdir -p $XERCESCROOT
 make install

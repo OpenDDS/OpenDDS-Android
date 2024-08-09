@@ -40,6 +40,11 @@ then
   extra_configure_flags+=("--macros=android_force_clang:=0")
 fi
 
+if [ ! -z "${force_cpp_std+x}" ]
+then
+  extra_configure_flags+=("--std=$force_cpp_std")
+fi
+
 if ! $use_toolchain
 then
   extra_configure_flags+=(
