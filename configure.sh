@@ -55,7 +55,7 @@ pushd $workspace/OpenDDS > /dev/null
   --tao=$TAO_ROOT \
   --tests \
   --no-inline \
-  --mpcopts "-workers $logical_cores" \
+  --mpc:workers $logical_cores \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}"
 popd > /dev/null
