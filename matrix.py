@@ -10,16 +10,16 @@ from functools import cmp_to_key
 import argparse
 
 # Start of matrix data ========================================================
-# This is what needs to be kept to date
+# This is what needs to be kept up to date
 
 default_default_flags = dict(
   # TODO: os='ubuntu-latest',
   os='ubuntu-22.04',
+  install_python2=False,
   use_security=False,
   use_java=False,
   use_toolchain=False,
   target_api=30,
-  install_python2=False,
 )
 
 
@@ -35,8 +35,8 @@ def define_ndks():
   Ndk('r12b', 16, 24)
 
 
-# API Level 25 was Android Wear-only
-skip_apis = set([25])
+# API Level 20 was Android Wear-only and 25 isn't in the NDK
+skip_apis = set([20, 25])
 
 
 def default_arch(api):
@@ -55,7 +55,7 @@ def get_matrices():
       ),
     )
 
-  # DOC Group master branch
+  # DOC Group master branch ---------------------------------------------------
   doc_group_master_matrix = Matrix(
     'doc_group_master', mark='M',
     url='https://github.com/DOCGroup/ACE_TAO',
@@ -95,7 +95,7 @@ def get_matrices():
   #   ),
   # )
 
-  # DOC Group master ace6_tao2 branch
+  # DOC Group master ace6_tao2 branch -----------------------------------------
   doc_group_ace6_tao2_matrix = Matrix(
     'doc_group_ace6_tao2', mark='6',
     url='https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2',
