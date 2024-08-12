@@ -1,4 +1,6 @@
-# An ACE/TAO/OpenDDS Build Matrix for Android  [![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
+# An ACE/TAO/OpenDDS Build Matrix for Android
+
+[![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
 against various combinations of Android NDK and API versions on GitHub Actions.
@@ -70,8 +72,7 @@ That's it, assuming nothing goes wrong.
 
 There are several environment variables that are the normal settings for the
 build. These all can be found in `default.settings.sh`. The first three: `ndk`,
-`arch`, and `api` are required so set to some example values. The rest are
-optional.
+`arch`, and `api` are required. The rest are optional.
 
 In addition to those, what ACE/TAO and OpenDDS it clones can optionally be
 controlled using `ACE_TAO_REPO`, `ACE_TAO_BRANCH`, `OPENDDS_REPO`, and
