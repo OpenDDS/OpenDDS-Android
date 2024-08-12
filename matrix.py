@@ -10,15 +10,25 @@ from functools import cmp_to_key
 import argparse
 
 # Start of matrix data ========================================================
-# This is what needs to be kept to date
+# This is what needs to be kept up to date
 
 default_default_flags = dict(
   # TODO: os='ubuntu-latest',
   os='ubuntu-22.04',
+  install_python2=False,
   use_security=False,
   use_java=False,
   use_toolchain=False,
   target_api=30,
+)
+
+
+all_archs = dict(
+  # Before 21, Android was 32-bit only
+  arm=dict(min_api=16, max_api=99999),
+  arm64=dict(min_api=21,max_api=99999),
+  x86=dict(min_api=16,max_api=99999),
+  x86_64=dict(min_api=21,max_api=99999),
 )
 
 
@@ -34,11 +44,12 @@ def define_ndks():
   Ndk('r12b', 16, 24)
 
 
-# API Level 25 was Android Wear-only
-skip_apis = set([25])
+# API Level 20 was Android Wear-only and 25 isn't in any NDK
+skip_apis = set([20, 25])
 
 
 def default_arch(api):
+  # Before 21, Android was 32-bit only
   return "arm64" if api >= 21 else "arm"
 
 
@@ -54,7 +65,7 @@ def get_matrices():
       ),
     )
 
-  # DOC Group master branch
+  # DOC Group master branch ---------------------------------------------------
   doc_group_master_matrix = Matrix(
     'doc_group_master', mark='M',
     url='https://github.com/DOCGroup/ACE_TAO',
@@ -94,7 +105,7 @@ def get_matrices():
   #   ),
   # )
 
-  # DOC Group master ace6_tao2 branch
+  # DOC Group master ace6_tao2 branch -----------------------------------------
   doc_group_ace6_tao2_matrix = Matrix(
     'doc_group_ace6_tao2', mark='6',
     url='https://github.com/DOCGroup/ACE_TAO/tree/ace6tao2',
@@ -105,6 +116,12 @@ def get_matrices():
   doc_group_ace6_tao2_matrix.add_ndk('r18b', 'minmax',
     default_flags=dict(
       use_toolchain=True,
+    ),
+  )
+  doc_group_ace6_tao2_matrix.add_ndk('r12b', 'minmax',
+    default_flags=dict(
+      use_toolchain=True,
+      install_python2=True,
     ),
   )
 
@@ -136,8 +153,10 @@ class Ndk:
 
   def __init__(self, name, min_api, max_api, latest_stable=False, latest_lts=False):
     self.name = name
+    self.as_tuple = convert_ndk(name)
     self.min_api = min_api
     self.max_api = max_api
+    self.ndk_only = self.as_tuple[0] >= 19
     self.latest_stable = latest_stable
     self.latest_lts = latest_lts
     self.latest_beta = 'beta' in name
@@ -160,6 +179,12 @@ class Ndk:
   def all_apis(self):
     return list(get_api_range((self.min_api, self.max_api)))
 
+  def all_apis_for_arch(self, arch):
+    arch_info = all_archs[arch]
+    return list(get_api_range((
+      max(self.min_api, arch_info['min_api']),
+      min(self.max_api, arch_info['max_api']))))
+
   def apis_by_name(self, name):
     if name == 'all':
       return self.all_apis()
@@ -174,9 +199,6 @@ class Ndk:
 
   def __str__(self):
     return self.name
-
-
-define_ndks()
 
 
 class Build:
@@ -226,6 +248,7 @@ class Build:
     return format_str.format(
       name=str(self), arch=self.arch, ndk=self.ndk, api=self.api,
       **format_flags)
+
 
 class Matrix:
   '''Represents information about a group of builds.
@@ -466,18 +489,36 @@ def default_settings(matrices, file, **kw):
     print(line, file=file)
 
 
+def bash_array(l):
+  return '(' + ' '.join([f"'{e}'" for e in l]) + ')'
+
+
+def known_apis(matrices, file, **kw):
+  ndks = list(reversed(Ndk.all_ndks.values()))
+  print('known_archs=' + bash_array(all_archs.keys()), file=file)
+  print('known_ndks=' + bash_array([ndk.name for ndk in ndks]), file=file)
+  print('known_ndks_ndk_only=' + bash_array([ndk.name for ndk in ndks if ndk.ndk_only]), file=file)
+  for ndk in ndks:
+    apis = bash_array(ndk.all_apis())
+    print(f'known_apis_{ndk.name}={apis}', file=file)
+    for arch in all_archs.keys():
+      apis = bash_array(ndk.all_apis_for_arch(arch))
+      print(f'known_apis_{ndk.name}_{arch}={apis}', file=file)
+
+
 class Kind(Enum):
-  GhActions = ('.github/workflows/matrix.yml', '# {}', github),
-  ReadMe = ('README.md', '<!-- {} -->', readme),
+  GhActions = ('.github/workflows/matrix.yml', '# {}', github, {})
+  ReadMe = ('README.md', '<!-- {} -->', readme, {})
   DefaultSettings = ('default.settings.sh', '# {}', default_settings, {
     'pass_before': True,
-  }),
+  })
+  KnownApis = ('known_apis.sh', '# {}', known_apis, {})
 
 
 def get_comment(kind, *args, **kw):
   kind = Kind(kind)
   sep = kw['sep'] if 'sep' in kw else ' '
-  return kind.value[0][1].format(sep.join(args))
+  return kind.value[1].format(sep.join(args))
 
 
 def comment(file, kind, *args, **kw):
@@ -491,7 +532,7 @@ def read_file(kind):
   mode = 0
   before = []
   after = []
-  filename = kind.value[0][0]
+  filename = kind.value[0]
   with open(filename) as file:
     for line in file:
       if mode == 0:
@@ -514,6 +555,9 @@ class NullContext:
     pass
 
 
+define_ndks()
+
+
 matrices = get_matrices()
 for matrix in matrices:
   if args.debug:
@@ -527,7 +571,8 @@ for matrix in matrices:
 for kind in Kind:
   opts = {
     'pass_before': False,
-  } if len(kind.value[0]) < 4 else kind.value[0][3]
+  }
+  opts.update(kind.value[3])
   filename, before, after = read_file(kind)
   if args.debug:
     file_context = NullContext()
@@ -542,6 +587,6 @@ for kind in Kind:
       for line in before:
         print(line, end='', file=file)
       comment(file, kind, 'This part is generated by matrix.py')
-    kind.value[0][2](matrices, file, **opts)
+    kind.value[2](matrices, file, **opts)
     for line in after:
       print(line, end='', file=file)

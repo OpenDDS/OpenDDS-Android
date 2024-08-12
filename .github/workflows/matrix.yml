@@ -41,10 +41,18 @@ jobs:
       run: |
         bash print_settings.sh
 
+    - name: Install Python 2
+      if: ${{ matrix.install_python2 }}
+      run: |
+        sudo apt install python2
+
     - name: Get NDK and Toolchain
       run: |
         bash get_ndk.sh
         bash get_toolchain.sh
+        # This is an extra check for files in the NDK we need to know about.
+        # This is not part of run.sh
+        bash assert_ndk_files.sh
 
     - name: Get SDK
       if: ${{ matrix.use_java }}
@@ -79,6 +87,9 @@ jobs:
     - name: Configure ACE/TAO and OpenDDS
       run: bash configure.sh
 
+    - name: Show Build Config
+      run: perl OpenDDS/tools/scripts/show_build_config.pl
+
     - name: Build ACE/TAO and OpenDDS
       run: bash build.sh
 
@@ -95,6 +106,7 @@ jobs:
             ndk: r23b
             api: 30
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: true
             use_java: true
             use_toolchain: false
@@ -105,6 +117,7 @@ jobs:
             ndk: r23b
             api: 29
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -115,6 +128,7 @@ jobs:
             ndk: r23b
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -125,6 +139,7 @@ jobs:
             ndk: r23b
             api: 27
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -135,6 +150,7 @@ jobs:
             ndk: r23b
             api: 26
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -145,6 +161,7 @@ jobs:
             ndk: r23b
             api: 24
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -155,6 +172,7 @@ jobs:
             ndk: r23b
             api: 23
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -165,6 +183,7 @@ jobs:
             ndk: r23b
             api: 22
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -175,16 +194,7 @@ jobs:
             ndk: r23b
             api: 21
             os: "ubuntu-22.04"
-            use_security: false
-            use_java: false
-            use_toolchain: false
-            target_api: 30
-            ace_tao: "doc_group_master"
-          - name: r23b-arm-20-doc-group-master
-            arch: arm
-            ndk: r23b
-            api: 20
-            os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -195,6 +205,7 @@ jobs:
             ndk: r23b
             api: 19
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -205,6 +216,7 @@ jobs:
             ndk: r23b
             api: 18
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -215,6 +227,7 @@ jobs:
             ndk: r23b
             api: 17
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -225,6 +238,7 @@ jobs:
             ndk: r23b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: true
             use_java: true
             use_toolchain: false
@@ -235,6 +249,7 @@ jobs:
             ndk: r23b
             api: 30
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -245,6 +260,7 @@ jobs:
             ndk: r23b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -256,6 +272,7 @@ jobs:
             ndk: r22b
             api: 30
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -266,6 +283,7 @@ jobs:
             ndk: r22b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -276,6 +294,7 @@ jobs:
             ndk: r22b
             api: 30
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: true
@@ -286,6 +305,7 @@ jobs:
             ndk: r22b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: true
@@ -297,6 +317,7 @@ jobs:
             ndk: r20b
             api: 29
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -307,6 +328,7 @@ jobs:
             ndk: r20b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -318,6 +340,7 @@ jobs:
             ndk: r19c
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -328,6 +351,7 @@ jobs:
             ndk: r19c
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -339,6 +363,7 @@ jobs:
             ndk: r18b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: true
             use_toolchain: true
@@ -349,6 +374,7 @@ jobs:
             ndk: r18b
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: true
@@ -361,6 +387,7 @@ jobs:
             ndk: r23b
             api: 30
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -371,6 +398,7 @@ jobs:
             ndk: r23b
             api: 29
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -381,6 +409,7 @@ jobs:
             ndk: r23b
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -391,6 +420,7 @@ jobs:
             ndk: r23b
             api: 27
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -401,6 +431,7 @@ jobs:
             ndk: r23b
             api: 26
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -411,6 +442,7 @@ jobs:
             ndk: r23b
             api: 24
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -421,6 +453,7 @@ jobs:
             ndk: r23b
             api: 23
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -431,6 +464,7 @@ jobs:
             ndk: r23b
             api: 22
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -441,16 +475,7 @@ jobs:
             ndk: r23b
             api: 21
             os: "ubuntu-22.04"
-            use_security: false
-            use_java: false
-            use_toolchain: false
-            target_api: 30
-            ace_tao: "doc_group_ace6_tao2"
-          - name: r23b-arm-20-doc-group-ace6-tao2
-            arch: arm
-            ndk: r23b
-            api: 20
-            os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -461,6 +486,7 @@ jobs:
             ndk: r23b
             api: 19
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -471,6 +497,7 @@ jobs:
             ndk: r23b
             api: 18
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -481,6 +508,7 @@ jobs:
             ndk: r23b
             api: 17
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -491,6 +519,7 @@ jobs:
             ndk: r23b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -502,6 +531,7 @@ jobs:
             ndk: r19c
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -512,6 +542,7 @@ jobs:
             ndk: r19c
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: false
@@ -523,6 +554,7 @@ jobs:
             ndk: r18b
             api: 28
             os: "ubuntu-22.04"
+            install_python2: false
             use_security: false
             use_java: false
             use_toolchain: true
@@ -533,6 +565,30 @@ jobs:
             ndk: r18b
             api: 16
             os: "ubuntu-22.04"
+            install_python2: false
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
+# r12b ---------------------------------------------------------------------------
+          - name: r12b-arm64-24-install-python2-toolchain-doc-group-ace6-tao2
+            arch: arm64
+            ndk: r12b
+            api: 24
+            os: "ubuntu-22.04"
+            install_python2: true
+            use_security: false
+            use_java: false
+            use_toolchain: true
+            target_api: 30
+            ace_tao: "doc_group_ace6_tao2"
+          - name: r12b-arm-16-install-python2-toolchain-doc-group-ace6-tao2
+            arch: arm
+            ndk: r12b
+            api: 16
+            os: "ubuntu-22.04"
+            install_python2: true
             use_security: false
             use_java: false
             use_toolchain: true

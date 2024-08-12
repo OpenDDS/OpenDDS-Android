@@ -33,11 +33,22 @@ fi
 
 if [ $ndk_major_rev -lt 16 ]
 then
-  extra_configure_flags+=("--macros=__NDK_MINOR__:=$ndk_minor_rev" "--macros=__NDK_MAJOR__:=$ndk_major_rev")
+  extra_configure_flags+=(
+    "--macros=__NDK_MINOR__:=$ndk_minor_rev"
+    "--macros=__NDK_MAJOR__:=$ndk_major_rev"
+    # platform_android.GNU should be defining this automatically, but that
+    # doesn't seem to be working...
+    '--configh=#define ACE_ANDROID_NDK_MISSING_NDK_VERSION_H'
+  )
 fi
 if [ $ndk_major_rev -lt 15 ]
 then
   extra_configure_flags+=("--macros=android_force_clang:=0")
+fi
+
+if [ ! -z "${force_cpp_std+x}" ]
+then
+  extra_configure_flags+=("--std=$force_cpp_std")
 fi
 
 if ! $use_toolchain
@@ -55,15 +66,10 @@ pushd $workspace/OpenDDS > /dev/null
   --tao=$TAO_ROOT \
   --tests \
   --no-inline \
-  --mpcopts "-workers $logical_cores" \
+  --mpc:workers $logical_cores \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}"
 popd > /dev/null
-
-# Avoid Deprecated POSIX Functions in ACE that OpenDDS Doesn't Use
-echo '#define ACE_DISABLE_MKTEMP' >> "$ace_target/ace/config.h"
-echo '#define ACE_DISABLE_TEMPNAM' >> "$ace_target/ace/config.h"
-echo '#define ACE_LACKS_READDIR_R' >> "$ace_target/ace/config.h"
 
 if $build_ace_tests
 then

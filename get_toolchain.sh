@@ -12,9 +12,14 @@ if $need_toolchain && [ ! -d $toolchain_name ]
 then
   echo "Generating Standalone Toolchain"
   py=
-  if command -v python2
+  if [ -x python2_source/python ]
   then
-    py=python2
+    py=python2_source/python
+  else
+    if command -v python2
+    then
+      py=python2
+    fi
   fi
   $py $OPENDDS_ANDROID_NDK/build/tools/make_standalone_toolchain.py \
     --arch $arch --api $api --install-dir $toolchain_name

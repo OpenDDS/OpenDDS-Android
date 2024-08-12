@@ -10,6 +10,7 @@ source setenv.sh
 source make.sh
 
 export PATH="$android_toolchain_bin:$PATH"
+export ANDROID_NDK_ROOT="${OPENDDS_ANDROID_NDK}"
 
 cd openssl_source
 ./Configure no-tests no-shared android-$arch -D__ANDROID_API__=$api --prefix=$SSL_ROOT
