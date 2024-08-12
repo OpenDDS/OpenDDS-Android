@@ -12,6 +12,11 @@ if [ -z "${ndk+x}" ]
 then
   ndks=(${known_ndks_ndk_only[@]})
 else
+  if ! [[ ${known_ndks_ndk_only[@]} =~ "${ndk}" ]]
+  then
+    echo "$ndk is invalid !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    exit 0
+  fi
   ndks=($ndk)
 fi
 
