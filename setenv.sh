@@ -29,6 +29,7 @@ fi
 # Convert arch to target and abi
 if [ "$arch" = "arm" ]
 then
+  export target_compiler=armv7a-linux-androideabi
   export target=arm-linux-androideabi
   export abi="armeabi-v7a"
 elif [ "$arch" = "arm64" ]
@@ -50,6 +51,9 @@ else
   echo "Error: \"$arch\" is invalid, must be arm, arm64, x86, or x86_64" 1>&2
   exit 1
 fi
+export target_cpp_stdlib=${target_cpp_stdlib:-$target}
+export target_ld=${target_ld:-$target}
+export target_compiler=${target_compiler:-$target}
 
 # Android NDK
 export ndk_major_rev=$(./matrix.py --get-ndk-major $ndk)
@@ -83,17 +87,16 @@ case $host_os in
 esac
 export OPENDDS_ANDROID_NDK="${OPENDDS_ANDROID_NDK-"$workspace/android-ndk-$ndk"}"
 export android_toolchain_root="${OPENDDS_ANDROID_NDK}/toolchains/llvm/prebuilt/$ndk_platform_name"
-export android_cpp_stdlib="${android_toolchain_root}/sysroot/usr/lib/${target}/libc++_shared.so"
+export android_cpp_stdlib="${android_toolchain_root}/sysroot/usr/lib/${target_cpp_stdlib}/libc++_shared.so"
 export android_toolchain_bin="${android_toolchain_root}/bin"
-export android_toolchain_prefix="${android_toolchain_bin}/${target}"
-export android_ld="${android_toolchain_prefix}-ld"
+export android_ld="${android_toolchain_bin}/${target_ld}-ld"
 if [ $ndk_major_rev -ge 22 ]
 then
-  # ${target}-ld doesn't exist in r22. GNU linker is still there under
+  # ${target_ld}-ld doesn't exist in r22. GNU linker is still there under
   # different names, but we should use LLVM linker.
   export android_ld="${android_toolchain_bin}/ld.lld"
 fi
-export android_cc="${android_toolchain_prefix}${api}-clang"
+export android_cc="${android_toolchain_bin}/${target_compiler}${api}-clang"
 export android_cxx="${android_cc}++"
 export use_toolchain=${use_toolchain-"false"}
 export need_toolchain=$use_toolchain
