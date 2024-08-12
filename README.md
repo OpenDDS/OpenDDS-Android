@@ -1,6 +1,6 @@
 # An ACE/TAO/OpenDDS Build Matrix for Android
 
-[![matrix](https://github.com/iguessthislldo/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/iguessthislldo/OpenDDS-Android/actions?query=workflow%3Amatrix)
+[![matrix](https://github.com/OpenDDS/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/OpenDDS/OpenDDS-Android/actions?query=workflow%3Amatrix)
 
 Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
 against various combinations of Android NDK and API versions on GitHub Actions.
