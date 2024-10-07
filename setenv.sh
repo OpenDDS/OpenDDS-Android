@@ -154,10 +154,15 @@ export PATH=${PATH}:"$ACE_ROOT/bin"
 export use_java=${use_java:-false}
 if $use_java
 then
-  export ANDROID_SDK="${ANDROID_SDK-"${workspace}/android-sdk"}"
-  if [ -z ${target_api+x} ]
+  export android_sdk="${ANDROID_SDK-"${workspace}/android-sdk"}"
+  if [ ! -z ${android_target_api+x} ]
   then
-    echo "Error: use_java is true, but target_api isn't set" 1>&2
+    export target_api="$android_target_api"
+  elif [ ! -z ${target_api+x} ]
+  then
+    export android_target_api="$target_api"
+  else
+    echo "Error: use_java is true, but android_target_api isn't set" 1>&2
     exit 1
   fi
 fi

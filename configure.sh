@@ -18,7 +18,13 @@ then
   else
     extra_configure_flags+=("--java=${jdk}")
   fi
-  extra_configure_flags+=("--macros=ANDROID_API_PATH=$ANDROID_SDK/platforms/android-$target_api")
+
+  android_jar="$android_sdk/platforms/android-$android_target_api/android.jar"
+  if [ ! -f "$android_jar" ]
+  then
+    echo "Error: $android_jar doesn't exist, check that android_sdk and android_target_api are correct" 1>&2
+    exit 1
+  fi
 fi
 
 if $use_security
