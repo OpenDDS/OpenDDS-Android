@@ -11,6 +11,6 @@ source setenv.sh
 if [ ! -d OpenDDS ]
 then
   git clone --recursive --depth 1 \
-    ${OPENDDS_REPO:-https://github.com/objectcomputing/OpenDDS} \
+    ${OPENDDS_REPO:-https://github.com/OpenDDS/OpenDDS} \
     --branch ${OPENDDS_BRANCH:-master}
 fi

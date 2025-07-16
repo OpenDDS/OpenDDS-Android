@@ -2,7 +2,7 @@
 
 [![matrix](https://github.com/OpenDDS/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/OpenDDS/OpenDDS-Android/actions?query=workflow%3Amatrix)
 
-Scripts for building [OpenDDS](https://github.com/objectcomputing/OpenDDS)
+Scripts for building [OpenDDS](https://github.com/OpenDDS/OpenDDS)
 against various combinations of Android NDK and API versions on GitHub Actions.
 Also can be used to build OpenDDS for Android locally on a Linux or macOS
 machine.
