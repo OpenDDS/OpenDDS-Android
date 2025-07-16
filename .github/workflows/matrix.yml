@@ -3,8 +3,8 @@ name: matrix
 on:
   push:
     branches:
-      - '*'
-      - '!macos'
+      - '**'
+      - '!no-gha/**'
   schedule:
     - cron: "0 3 * * 5"
   workflow_dispatch:
@@ -20,6 +20,8 @@ permissions:
 jobs:
   matrix:
     runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.name }}
 
     # TODO: Figure out a way let the matrix cases define the environment variables
     env:
