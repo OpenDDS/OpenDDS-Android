@@ -9,6 +9,7 @@ export api=24
 
 # Java, defaults to false
 #export use_java=true
+
 # Target API, required for Java on Android
 #export target_api=30
 
@@ -29,3 +30,6 @@ export api=24
 
 # Build using a standalone toolchain, defaults to using the NDK directly.
 #export use_toolchain=true
+
+# Enable concurrent MPC in OpenDDS's configure script (defaults to true)
+#export mpc_concurrent=false

@@ -65,6 +65,11 @@ then
   )
 fi
 
+if $mpc_concurrent
+then
+  mpc_concurrent_arg="--mpc:workers $logical_cores"
+fi
+
 pushd $workspace/OpenDDS > /dev/null
 ./configure --target=android \
   --verbose \
@@ -72,7 +77,7 @@ pushd $workspace/OpenDDS > /dev/null
   --tao=$TAO_ROOT \
   --tests \
   --no-inline \
-  --mpc:workers $logical_cores \
+  ${mpc_concurrent_arg:-} \
   --macros=ANDROID_ABI:=$abi \
   "${extra_configure_flags[@]}"
 popd > /dev/null

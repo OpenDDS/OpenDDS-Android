@@ -173,3 +173,4 @@ then
   export SSL_ROOT="${SSL_ROOT-"${workspace}/secdeps_prefix"}"
 fi
 export build_ace_tests=${build_ace_tests:-true}
+export mpc_concurrent=${mpc_concurrent:-true}
