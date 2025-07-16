@@ -35,13 +35,13 @@ all_archs = dict(
 def define_ndks():
   # Define NDK versions, their min and max API Levels, and if they have
   # nicknames.
-  Ndk('r23b', 16, 30, latest_stable=True, latest_lts=True)
-  Ndk('r22b', 16, 30)
+  Ndk('r28c', 21, 30, latest_stable=True)
+  Ndk('r27c', 21, 30, latest_lts=True)
+  Ndk('r26d', 21, 30)
+  Ndk('r25c', 19, 30)
+  Ndk('r23c', 16, 30)
   Ndk('r21e', 16, 29)
-  Ndk("r20b", 16, 29)
-  Ndk("r19c", 16, 28)
   Ndk('r18b', 16, 28)
-  Ndk('r12b', 16, 24)
 
 
 # API Level 20 was Android Wear-only and 25 isn't in any NDK
@@ -74,15 +74,7 @@ def get_matrices():
   comprehensive(doc_group_master_matrix, 'latest_stable', extras=True)
   comprehensive(doc_group_master_matrix, 'latest_beta', extras=True)
   doc_group_master_matrix.add_ndk('latest_lts', 'minmax')
-  doc_group_master_matrix.add_ndk('r22b', 'minmax')
-  # r23 standalone toolchain script doesn't seem to work anymore.
-  doc_group_master_matrix.add_ndk('r22b', 'minmax',
-    default_flags=dict(
-      use_toolchain=True,
-    ),
-  )
-  doc_group_master_matrix.add_ndk('r20b', 'minmax')
-  doc_group_master_matrix.add_ndk('r19c', 'minmax')
+  doc_group_master_matrix.add_ndk('r23c', 'minmax')
   doc_group_master_matrix.add_ndk('r18b', 'min',
     default_flags=dict(
       use_toolchain=True,
@@ -112,16 +104,10 @@ def get_matrices():
     ace_tao='doc_group_ace6_tao2',
   )
   comprehensive(doc_group_ace6_tao2_matrix, 'latest_stable')
-  doc_group_ace6_tao2_matrix.add_ndk('r19c', 'minmax')
+  doc_group_ace6_tao2_matrix.add_ndk('r21e', 'minmax')
   doc_group_ace6_tao2_matrix.add_ndk('r18b', 'minmax',
     default_flags=dict(
       use_toolchain=True,
-    ),
-  )
-  doc_group_ace6_tao2_matrix.add_ndk('r12b', 'minmax',
-    default_flags=dict(
-      use_toolchain=True,
-      install_python2=True,
     ),
   )
 
