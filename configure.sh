@@ -25,6 +25,9 @@ then
     echo "Error: $android_jar doesn't exist, check that android_sdk and android_target_api are correct" 1>&2
     exit 1
   fi
+
+  extra_configure_flags+=("--macros=android_sdk:=$android_sdk"
+                          "--macros=android_target_api:=$android_target_api")
 fi
 
 if $use_security
