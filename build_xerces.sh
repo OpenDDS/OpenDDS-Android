@@ -34,13 +34,13 @@ then
 fi
 
 pushd xerces_source
-cmake \
+cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   "-DCMAKE_INSTALL_PREFIX=$XERCESCROOT" \
   "-DCMAKE_TOOLCHAIN_FILE=$OPENDDS_ANDROID_NDK/build/cmake/android.toolchain.cmake" \
   "-DANDROID_ABI=$abi" "-DANDROID_PLATFORM=android-$api" \
   "-DANDROID_CPP_FEATURES=rtti exceptions" \
   "${extra_configure_opts[@]}"
-$make
+$make -C build
 mkdir -p $XERCESCROOT
-make install
+make -C build install
 popd
