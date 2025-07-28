@@ -15,12 +15,6 @@ then
   exit 1
 fi
 
-need_iconv=true
-if [[ $api -ge 28 ]]
-then
-  need_iconv=false
-fi
-
 function get {
   if [ ! -d "$ourname" ]
   then
@@ -56,24 +50,9 @@ then
   get
 fi
 
-# Get Xerces
-basename="xerces-c-3.2.2"
-tarname="$basename.tar.gz"
-url="https://archive.apache.org/dist/xerces/c/3/sources/$tarname"
-ourname="xerces_source"
-get
-
-if ${JUST_CACHE_SOURCES:-false}
+if [ ! -d xerces_source ]
 then
-  exit 0
-fi
-
-# Patch Xerces To Use Our Libiconv
-if $need_iconv
-then
-  if ! md5sum -c "${basename}.md5" --status
-  then
-    patch -s -p0 -d ${ourname} < ${basename}.patch
-    md5sum -c "${basename}.md5"
-  fi
+  git clone --recursive --depth 1 \
+    ${XERCES_REPO:-https://github.com/OpenDDS/xerces-c} \
+    --branch ${XERCES_BRANCH:-xerces-3.2-android} xerces_source
 fi
