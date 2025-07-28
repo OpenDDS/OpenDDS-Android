@@ -9,7 +9,9 @@ echo build_xerces.sh ==========================================================
 source setenv.sh
 source make.sh
 
-if [[ $api -lt 28 ]]
+extra_configure_opts=()
+
+if $need_iconv
 then
   pushd iconv_source
   ./configure \
@@ -24,9 +26,8 @@ then
   mkdir -p $GNU_ICONV_ROOT
   make install
   popd
+  extra_configure_opts+=("-DXERCES_USE_GNUICONV=ON")
 fi
-
-extra_configure_opts=()
 
 if [ ! -z "${force_cpp_std+x}" ]
 then
@@ -34,7 +35,7 @@ then
 fi
 
 pushd xerces_source
-cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+cmake -B build \
   "-DCMAKE_INSTALL_PREFIX=$XERCESCROOT" \
   "-DCMAKE_TOOLCHAIN_FILE=$OPENDDS_ANDROID_NDK/build/cmake/android.toolchain.cmake" \
   "-DANDROID_ABI=$abi" "-DANDROID_PLATFORM=android-$api" \

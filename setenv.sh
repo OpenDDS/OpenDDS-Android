@@ -174,3 +174,9 @@ then
 fi
 export build_ace_tests=${build_ace_tests:-true}
 export mpc_concurrent=${mpc_concurrent:-true}
+
+need_iconv=true
+if [[ $api -ge 28 ]]
+then
+  need_iconv=false
+fi
