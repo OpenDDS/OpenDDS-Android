@@ -1,6 +1,8 @@
 # An ACE/TAO/OpenDDS Build Matrix for Android
 
-[![matrix](https://github.com/OpenDDS/OpenDDS-Android/workflows/matrix/badge.svg)](https://github.com/OpenDDS/OpenDDS-Android/actions?query=workflow%3Amatrix)
+> [!CAUTION]
+> These scripts have been moved into OpenDDS itself and this repo isn't going to be maintained anymore.
+> You now can find these scripts in [`tools/scripts/android`](https://github.com/OpenDDS/OpenDDS/tree/master/tools/scripts/android) of your OpenDDS source code.
 
 Scripts for building [OpenDDS](https://github.com/OpenDDS/OpenDDS)
 against various combinations of Android NDK and API versions on GitHub Actions.
